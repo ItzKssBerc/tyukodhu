@@ -87,11 +87,13 @@ export default function MapPage() {
           zoomControl: true,
         }).setView([47.8530348, 22.5568265], 15);
 
-        map.on("click", () => map.scrollWheelZoom.enable());
+        if (map) {
+          map.on("click", () => map!.scrollWheelZoom.enable());
+        }
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
           maxZoom: 19,
-        }).addTo(map);
+        }).addTo(map!);
         
         if (isMounted) {
             setMapInstance(map);
