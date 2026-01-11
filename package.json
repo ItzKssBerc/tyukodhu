@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@keystatic/core": "^0.5.48",
+    "@keystatic/next": "^5.0.4",
     "@tailwindcss/postcss": "^4.1.18",
     "leaflet": "^1.9.4",
     "next": "^16.1.1",

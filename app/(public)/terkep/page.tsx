@@ -353,10 +353,7 @@ export default function MapPage() {
           </div>
         </div>
       )}
-      <style jsx>{`
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: rgba(99, 102, 241, 0.5); border-radius: 3px; }
-      `}</style>
+
     </div>
   );
 }
