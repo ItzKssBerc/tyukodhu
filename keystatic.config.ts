@@ -23,5 +23,68 @@ export default config({
         }),
       },
     }),
+    documents: collection({
+      label: 'Dokumentumok',
+      slugField: 'title',
+      path: 'content/documents/*',
+      schema: {
+        title: fields.slug({ name: { label: 'Cím' } }),
+        description: fields.text({
+          label: 'Leírás',
+          multiline: true,
+        }),
+        file: fields.file({
+          label: 'Fájl',
+          directory: 'public/documents',
+          publicPath: '/documents/',
+          validation: {
+            isRequired: true,
+          },
+        }),
+        publishedDate: fields.date({ label: 'Közzététel dátuma' }),
+      },
+    }),
+    images: collection({
+      label: 'Képek',
+      slugField: 'title',
+      path: 'content/images/*',
+      schema: {
+        title: fields.slug({ name: { label: 'Cím' } }),
+        description: fields.text({
+          label: 'Leírás',
+          multiline: true,
+        }),
+        image: fields.image({
+          label: 'Kép',
+          directory: 'public/images/gallery',
+          publicPath: '/images/gallery/',
+          validation: {
+            isRequired: true,
+          },
+        }),
+        publishedDate: fields.date({ label: 'Feltöltés dátuma' }),
+      },
+    }),
+  },
+  singletons: {
+    liveStream: {
+      label: 'Élő Adás Beállítások',
+      path: 'content/live-stream',
+      schema: {
+        title: fields.text({ label: 'Adás címe' }),
+        description: fields.text({
+          label: 'Leírás',
+          multiline: true,
+        }),
+        streamUrl: fields.url({ label: 'Stream URL (YouTube/Vimeo beágyazási link)' }),
+        embedCode: fields.text({
+          label: 'Beágyazási kód (iframe)',
+          description: 'Alternatívaként használd a teljes iframe kódot.',
+          multiline: true,
+        }),
+        isLive: fields.checkbox({ label: 'Élő Adás Aktív', defaultValue: false }),
+      },
+    },
   },
 });
+
