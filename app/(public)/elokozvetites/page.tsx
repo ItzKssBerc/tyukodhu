@@ -1,6 +1,34 @@
 import { createReader } from "@keystatic/core/reader";
 import config from "../../../keystatic.config";
 
+// Helper function to convert YouTube URL to embed URL
+function getYouTubeEmbedUrl(url: string): string | null {
+  if (!url) return null;
+
+  let videoId: string | null = null;
+  const watchRegex = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|watch\?v=|watch\?.+&v=))([a-zA-Z0-9_-]{11})/;
+  const shortRegex = /(?:youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/;
+
+  let match = url.match(watchRegex);
+  if (match && match[1]) {
+    videoId = match[1];
+  } else {
+    match = url.match(shortRegex);
+    if (match && match[1]) {
+      videoId = match[1];
+    }
+  }
+
+  if (videoId) {
+    // Add rel=0 to prevent related videos from showing after the video ends
+    // Add autoplay=1 to auto-play the video (optional, but common for live streams)
+    // Add modestbranding=1 to remove YouTube logo (optional)
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+  }
+
+  return null;
+}
+
 // Live Stream Page Component
 export default async function LiveStreamPage() {
   const reader = createReader(process.cwd(), config);
@@ -11,6 +39,8 @@ export default async function LiveStreamPage() {
   const embedCode = liveStream?.embedCode || "";
   const streamUrl = liveStream?.streamUrl || "";
 
+  const finalStreamUrl = getYouTubeEmbedUrl(streamUrl);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">
@@ -19,15 +49,21 @@ export default async function LiveStreamPage() {
 
       {/* Videó lejátszó konténer */}
       {isLive && embedCode ? (
-        <div
-          className="bg-black aspect-video mb-8 w-full"
-          dangerouslySetInnerHTML={{ __html: embedCode }}
-        />
-      ) : isLive && streamUrl ? (
+        <div className="bg-black aspect-video mb-8 w-full">
+          {/*
+            Fontos: Az ide beágyazott iframe-nek is rendelkeznie kell
+            `width="100%"` és `height="100%"` attribútumokkal
+            vagy a megfelelő Tailwind CSS osztályokkal (`w-full h-full`),
+            hogy pontosan illeszkedjen a konténerbe.
+            Ellenkező esetben a beágyazott kód felülírhatja a reszponzív viselkedést.
+          */}
+          <div className="w-full h-full" dangerouslySetInnerHTML={{ __html: embedCode }} />
+        </div>
+      ) : isLive && finalStreamUrl ? (
         <div className="bg-black aspect-video mb-8 w-full">
           <iframe
             className="w-full h-full"
-            src={streamUrl}
+            src={finalStreamUrl}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen

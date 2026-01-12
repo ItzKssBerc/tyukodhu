@@ -2,6 +2,20 @@ import SearchBar from "@/components/SearchBar";
 import { Suspense } from "react";
 import { createReader } from "@keystatic/core/reader";
 import config from "../../../keystatic.config";
+import NewsCard from "@/components/NewsCard"; // Import NewsCard
+
+// Hardcoded category options from keystatic.config.ts for runtime lookup
+const categoryOptions = [
+  { label: 'Hírek', value: 'news' },
+  { label: 'Közlemények', value: 'announcements' },
+  { label: 'Rendezvények', value: 'events' },
+  { label: 'Egyéb', value: 'other' },
+];
+
+function getCategoryLabel(value: string): string {
+  const option = categoryOptions.find(opt => opt.value === value);
+  return option ? option.label : value; // Return label if found, otherwise return the value itself
+}
 
 export default async function NewsPage() {
   const reader = createReader(process.cwd(), config);
@@ -19,15 +33,17 @@ export default async function NewsPage() {
         </Suspense>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
         {posts.length > 0 ? (
           posts.map((post) => (
-            <div key={post.slug} className="border p-4 rounded-lg shadow-md">
-              <h2 className="text-xl font-semibold">{post.entry.title}</h2>
-              <p>{post.entry.publishedDate}</p>
-              {/* You might want to render content. Keystatic documents require a renderer. */}
-              {/* For now, let's just show the title and date */}
-            </div>
+            <NewsCard
+              key={post.slug}
+              slug={post.slug}
+              title={post.entry.title}
+              publishedDate={post.entry.publishedDate}
+              featuredImage={post.entry.featuredImage}
+              category={getCategoryLabel(post.entry.category)} // Pass the Hungarian label
+            />
           ))
         ) : (
           <p className="col-span-full text-center text-gray-500 dark:text-gray-400">

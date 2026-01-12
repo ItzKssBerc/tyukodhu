@@ -2,8 +2,8 @@ import { config, fields, collection } from '@keystatic/core';
 
 export default config({
   storage: {
-    kind: 'github',
-    repo: 'ElectronSama/tyukodhu',
+    kind: 'local',
+    // repo: 'ElectronSama/tyukodhu',
   },
   ui: {
     brand: {
@@ -16,9 +16,19 @@ export default config({
       slugField: 'title',
       path: 'content/posts/*',
       format: { contentField: 'content' },
+      columns: ['title', 'category', 'publishedDate'],
       schema: {
         title: fields.slug({ name: { label: 'Cím' } }),
-        publishedDate: fields.date({ label: 'Közzététel dátuma' }),
+        category: fields.select({
+          label: 'Kategória',
+          options: [
+            { label: 'Hírek', value: 'news' },
+            { label: 'Közlemények', value: 'announcements' },
+            { label: 'Rendezvények', value: 'events' },
+            { label: 'Egyéb', value: 'other' },
+          ],
+          defaultValue: 'news',
+        }),
         featuredImage: fields.image({
           label: 'Kiemelt kép',
           directory: 'public/images/posts',
@@ -34,6 +44,7 @@ export default config({
             publicPath: '/images/posts/',
           },
         }),
+        publishedDate: fields.date({ label: 'Közzététel dátuma', defaultValue: new Date().toISOString().split('T')[0] }),
       },
     }),
     documents: collection({
