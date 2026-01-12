@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import CustomSelect from "@/components/CustomSelect";
 
 // --- Office Hours Component ---
 const OfficeHours = ({ hours, layout = 'list' }: { hours: Record<string, { start: string; end: string }>, layout?: 'list' | 'grid' }) => {
@@ -95,6 +96,9 @@ const OfficeHours = ({ hours, layout = 'list' }: { hours: Record<string, { start
 // --- Main Contact Page Component ---
 export default function ContactPage() {
   const [activeTab, setActiveTab] = useState('tyukod');
+  const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [submissionMessage, setSubmissionMessage] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState('');
 
   const tyukodOfficeHours = {
     '1': { start: '8:00', end: '12:00' },
@@ -111,6 +115,50 @@ export default function ContactPage() {
     '4': { start: '8:00', end: '16:00' },
     '5': { start: '8:00', end: '12:00' }
   };
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setSubmissionStatus('loading');
+    setSubmissionMessage('');
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const data = {
+      access_key: "9a9bd9e5-fdd8-44c1-b0ac-c4c0870c7d7e",
+      subject: selectedSubject || "Új üzenet a weboldalról (tárgy nélkül)", // Use selected subject or a default
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmissionStatus('success');
+        setSubmissionMessage('Üzenet elküldve sikeresen!');
+        form.reset(); // Clear the form
+        setSelectedSubject(''); // Reset subject dropdown
+      } else {
+        setSubmissionStatus('error');
+        setSubmissionMessage(`Hiba történt: ${result.message || 'Ismeretlen hiba'}`);
+      }
+    } catch (error) {
+      setSubmissionStatus('error');
+      setSubmissionMessage('Hálózati hiba történt. Kérjük, próbálja meg később.');
+      console.error("Form submission error:", error);
+    }
+  }
 
   return (
     <div className="py-16">
@@ -159,13 +207,32 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2">
                   <div className="p-8 sm:p-10">
                     <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Küldjön üzenetet</h2>
-                    <form action="#" method="POST" className="space-y-6">
-                      <input type="text" name="name" placeholder="Teljes név" className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-amber-500 focus:border-amber-500 transition-shadow duration-150" />
-                      <input id="email" name="email" type="email" placeholder="Email cím" className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-amber-500 focus:border-amber-500 transition-shadow duration-150" />
-                      <textarea id="message" name="message" rows={5} placeholder="Írja ide az üzenetét..." className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-amber-500 focus:border-amber-500 transition-shadow duration-150"></textarea>
-                      <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-lg text-lg font-semibold text-white bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-all duration-150 transform hover:scale-105">
-                        Üzenet elküldése
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      <input type="text" name="name" placeholder="Teljes név" className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-amber-500 focus:border-amber-500 transition-shadow duration-150" disabled={submissionStatus === 'loading'} />
+                      <input id="email" name="email" type="email" placeholder="Email cím" className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-amber-500 focus:border-amber-500 transition-shadow duration-150" disabled={submissionStatus === 'loading'} />
+                      <CustomSelect
+                        name="subject"
+                        options={[
+                          { value: "Általános érdeklődés", label: "Általános érdeklődés" },
+                          { value: "Bejelentés", label: "Bejelentés" },
+                          { value: "Panasz", label: "Panasz" },
+                          { value: "Egyéb", label: "Egyéb" },
+                        ]}
+                        value={selectedSubject}
+                        onChange={setSelectedSubject}
+                        placeholder="Válasszon tárgyat"
+                        disabled={submissionStatus === 'loading'}
+                      />
+                      <textarea id="message" name="message" rows={5} placeholder="Írja ide az üzenetét..." className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-amber-500 focus:border-amber-500 transition-shadow duration-150" disabled={submissionStatus === 'loading'}></textarea>
+                      <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-lg text-lg font-semibold text-white bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-all duration-150 transform hover:scale-105" disabled={submissionStatus === 'loading'}>
+                        {submissionStatus === 'loading' ? 'Küldés...' : 'Üzenet elküldése'}
                       </button>
+                      {submissionStatus === 'success' && (
+                        <p className="text-center text-green-600 dark:text-green-400">{submissionMessage}</p>
+                      )}
+                      {submissionStatus === 'error' && (
+                        <p className="text-center text-red-600 dark:text-red-400">{submissionMessage}</p>
+                      )}
                     </form>
                   </div>
                   <div className="bg-gray-50 dark:bg-gray-700/50 p-8 sm:p-10 md:border-l border-t md:border-t-0 border-gray-200 dark:border-gray-700">
