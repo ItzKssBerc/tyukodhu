@@ -5,6 +5,11 @@ export default config({
     kind: 'github',
     repo: 'ElectronSama/tyukodhu',
   },
+  ui: {
+    brand: {
+      name: 'TYUKOD.HU',
+    },
+  },
   collections: {
     posts: collection({
       label: 'Hírek',
@@ -14,12 +19,20 @@ export default config({
       schema: {
         title: fields.slug({ name: { label: 'Cím' } }),
         publishedDate: fields.date({ label: 'Közzététel dátuma' }),
+        featuredImage: fields.image({
+          label: 'Kiemelt kép',
+          directory: 'public/images/posts',
+          publicPath: '/images/posts/',
+        }),
         content: fields.document({
           label: 'Tartalom',
           formatting: true,
-          dividers: true,
+          dividers: true, 
           links: true,
-          images: true,
+          images: {
+            directory: 'public/images/posts',
+            publicPath: '/images/posts/',
+          },
         }),
       },
     }),
@@ -31,6 +44,7 @@ export default config({
         title: fields.slug({ name: { label: 'Cím' } }),
         description: fields.text({
           label: 'Leírás',
+          description: 'Rövid leírás a dokumentumról.',
           multiline: true,
         }),
         file: fields.file({
@@ -53,6 +67,7 @@ export default config({
         description: fields.text({
           label: 'Leírás',
           multiline: true,
+          description: 'Rövid leírás a képről.',
         }),
         image: fields.image({
           label: 'Kép',
@@ -71,11 +86,6 @@ export default config({
       label: 'Élő Adás Beállítások',
       path: 'content/live-stream',
       schema: {
-        title: fields.text({ label: 'Adás címe' }),
-        description: fields.text({
-          label: 'Leírás',
-          multiline: true,
-        }),
         streamUrl: fields.url({ label: 'Stream URL (YouTube/Vimeo beágyazási link)' }),
         embedCode: fields.text({
           label: 'Beágyazási kód (iframe)',
