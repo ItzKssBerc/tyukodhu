@@ -1,17 +1,15 @@
-"use client";
-
-import { useState, useEffect } from "react";
+import { createReader } from "@keystatic/core/reader";
+import config from "../../../keystatic.config";
 
 // Live Stream Page Component
-export default function LiveStreamPage() {
-  // Ezt a változót kell majd dinamikusan beállítani a szerver oldali állapot alapján.
-  // Pl. egy API hívás eredményéből.
-  const [isLive, setIsLive] = useState(false);
+export default async function LiveStreamPage() {
+  const reader = createReader(process.cwd(), config);
+  const liveStream = await reader.singletons.liveStream.read();
 
-  useEffect(() => {
-    // Itt lehetne egy API hívás, hogy ellenőrizzük, megy-e a stream
-    // setIsLive(true); // Teszteléshez
-  }, []);
+  // Ha nincs konfigurálva a liveStream, vagy nincs aktív, alapértelmezett offline állapot
+  const isLive = liveStream?.isLive || false;
+  const embedCode = liveStream?.embedCode || "";
+  const streamUrl = liveStream?.streamUrl || "";
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -20,14 +18,21 @@ export default function LiveStreamPage() {
       </h1>
 
       {/* Videó lejátszó konténer */}
-      {isLive ? (
+      {isLive && embedCode ? (
+        <div
+          className="bg-black aspect-video mb-8 w-full"
+          dangerouslySetInnerHTML={{ __html: embedCode }}
+        />
+      ) : isLive && streamUrl ? (
         <div className="bg-black aspect-video mb-8 w-full">
-          {/* Ide ágyazd be a streaming szolgáltató (pl. YouTube, Twitch) iframe kódját */}
-          {/* Példa YouTube beágyazás: */}
-          {/* <iframe className="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID_IDE" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> */}
-          <div className="w-full h-full flex items-center justify-center text-white">
-            Stream helye
-          </div>
+          <iframe
+            className="w-full h-full"
+            src={streamUrl}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title="Élő közvetítés"
+          ></iframe>
         </div>
       ) : (
         /* Offline banner */
