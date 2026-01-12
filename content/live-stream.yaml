@@ -1,2 +1,8 @@
 streamUrl: https://www.youtube.com/watch?v=clDBtrNfJ1c&list=RDclDBtrNfJ1c&start_radio=1
+embedCode: >-
+  <iframe width="560" height="315"
+  src="https://www.youtube.com/embed/clDBtrNfJ1c?si=Ijj0Tu1zajaPq5LN"
+  title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;
+  clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 isLive: true
