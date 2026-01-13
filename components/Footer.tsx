@@ -1,4 +1,17 @@
+"use client";
+
+import { useState, useEffect } from 'react';
+
 export default function Footer() {
+    const [currentDay, setCurrentDay] = useState<number | null>(null); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
+
+    useEffect(() => {
+        setCurrentDay(new Date().getDay());
+    }, []);
+
+    const daysOfWeek = ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"];
+    const hungarianDays = ["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek"]; // Only weekdays for office hours
+
     return (
         <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-md mt-12 transition-colors duration-300">
             <div className="max-w-7xl mx-auto">
@@ -32,26 +45,18 @@ export default function Footer() {
                             </summary>
                             <div className="px-4 pb-4">
                                 <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
-                                    <li className="flex justify-between">
-                                        <span>Hétfő</span>
-                                        <span className="font-medium">8:00 – 12:00</span>
-                                    </li>
-                                    <li className="flex justify-between">
-                                        <span>Kedd</span>
-                                        <span className="font-medium">8:00 – 12:00</span>
-                                    </li>
-                                    <li className="flex justify-between">
-                                        <span>Szerda</span>
-                                        <span className="font-medium">8:00 – 16:00</span>
-                                    </li>
-                                    <li className="flex justify-between">
-                                        <span>Csütörtök</span>
-                                        <span className="font-medium">8:00 – 12:00</span>
-                                    </li>
-                                    <li className="flex justify-between">
-                                        <span>Péntek</span>
-                                        <span className="font-medium">8:00 – 12:00</span>
-                                    </li>
+                                    {hungarianDays.map((day, index) => {
+                                        // Monday is 1, Tuesday is 2, ..., Friday is 5
+                                        const isCurrentDay = currentDay === (index + 1);
+                                        return (
+                                            <li key={day} className={`flex justify-between ${isCurrentDay ? 'font-bold text-red-600 dark:text-red-500' : ''}`}>
+                                                <span>{day}</span>
+                                                <span className="font-medium">
+                                                    {day === "Szerda" ? "8:00 – 16:00" : "8:00 – 12:00"}
+                                                </span>
+                                            </li>
+                                        );
+                                    })}
                                 </ul>
                             </div>
                         </details>
@@ -135,26 +140,18 @@ export default function Footer() {
                                 Ügyfélfogadás
                             </h4>
                             <ul className="space-y-2 text-sm">
-                                <li className="flex justify-between">
-                                    <span>Hétfő</span>
-                                    <span className="font-medium">8:00 – 12:00</span>
-                                </li>
-                                <li className="flex justify-between">
-                                    <span>Kedd</span>
-                                    <span className="font-medium">8:00 – 12:00</span>
-                                </li>
-                                <li className="flex justify-between">
-                                    <span>Szerda</span>
-                                    <span className="font-medium">8:00 – 16:00</span>
-                                </li>
-                                <li className="flex justify-between">
-                                    <span>Csütörtök</span>
-                                    <span className="font-medium">8:00 – 12:00</span>
-                                </li>
-                                <li className="flex justify-between">
-                                    <span>Péntek</span>
-                                    <span className="font-medium">8:00 – 12:00</span>
-                                </li>
+                                {hungarianDays.map((day, index) => {
+                                    // Monday is 1, Tuesday is 2, ..., Friday is 5
+                                    const isCurrentDay = currentDay === (index + 1);
+                                    return (
+                                        <li key={day} className={`flex justify-between ${isCurrentDay ? 'font-bold text-red-600 dark:text-red-500' : ''}`}>
+                                            <span>{day}</span>
+                                            <span className="font-medium">
+                                                {day === "Szerda" ? "8:00 – 16:00" : "8:00 – 12:00"}
+                                            </span>
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </div>
 
