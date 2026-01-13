@@ -2,24 +2,48 @@ import SearchBar from "@/components/SearchBar";
 import { Suspense } from "react";
 import { createReader } from "@keystatic/core/reader";
 import config from "../../../keystatic.config";
-import NewsCard from "@/components/NewsCard"; // Import NewsCard
+import NewsGrid from "@/components/NewsGrid";
 
 // Hardcoded category options from keystatic.config.ts for runtime lookup
 const categoryOptions = [
-  { label: 'Hírek', value: 'news' },
-  { label: 'Közlemények', value: 'announcements' },
-  { label: 'Rendezvények', value: 'events' },
-  { label: 'Egyéb', value: 'other' },
+  { label: 'Hírek', value: 'hirek' },
+  { label: 'Közlemények', value: 'kozlemenyek' },
+  { label: 'Rendezvények', value: 'rendezvenyek' },
+  { label: 'Egyéb', value: 'egyeb' },
 ];
 
 function getCategoryLabel(value: string): string {
   const option = categoryOptions.find(opt => opt.value === value);
-  return option ? option.label : value; // Return label if found, otherwise return the value itself
+  return option ? option.label : value;
 }
 
-export default async function NewsPage() {
+type PageProps = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export default async function NewsPage({ searchParams }: PageProps) {
   const reader = createReader(process.cwd(), config);
   const posts = await reader.collections.posts.all();
+  
+  const resolvedSearchParams = await searchParams;
+  const query = typeof resolvedSearchParams.q === 'string' ? resolvedSearchParams.q : '';
+
+  const filteredPosts = posts.filter((post) => {
+    if (!query) return true;
+    
+    const title = post.entry.title.toLowerCase();
+    const searchLower = query.toLowerCase();
+    
+    // Simple inclusion check
+    return title.includes(searchLower);
+  });
+
+  // Sort posts by date (newest first)
+  const sortedPosts = filteredPosts.sort((a, b) => {
+    const dateA = new Date(a.entry.publishedDate || 0).getTime();
+    const dateB = new Date(b.entry.publishedDate || 0).getTime();
+    return dateB - dateA;
+  });
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -33,24 +57,18 @@ export default async function NewsPage() {
         </Suspense>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
-        {posts.length > 0 ? (
-          posts.map((post) => (
-            <NewsCard
-              key={post.slug}
-              slug={post.slug}
-              title={post.entry.title}
-              publishedDate={post.entry.publishedDate}
-              featuredImage={post.entry.featuredImage}
-              category={getCategoryLabel(post.entry.category)} // Pass the Hungarian label
-            />
-          ))
-        ) : (
-          <p className="col-span-full text-center text-gray-500 dark:text-gray-400">
-            Jelenleg nincsenek megjeleníthető hírek.
-          </p>
-        )}
-      </div>
+      <NewsGrid posts={sortedPosts.map(post => {
+        const { content, ...restEntry } = post.entry;
+        return {
+          ...post,
+          entry: {
+            ...restEntry,
+            category: getCategoryLabel(restEntry.category),
+            categorySlug: restEntry.category,
+          }
+        };
+      })} />
+
     </div>
   );
 }

@@ -22,27 +22,20 @@ export default config({
         category: fields.select({
           label: 'Kategória',
           options: [
-            { label: 'Hírek', value: 'news' },
-            { label: 'Közlemények', value: 'announcements' },
-            { label: 'Rendezvények', value: 'events' },
-            { label: 'Egyéb', value: 'other' },
+            { label: 'Hírek', value: 'hirek' },
+            { label: 'Közlemények', value: 'kozlemenyek' },
+            { label: 'Rendezvények', value: 'rendezvenyek' },
+            { label: 'Egyéb', value: 'egyeb' },
           ],
-          defaultValue: 'news',
+          defaultValue: 'hirek',
         }),
         featuredImage: fields.image({
           label: 'Kiemelt kép',
           directory: 'public/images/posts',
           publicPath: '/images/posts/',
         }),
-        content: fields.document({
+        content: fields.markdoc({
           label: 'Tartalom',
-          formatting: true,
-          dividers: true, 
-          links: true,
-          images: {
-            directory: 'public/images/posts',
-            publicPath: '/images/posts/',
-          },
         }),
         publishedDate: fields.date({ label: 'Közzététel dátuma', defaultValue: new Date().toISOString().split('T')[0] }),
       },
