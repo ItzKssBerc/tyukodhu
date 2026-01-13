@@ -133,6 +133,30 @@ export default config({
         ),
       },
     }),
+    people: collection({
+        label: 'Személyek',
+        slugField: 'name',
+        path: 'content/people/*',
+        columns: ['name', 'body', 'position'],
+        schema: {
+            name: fields.slug({ name: { label: 'Név' } }),
+            body: fields.select({
+                label: 'Testület',
+                options: [
+                    { label: 'Képviselő testület', value: 'kepviselo-testulet' },
+                    { label: 'Pénzügyi bizottság', value: 'penzugyi-bizottsag' },
+                    { label: 'Egészségügyi és Szociális bizottság', value: 'egeszsegugyi-es-szocialis-bizottsag' },
+                ],
+                defaultValue: 'kepviselo-testulet',
+            }),
+            position: fields.text({ label: 'Beosztás' }),
+            image: fields.image({
+                label: 'Fénykép',
+                directory: 'public/images/people',
+                publicPath: '/images/people/',
+            }),
+        },
+    }),
 
   },
   singletons: {
