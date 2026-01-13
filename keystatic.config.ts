@@ -115,7 +115,8 @@ export default config({
           ],
           defaultValue: 'Egyéb',
         }),
-        googleMapsUrl: fields.text({ label: 'Google Maps Beágyazási Link (iframe src)', description: 'Illessze be a Google Maps "Beágyazási térkép" opciójából származó iframe `src` URL-t. Például: `https://www.google.com/maps/embed?...`' }),
+        latitude: fields.number({ label: 'Földrajzi szélesség', validation: { isRequired: true } }),
+        longitude: fields.number({ label: 'Földrajzi hosszúság', validation: { isRequired: true } }),
         description: fields.text({
           label: 'Leírás',
           multiline: true,

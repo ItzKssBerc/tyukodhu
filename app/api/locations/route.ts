@@ -12,7 +12,7 @@ export async function GET() {
       title: loc.entry.title,
       address: loc.entry.address,
       category: loc.entry.category,
-      googleMapsUrl: loc.entry.googleMapsUrl, // Keep the URL for embedding
+      coords: [loc.entry.latitude, loc.entry.longitude],
       description: loc.entry.description,
       images: loc.entry.images.filter(img => img !== null) as string[],
     }));
