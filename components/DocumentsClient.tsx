@@ -2,7 +2,8 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { FileText, Download, Search, ChevronDown } from "lucide-react";
+import { FileText, Download, Search } from "lucide-react";
+import CategoryDropdown from "./CategoryDropdown";
 
 type DocumentItem = {
   slug: string;
@@ -77,7 +78,7 @@ export default function DocumentsClient({
     <div className="space-y-8">
       {/* Combined Search and Filter Bar */}
       <div className="max-w-3xl mx-auto">
-        <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white dark:bg-gray-800 overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm transition-all duration-300 focus-within:border-indigo-500 dark:focus-within:border-indigo-400 focus-within:ring-1 focus-within:ring-indigo-500 dark:focus-within:ring-indigo-400">
+        <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm transition-all duration-300 focus-within:border-indigo-500 dark:focus-within:border-indigo-400 focus-within:ring-1 focus-within:ring-indigo-500 dark:focus-within:ring-indigo-400">
           <div className="grid place-items-center h-full w-12 text-gray-400">
             <Search className="h-5 w-5" />
           </div>
@@ -93,25 +94,13 @@ export default function DocumentsClient({
 
           <div className="h-6 w-px bg-gray-200 dark:bg-gray-700 mx-2"></div>
 
-          <div className="relative h-full flex items-center min-w-[160px] max-w-[200px]">
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="appearance-none h-full w-full outline-none text-sm text-gray-700 dark:text-gray-200 bg-transparent pl-3 pr-8 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
-            >
-              {categories.map((category) => (
-                <option
-                  key={category}
-                  value={category}
-                  className="bg-white dark:bg-gray-800"
-                >
-                  {formatCategoryName(category)}
-                </option>
-              ))}
-            </select>
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-              <ChevronDown className="h-4 w-4" />
-            </div>
+          <div className="relative h-full flex items-center min-w-[160px] max-w-[200px] z-10">
+            <CategoryDropdown
+              categories={categories}
+              selectedCategory={selectedCategory}
+              onSelectCategory={setSelectedCategory}
+              formatCategoryName={formatCategoryName}
+            />
           </div>
         </div>
       </div>
