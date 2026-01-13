@@ -44,8 +44,20 @@ export default config({
       label: 'Dokumentumok',
       slugField: 'title',
       path: 'content/documents/*',
+      columns: ['title', 'category', 'publishedDate'],
       schema: {
         title: fields.slug({ name: { label: 'Cím' } }),
+        category: fields.select({
+            label: 'Kategória',
+            options: [
+                { label: 'Jegyzőkönyvek', value: 'jegyzokonyvek' },
+                { label: 'Határozatok', value: 'hatarozatok' },
+                { label: 'Rendeletek', value: 'rendeletek' },
+                { label: 'Meghívók', value: 'meghivok' },
+                { label: 'Egyéb', value: 'egyeb' },
+            ],
+            defaultValue: 'jegyzokonyvek',
+        }),
         description: fields.text({
           label: 'Leírás',
           description: 'Rövid leírás a dokumentumról.',
@@ -59,7 +71,7 @@ export default config({
             isRequired: true,
           },
         }),
-        publishedDate: fields.date({ label: 'Közzététel dátuma' }),
+        publishedDate: fields.date({ label: 'Közzététel dátuma', defaultValue: new Date().toISOString().split('T')[0] }),
       },
     }),
     images: collection({
