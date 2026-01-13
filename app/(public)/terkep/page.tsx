@@ -1,10 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-// Removed Leaflet imports and types
-// import type { Map as LeafletMap, Marker as LeafletMarker } from "leaflet";
-// import "leaflet/dist/leaflet.css";
-// import dynamic from "next/dynamic";
+import MapComponent from "@/components/MapComponent"; // Import the new MapComponent
 
 interface Location {
   id: string;
@@ -65,23 +62,10 @@ export default function MapPage() {
         </div>
 
         <div className="p-4">
-          {locationToEmbed ? (
-            <iframe
-              src={locationToEmbed.googleMapsUrl}
-              width="100%"
-              height="600"
-              style={{ border: 0 }}
-              allowFullScreen={false}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title={locationToEmbed.title || "Google Map Embed"}
-              className="rounded-2xl shadow-inner border border-gray-100 dark:border-gray-700"
-            ></iframe>
-          ) : (
-            <div className="text-center py-20 text-gray-500 dark:text-gray-400">
-              Nincs térkép a megjelenítéshez. Kérjük, adjon hozzá egy Google Maps beágyazási linket.
-            </div>
-          )}
+          <MapComponent 
+            locations={locations} 
+            defaultGoogleMapsUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85689.17445677644!2d22.45029434023525!3d47.84372541947771!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47387366bb00609d%3A0x3881f0c947e81ede!2sTyukod%2C%204762%20Magyarorsz%C3%A1g!5e0!3m2!1shu!2sro!4v1768303009255!5m2!1shu!2sro"
+          />
         </div>
       </div>
     </div>
