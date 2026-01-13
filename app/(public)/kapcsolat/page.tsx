@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import CustomSelect from "@/components/CustomSelect";
 
 // --- Office Hours Component ---
-const OfficeHours = ({ hours, layout = 'list' }: { hours: Record<string, { start: string; end: string }>, layout?: 'list' | 'grid' }) => {
+const OfficeHours = ({ hours }: { hours: Record<string, { start: string; end: string }> }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   useEffect(() => {
@@ -46,45 +46,46 @@ const OfficeHours = ({ hours, layout = 'list' }: { hours: Record<string, { start
 
   const dayEntries = Object.entries(hours);
 
-  if (layout === 'grid') {
-    return (
-        <div className="flex text-center text-gray-600 dark:text-gray-300 text-lg">
-            {dayEntries.map(([day, hourData]) => {
-                const status = getStatus(day);
-                return (
-                    <div key={day} className="flex-1 border-r border-gray-200 dark:border-gray-700 last:border-r-0 px-2">
-                        <div className="font-semibold">{getDayName(day)}</div>
-                        <div>{hourData.start} - {hourData.end}</div>
-                        {isToday(day) && (
-                            <div className="mt-2">
-                                <span className="font-bold text-amber-600 dark:text-amber-500">(MA)</span>
-                                <span className={`block text-sm ${status.class}`}>{status.text}</span>
-                            </div>
-                        )}
-                    </div>
-                );
-            })}
-        </div>
-    );
-  }
-
   return (
-    <div className="space-y-4 text-gray-600 dark:text-gray-300 text-lg">
+    <div className="grid grid-cols-1 gap-4">
       {dayEntries.map(([day, hourData]) => {
         const status = getStatus(day);
+        const today = isToday(day);
+        
         return (
-          <div key={day} className="flex items-center">
-            <i className="bi bi-calendar-day flex-shrink-0 w-6 h-6 mr-4 text-amber-600 dark:text-amber-500"></i>
-            <div className="flex flex-col">
-              <span>{getDayName(day)}</span>
-              <span className="font-semibold">{hourData.start} - {hourData.end}</span>
-            </div>
-            {isToday(day) && (
-              <div className="ml-auto text-right">
-                <span className="font-bold text-amber-600 dark:text-amber-500">(MA)</span>
-                <span className={`block text-sm ${status.class}`}>{status.text}</span>
+          <div 
+            key={day} 
+            className={`
+              relative p-4 rounded-xl border transition-all duration-200
+              ${today 
+                ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-700 shadow-md transform scale-[1.02] z-10' 
+                : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-md'
+              }
+            `}
+          >
+            <div className="flex flex-row items-center justify-between space-x-4">
+              <div className="flex items-center space-x-4">
+                <div className={`p-2 rounded-full ${today ? 'bg-amber-100 dark:bg-amber-800/30 text-amber-600 dark:text-amber-400' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'}`}>
+                  <i className="bi bi-calendar-day text-xl"></i>
+                </div>
+                <span className={`font-bold text-lg ${today ? 'text-amber-700 dark:text-amber-400' : 'text-gray-700 dark:text-gray-200'}`}>
+                  {getDayName(day)}
+                </span>
               </div>
-            )}
+              
+              <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 text-right sm:text-left">
+                <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+                  <i className="bi bi-clock text-sm opacity-70 hidden sm:inline"></i>
+                  <span className="font-medium text-lg">{hourData.start} - {hourData.end}</span>
+                </div>
+                
+                {today && (
+                  <div className={`text-sm font-bold ${status.class}`}>
+                    {status.text}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         );
       })}
@@ -277,7 +278,7 @@ export default function ContactPage() {
               <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden">
                 <div className="p-8 sm:p-10">
                   <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Ügyfélfogadás</h2>
-                  <OfficeHours hours={uraOfficeHours} layout="grid" />
+                  <OfficeHours hours={uraOfficeHours} />
                 </div>
               </div>
             </div>

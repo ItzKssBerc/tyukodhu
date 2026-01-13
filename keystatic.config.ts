@@ -150,6 +150,16 @@ export default config({
                 defaultValue: 'kepviselo-testulet',
             }),
             position: fields.text({ label: 'Beosztás' }),
+            committees: fields.array(
+                fields.object({
+                    name: fields.text({ label: 'Bizottság neve' }),
+                    position: fields.text({ label: 'Pozíció' }),
+                }),
+                {
+                    label: 'Bizottsági tagságok',
+                    itemLabel: (props) => props.fields.name.value || 'Bizottság',
+                }
+            ),
             image: fields.image({
                 label: 'Fénykép',
                 directory: 'public/images/people',
@@ -175,4 +185,3 @@ export default config({
     },
   },
 });
-
