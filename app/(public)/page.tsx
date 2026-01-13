@@ -1,6 +1,21 @@
 import Carousel from "@/components/Carousel";
+import { reader } from '@/keystatic/reader';
 
-export default function Home() {
+export default async function Home() {
+        const latestPosts = (await reader.collections.posts.all())
+          .sort((a, b) => {
+            const dateA = a.entry.publishedDate ? new Date(a.entry.publishedDate).getTime() : 0; // Fallback to 0 (epoch) if null
+            const dateB = b.entry.publishedDate ? new Date(b.entry.publishedDate).getTime() : 0; // Fallback to 0 (epoch) if null
+            return dateB - dateA;
+          })
+          .slice(0, 3);
+        const latestDocuments = (await reader.collections.documents.all())
+          .sort((a, b) => {
+            const dateA = a.entry.publishedDate ? new Date(a.entry.publishedDate).getTime() : 0; // Fallback to 0 (epoch) if null
+            const dateB = b.entry.publishedDate ? new Date(b.entry.publishedDate).getTime() : 0; // Fallback to 0 (epoch) if null
+            return dateB - dateA;
+          })
+          .slice(0, 3);
   return (
     <>
       <Carousel />
@@ -106,77 +121,38 @@ export default function Home() {
           <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">
             Legújabb dokumentumok
           </h3>
-          <ul className="space-y-2">
-            <li>
-              <a
-                href="#"
-                className="text-blue-600 dark:text-blue-400 hover:underline"
-              >
-                Képviselő-testületi jegyzőkönyv (2023.10.27)
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="text-blue-600 dark:text-blue-400 hover:underline"
-              >
-                Közmeghallgatási jegyzőkönyv (2023.09.15)
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="text-blue-600 dark:text-blue-400 hover:underline"
-              >
-                Helyi rendelet módosítás (2023.10.01)
-              </a>
-            </li>
-          </ul>
+                        <ul className="space-y-2">
+                          {latestDocuments.map((doc) => (                <li key={doc.slug}>
+                  <a
+                    href={`/onkormanyzat/dokumentumok/${doc.entry.category}/${doc.slug}`}
+                    className="text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    {doc.entry.title} ({doc.entry.publishedDate ? new Date(doc.entry.publishedDate).toLocaleDateString('hu-HU') : 'N/A'})
+                  </a>
+                </li>
+              ))}
+            </ul>
 
           <div className="mt-8">
             <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">
               Friss hírek
             </h3>
             <ul className="space-y-4">
-              <li>
-                <a
-                  href="#"
-                  className="block p-4 bg-white dark:bg-gray-700 rounded-lg shadow hover:shadow-md transition-all duration-300"
-                >
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    2023. október 27.
-                  </p>
-                  <p className="font-semibold text-gray-800 dark:text-gray-200">
-                    Képviselő-testületi ülés összefoglalója
-                  </p>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block p-4 bg-white dark:bg-gray-700 rounded-lg shadow hover:shadow-md transition-all duration-300"
-                >
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    2023. október 20.
-                  </p>
-                  <p className="font-semibold text-gray-800 dark:text-gray-200">
-                    Falunap képgaléria
-                  </p>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block p-4 bg-white dark:bg-gray-700 rounded-lg shadow hover:shadow-md transition-all duration-300"
-                >
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    2023. október 15.
-                  </p>
-                  <p className="font-semibold text-gray-800 dark:text-gray-200">
-                    Új óvodai csoport indult
-                  </p>
-                </a>
-              </li>
+              {latestPosts.map((post) => (
+                <li key={post.slug}>
+                  <a
+                    href={`/hirek/${post.entry.category}/${post.slug}`}
+                    className="block p-4 bg-white dark:bg-gray-700 rounded-lg shadow hover:shadow-md transition-all duration-300"
+                  >
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {post.entry.publishedDate ? new Date(post.entry.publishedDate).toLocaleDateString('hu-HU') : 'N/A'}
+                    </p>
+                    <p className="font-semibold text-gray-800 dark:text-gray-200">
+                      {post.entry.title}
+                    </p>
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

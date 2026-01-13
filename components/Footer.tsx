@@ -206,7 +206,7 @@ export default function Footer() {
                 <div className="max-w-7xl mx-auto py-4 px-4">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-gray-600 dark:text-gray-400">
                         <p className="text-center md:text-left order-2 md:order-1">
-                            &copy; 2025 Tyukod Nagyközség Önkormányzata. Minden jog fenntartva.
+                            &copy; {new Date().getFullYear()} Tyukod Nagyközség Önkormányzata. Minden jog fenntartva.
                         </p>
                         <div className="flex flex-wrap justify-center gap-4 order-1 md:order-2 mb-3 md:mb-0">
                             <a href="/adatvedelem" className="text-red-600 dark:text-red-500 hover:text-red-800 dark:hover:text-red-400 font-medium">Adatvédelmi nyilatkozat</a>
