@@ -140,7 +140,7 @@ export default function DocumentsClient({
                 </p>
                 {doc.entry.file && (
                   <Link
-                    href={doc.entry.file}
+                    href={'/api/dokumentumok/' + doc.entry.category + '/' + doc.slug}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-200 font-semibold transition-colors"
