@@ -115,8 +115,7 @@ export default config({
           ],
           defaultValue: 'Egyéb',
         }),
-        latitude: fields.number({ label: 'Földrajzi szélesség', validation: { isRequired: true } }),
-        longitude: fields.number({ label: 'Földrajzi hosszúság', validation: { isRequired: true } }),
+        googleMapsUrl: fields.text({ label: 'Google Maps Link', description: 'Illessze be a Google Maps helyszín linkjét. Ebből a linkből lesznek kinyerve a koordináták.' }),
         description: fields.text({
           label: 'Leírás',
           multiline: true,
