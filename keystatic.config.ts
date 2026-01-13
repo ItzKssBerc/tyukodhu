@@ -96,6 +96,45 @@ export default config({
         publishedDate: fields.date({ label: 'Feltöltés dátuma' }),
       },
     }),
+    locations: collection({
+      label: 'Helyszínek',
+      slugField: 'title',
+      path: 'content/locations/*',
+      schema: {
+        title: fields.slug({ name: { label: 'Megnevezés' } }),
+        address: fields.text({ label: 'Cím' }),
+        category: fields.select({
+          label: 'Kategória',
+          options: [
+            { label: 'Önkormányzat', value: 'Önkormányzat' },
+            { label: 'Kultúra', value: 'Kultúra' },
+            { label: 'Oktatás', value: 'Oktatás' },
+            { label: 'Egészségügy', value: 'Egészségügy' },
+            { label: 'Sport', value: 'Sport' },
+            { label: 'Egyéb', value: 'Egyéb' },
+          ],
+          defaultValue: 'Egyéb',
+        }),
+        latitude: fields.number({ label: 'Földrajzi szélesség', validation: { isRequired: true } }),
+        longitude: fields.number({ label: 'Földrajzi hosszúság', validation: { isRequired: true } }),
+        description: fields.text({
+          label: 'Leírás',
+          multiline: true,
+          description: 'Rövid leírás a helyszínről.',
+        }),
+        images: fields.array(
+          fields.image({
+            label: 'Kép',
+            directory: 'public/images/locations',
+            publicPath: '/images/locations/',
+          }),
+          {
+            label: 'Képek',
+            itemLabel: (props) => props.value?.filename || 'Kép',
+          }
+        ),
+      },
+    }),
   },
   singletons: {
     liveStream: {

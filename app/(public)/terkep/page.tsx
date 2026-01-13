@@ -4,56 +4,57 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import type { Map as LeafletMap, Marker as LeafletMarker } from "leaflet";
 import dynamic from "next/dynamic";
 
-// --- Data (can be moved to an API later) ---
-const locations = [
-  {
-    id: "polgarmesteri-hivatal",
-    title: "Polgármesteri Hivatal",
-    address: "Tyukod, Kossuth u. 1.",
-    category: "Önkormányzat",
-    coords: [47.8541, 22.5592] as [number, number],
-    description:
-      "Tyukod község önkormányzatának központi épülete. Itt intézhetők a helyi adózással, építkezéssel és egyéb közigazgatási ügyekkel kapcsolatos teendők.",
-    images: [
-      "https://images.unsplash.com/photo-1562575214-da9fcf59b902?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800",
-      "https://images.unsplash.com/photo-1618225139893-b189916d3c3a?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800",
-    ],
-  },
-  {
-    id: "muvelodesi-haz",
-    title: "Művelődési Ház",
-    address: "Tyukod, Árpád u. 22.",
-    category: "Kultúra",
-    coords: [47.8525, 22.557] as [number, number],
-    description:
-      "A helyi kulturális élet központja. Otthont ad színházi előadásoknak, koncerteknek, kiállításoknak és a községi könyvtárnak is.",
-    images: [
-      "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800",
-      "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800",
-      "https://images.unsplash.com/photo-1519751068421-f165c2fb3348?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800",
-    ],
-  },
-];
+interface Location {
+  id: string;
+  title: string;
+  address: string;
+  category: string;
+  coords: [number, number];
+  description: string;
+  images: string[];
+}
 
 export default function MapPage() {
   // --- State Management ---
+  const [locations, setLocations] = useState<Location[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Összes kategória");
   const [mapInstance, setMapInstance] = useState<LeafletMap | null>(null);
   const [markers, setMarkers] = useState<LeafletMarker[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<typeof locations[0] | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // --- Refs ---
   const mapRef = useRef<HTMLDivElement>(null);
   const LRef = useRef<typeof import("leaflet") | null>(null);
 
+  // --- Fetch Locations ---
+  useEffect(() => {
+    async function fetchLocations() {
+      try {
+        const response = await fetch("/api/locations");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: Location[] = await response.json();
+        setLocations(data);
+      } catch (e: any) {
+        setError(e.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchLocations();
+  }, []);
+
   // --- Derived State ---
   const uniqueCategories = useMemo(() => {
     const categories = new Set(locations.map((loc) => loc.category));
     return ["Összes kategória", ...Array.from(categories)];
-  }, []);
+  }, [locations]);
 
   const filteredLocations = useMemo(() => {
     return locations.filter((loc) => {
@@ -65,7 +66,7 @@ export default function MapPage() {
         loc.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [searchQuery, selectedCategory, locations]);
 
   // --- Map Initialization ---
   useEffect(() => {
@@ -114,7 +115,7 @@ export default function MapPage() {
 
   // --- Update Markers ---
   useEffect(() => {
-    if (!mapInstance || !LRef.current) return;
+    if (!mapInstance || !LRef.current || loading || error) return;
 
     // Clear existing markers
     markers.forEach((marker) => marker.remove());
@@ -122,23 +123,35 @@ export default function MapPage() {
     const newMarkers: LeafletMarker[] = [];
     const L = LRef.current;
     
-    const icons = {
+    // Define a default icon for categories not explicitly listed
+    const defaultIcon = L.icon({
+      iconUrl: 'https://api.iconify.design/mdi:map-marker.svg?color=%23f97316', // Orange color
+      iconSize: [32, 32],
+      iconAnchor: [16, 32]
+    });
+
+    const categoryIcons: { [key: string]: L.Icon } = {
         'Önkormányzat': L.icon({ iconUrl: 'https://api.iconify.design/mdi:town-hall.svg?color=%234f46e5', iconSize: [32, 32], iconAnchor: [16, 32] }),
         'Kultúra': L.icon({ iconUrl: 'https://api.iconify.design/mdi:theater.svg?color=%2316a34a', iconSize: [32, 32], iconAnchor: [16, 32] }),
+        'Oktatás': L.icon({ iconUrl: 'https://api.iconify.design/mdi:school.svg?color=%2306b6d4', iconSize: [32, 32], iconAnchor: [16, 32] }),
+        'Egészségügy': L.icon({ iconUrl: 'https://api.iconify.design/mdi:hospital-building.svg?color=%23dc2626', iconSize: [32, 32], iconAnchor: [16, 32] }),
+        'Sport': L.icon({ iconUrl: 'https://api.iconify.design/mdi:dumbbell.svg?color=%23eab308', iconSize: [32, 32], iconAnchor: [16, 32] }),
+        // Add more categories as needed
     };
 
     filteredLocations.forEach((loc) => {
-      const marker = L.marker(loc.coords, { icon: icons[loc.category as keyof typeof icons] || undefined })
+      const icon = categoryIcons[loc.category] || defaultIcon;
+      const marker = L.marker(loc.coords, { icon })
         .addTo(mapInstance)
         .on("click", () => openModal(loc));
       newMarkers.push(marker);
     });
 
     setMarkers(newMarkers);
-  }, [filteredLocations, mapInstance]);
+  }, [filteredLocations, mapInstance, loading, error]);
 
   // --- Modal Logic ---
-  const openModal = (location: typeof locations[0]) => {
+  const openModal = (location: Location) => {
     setSelectedLocation(location);
     setCurrentImageIndex(0);
     setModalOpen(true);
@@ -161,7 +174,7 @@ export default function MapPage() {
     }
   };
 
-  const focusLocation = (location: typeof locations[0]) => {
+  const focusLocation = (location: Location) => {
     if (mapInstance) {
       mapInstance.flyTo(location.coords, 17, { duration: 1.5 });
       setTimeout(() => openModal(location), 1600);
@@ -177,6 +190,14 @@ export default function MapPage() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [modalOpen]);
+
+  if (loading) {
+    return <div className="max-w-7xl mx-auto px-4 py-10 text-center">Térképadatok betöltése...</div>;
+  }
+
+  if (error) {
+    return <div className="max-w-7xl mx-auto px-4 py-10 text-center text-red-500">Hiba történt az adatok betöltésekor: {error}</div>;
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
