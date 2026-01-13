@@ -1,26 +1,31 @@
-"use client";
+// app/(public)/terkep/page.tsx (Server Component)
+import { reader } from '@/keystatic/reader'; // Adjust path if necessary
+import MapClientPage from './client-page'; // Import the client component
 
-import React from "react";
+interface Location {
+  title: string;
+  address: string;
+  description?: string;
+  category?: string;
+}
 
-export default function MapPage() {
-  return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
-      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-lg shadow-indigo-100/50 dark:shadow-none overflow-hidden border border-indigo-50 dark:border-gray-700">
-        <div className="bg-gradient-to-r from-indigo-600 to-indigo-500 dark:from-indigo-900 dark:to-indigo-800 px-6 py-6">
-          <h1 className="text-xl font-bold text-white tracking-tight">
-            Tyukod digitális térképe
-          </h1>
-          <p className="text-indigo-100 text-sm opacity-90">
-            Helyi intézmények, üzletek és közösségi terek
-          </p>
-        </div>
+export default async function MapPage() {
+  let locations: Location[] = [];
+  let error: string | null = null;
 
-        <div className="p-4">
-          <div className="text-center py-20 text-gray-500 dark:text-gray-400">
-            A térkép funkcionalitás eltávolítva.
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  try {
+    const keystaticLocations = await reader.collections.locations.all();
+    locations = keystaticLocations.map(loc => ({
+      title: loc.entry.title,
+      address: loc.entry.address,
+      description: loc.entry.description,
+      category: loc.entry.category,
+    }));
+  } catch (err: any) {
+    console.error("Failed to fetch locations from Keystatic in Server Component:", err);
+    error = "Hiba történt a helyszínek betöltésekor.";
+  }
+
+  // Pass the locations (or an empty array if error) to the client component
+  return <MapClientPage locations={locations} />;
 }

@@ -102,7 +102,7 @@ export default config({
       path: 'content/locations/*',
       schema: {
         title: fields.slug({ name: { label: 'Megnevezés' } }),
-        address: fields.text({ label: 'Cím' }),
+        address: fields.text({ label: 'Cím', validation: { isRequired: true } }),
         category: fields.select({
           label: 'Kategória',
           options: [
@@ -115,8 +115,6 @@ export default config({
           ],
           defaultValue: 'Egyéb',
         }),
-        latitude: fields.number({ label: 'Földrajzi szélesség', validation: { isRequired: true } }),
-        longitude: fields.number({ label: 'Földrajzi hosszúság', validation: { isRequired: true } }),
         description: fields.text({
           label: 'Leírás',
           multiline: true,
