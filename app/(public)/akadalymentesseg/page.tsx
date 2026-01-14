@@ -173,14 +173,14 @@ export default function AkadalymentessegPage() {
             </div>
           </div>
 
-          {/* Mobile Navigation (Horizontal Scroll) */}
-          <div className="lg:hidden mb-8 -mx-4 px-4 overflow-x-auto pb-2 scrollbar-hide">
-             <div className="flex space-x-2">
+          {/* Mobile Navigation (Wrapping) */}
+          <div className="lg:hidden mb-8">
+             <div className="flex flex-wrap gap-2">
                 {sections.map((section) => (
                   <a
                     key={section.id}
                     href={`#${section.id}`}
-                    className="flex-shrink-0 inline-flex items-center px-4 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm whitespace-nowrap"
+                    className="inline-flex items-center px-4 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm"
                   >
                     <i className={`bi ${section.icon} mr-2 text-indigo-500`}></i>
                     {section.title.split('. ')[1]}
