@@ -9,6 +9,7 @@ type Post = {
     entry: {
         title: string;
         publishedDate: string | null;
+        publishedTime: string | null; // Added publishedTime
         featuredImage: string | null;
         category: string; // This is the display label
         categorySlug: string; // This is the raw value
@@ -39,6 +40,7 @@ export default function NewsGrid({ posts }: NewsGridProps) {
                             slug={post.slug}
                             title={post.entry.title}
                             publishedDate={post.entry.publishedDate}
+                            publishedTime={post.entry.publishedTime}
                             featuredImage={post.entry.featuredImage}
                             category={post.entry.category}
                             categorySlug={post.entry.categorySlug}

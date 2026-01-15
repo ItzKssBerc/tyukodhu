@@ -27,10 +27,28 @@ export default config({
           ],
           defaultValue: 'hirek',
         }),
-        publishedDate: fields.date({ label: 'Közzététel dátuma', defaultValue: () => new Date().toISOString().split('T')[0] }),
+        publishedDate: fields.date({ label: 'Közzététel dátuma', defaultValue: { kind: 'today' } }),
         publishedTime: fields.text({
           label: 'Közzététel ideje',
           defaultValue: () => new Date().toTimeString().split(' ')[0].substring(0, 5),
+        }),
+        content: fields.document({
+          label: 'Tartalom',
+          formatting: true,
+          dividers: true,
+          links: true,
+          images: {
+            directory: 'public/images/posts',
+            publicPath: '/images/posts/',
+          },
+        }),
+        featuredImage: fields.image({
+            label: 'Kiemelt kép',
+            directory: 'public/images/posts',
+            publicPath: '/images/posts/',
+            validation: {
+                isRequired: false,
+            },
         }),
       },
     }),
@@ -65,7 +83,7 @@ export default config({
             isRequired: true,
           },
         }),
-        publishedDate: fields.date({ label: 'Közzététel dátuma', defaultValue: () => new Date().toISOString().split('T')[0] }),
+        publishedDate: fields.date({ label: 'Közzététel dátuma', defaultValue: { kind: 'today' } }),
         publishedTime: fields.text({
           label: 'Közzététel ideje',
           defaultValue: () => new Date().toTimeString().split(' ')[0].substring(0, 5),
@@ -96,7 +114,7 @@ export default config({
             isRequired: true,
           },
         }),
-        publishedDate: fields.date({ label: 'Feltöltés dátuma', defaultValue: () => new Date().toISOString().split('T')[0] }),
+        publishedDate: fields.date({ label: 'Feltöltés dátuma', defaultValue: { kind: 'today' } }),
         publishedTime: fields.text({
           label: 'Feltöltés ideje',
           defaultValue: () => new Date().toTimeString().split(' ')[0].substring(0, 5),

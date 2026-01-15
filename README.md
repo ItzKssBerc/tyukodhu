@@ -39,3 +39,5 @@ A bejelentkezés után a bal oldali menüből választhatóak ki a szerkeszteni 
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Keystatic](https://img.shields.io/badge/Keystatic-333333?style=for-the-badge)
 ![Leaflet](https://img.shields.io/badge/Leaflet-199900?style=for-the-badge&logo=leaflet&logoColor=white)
+
+Készítette: Kiss Bercel

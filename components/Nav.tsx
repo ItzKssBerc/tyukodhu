@@ -381,7 +381,7 @@ export default function Nav() {
             </Link>
 
             {/* Mobile Média */}
-            <div className>
+            <div className="">
               <button
                 onClick={() => setMobileMediaOpen(!mobileMediaOpen)}
                 className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${

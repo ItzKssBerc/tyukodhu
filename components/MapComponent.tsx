@@ -6,7 +6,8 @@ import { LatLngExpression, LatLngBoundsExpression } from 'leaflet';
 import { useEffect, useState } from 'react';
 import L from 'leaflet';
 import * as LucideIcons from 'lucide-react';
-import ReactDOM from 'react-dom'; // Will be used in useEffect for custom icon
+import ReactDOM from 'react-dom'; // Keep this for now for compatibility in case other parts rely on it
+import { createRoot } from 'react-dom/client'; // Import createRoot
 
 const IconComponents: Record<string, React.ElementType> = {
   MapPin: LucideIcons.MapPin,
@@ -69,7 +70,8 @@ const createCustomIcon = (iconName: string) => {
 
   const iconDiv = document.createElement('div');
   // Render the Lucide icon into the created div
-  ReactDOM.render(<IconComponent size={24} color="red" />, iconDiv);
+  const root = createRoot(iconDiv);
+  root.render(<IconComponent size={24} color="red" />);
 
   return L.divIcon({
     className: 'custom-map-marker', // Apply custom styling if needed

@@ -164,7 +164,8 @@ export default async function Home() {
                     slug={post.slug}
                     title={post.entry.title}
                     publishedDate={post.entry.publishedDate}
-                    featuredImage={null}
+                    publishedTime={post.entry.publishedTime}
+                    featuredImage={post.entry.featuredImage}
                     category={postCategoryLabels[post.entry.category] || post.entry.category}
                     categorySlug={post.entry.category}
                   />
