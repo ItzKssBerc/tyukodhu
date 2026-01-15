@@ -189,7 +189,7 @@ export default function Footer() {
                             </h4>
                             <ul className="space-y-2 text-sm">
                                 <li><a href="https://magyarorszag.hu/" target="_blank" className="hover:text-red-600 dark:hover:text-red-400 block py-1">Magyarország.hu</a></li>
-                                <li><a href="https://kozigazgatas.magyarorszag.hu/kozigazgatas/kozadat-kereso" target="_blank" className="hover:text-red-600 dark:hover:text-red-400 block py-1">Közadatkereső</a></li>
+                                <li><a href="https://kozadat.hu/kereso/" target="_blank" className="hover:text-red-600 dark:hover:text-red-400 block py-1">Közadatkereső</a></li>
                                 <li><a href="https://www.valasztas.hu/ugyintezes" target="_blank" className="hover:text-red-600 dark:hover:text-red-400 block py-1">Nemzeti Választási Iroda</a></li>
                                 <li><a href="https://csenger.jarasihivatal.hu/" target="_blank" className="hover:text-red-600 dark:hover:text-red-400 block py-1">Csengeri Járási Hivatal</a></li>
                                 <li><a href="https://www.police.hu/" target="_blank" className="hover:text-red-600 dark:hover:text-red-400 block py-1">Rendőrség honlapja</a></li>
@@ -204,6 +204,7 @@ export default function Footer() {
                     <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-gray-600 dark:text-gray-400">
                         <p className="text-center md:text-left order-2 md:order-1">
                             &copy; {new Date().getFullYear()} Tyukod Nagyközség Önkormányzata. Minden jog fenntartva.
+                            <br/><span className="text-gray-800 dark:text-gray-200">Készítette:</span> <span className="text-emerald-600 dark:text-emerald-400">Kiss Bercel</span>
                         </p>
                         <div className="flex flex-wrap justify-center gap-4 order-1 md:order-2 mb-3 md:mb-0">
                             <a href="/adatvedelem" className="text-red-600 dark:text-red-500 hover:text-red-800 dark:hover:text-red-400 font-medium">Adatvédelmi nyilatkozat</a>

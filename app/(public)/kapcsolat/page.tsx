@@ -3,91 +3,72 @@
 import { useState, useEffect } from "react";
 import CustomSelect from "@/components/CustomSelect";
 
-// --- Office Hours Component ---
+// --- Simplified OfficeHours Component ---
 const OfficeHours = ({ hours }: { hours: Record<string, { start: string; end: string }> }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   useEffect(() => {
-    // Update the time every minute to keep the status fresh
     const timer = setInterval(() => setCurrentDate(new Date()), 60000);
     return () => clearInterval(timer);
   }, []);
 
-  const getDayName = (day: string) => {
+  const getDayName = (dayIndex: number) => {
     const dayNames = ['Vasárnap', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat'];
-    return dayNames[parseInt(day, 10)];
+    return dayNames[dayIndex];
   };
 
-  const isToday = (day: string) => {
-    return currentDate.getDay() === parseInt(day, 10);
-  };
-
-  const getStatus = (day: string) => {
-    const hoursData = hours[day];
-    if (!hoursData || !isToday(day)) return { text: '', class: '' };
+  const getStatus = (dayIndex: number) => {
+    const hoursData = hours[dayIndex.toString()];
+    if (!hoursData || currentDate.getDay() !== dayIndex) return { text: '', color: '' };
 
     const [startHour, startMinute] = hoursData.start.split(':').map(Number);
     const [endHour, endMinute] = hoursData.end.split(':').map(Number);
-
+    
     const startTime = new Date(currentDate);
     startTime.setHours(startHour, startMinute, 0, 0);
 
     const endTime = new Date(currentDate);
     endTime.setHours(endHour, endMinute, 0, 0);
 
-    if (currentDate < startTime) {
-      return { text: 'Még nincs nyitva', class: 'text-orange-500' };
-    } else if (currentDate >= startTime && currentDate <= endTime) {
-      return { text: 'Nyitva', class: 'text-green-600 dark:text-green-400' };
-    } else {
-      return { text: 'Már bezárt', class: 'text-red-600 dark:text-red-400' };
+    if (currentDate >= startTime && currentDate <= endTime) {
+      return { text: 'Nyitva', color: 'text-green-600 dark:text-green-400' };
     }
+    return { text: 'Zárva', color: 'text-red-600 dark:text-red-400' };
   };
 
-  const dayEntries = Object.entries(hours);
+  const weekDays = [1, 2, 3, 4, 5]; // Monday to Friday
 
   return (
-    <div className="grid grid-cols-1 gap-4">
-      {dayEntries.map(([day, hourData]) => {
-        const status = getStatus(day);
-        const today = isToday(day);
+    <div className="space-y-2">
+      {weekDays.map(dayIndex => {
+        const hourData = hours[dayIndex.toString()];
+        const today = currentDate.getDay() === dayIndex;
+        const status = getStatus(dayIndex);
         
         return (
-          <div 
-            key={day} 
-            className={`
-              relative p-4 rounded-xl border transition-all duration-200
-              ${today 
-                ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-700 shadow-md transform scale-[1.02] z-10' 
-                : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-md'
-              }
-            `}
+          <div
+            key={dayIndex}
+            className={`flex justify-between items-center p-3 rounded-lg border ${
+              today 
+              ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700' 
+              : 'bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700'
+            }`}
           >
-            <div className="flex flex-row items-center justify-between space-x-4">
-              <div className="flex items-center space-x-4">
-                <div className={`p-2 rounded-full ${today ? 'bg-amber-100 dark:bg-amber-800/30 text-amber-600 dark:text-amber-400' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'}`}>
-                  <i className="bi bi-calendar-day text-xl"></i>
-                </div>
-                <span className={`font-bold text-lg ${today ? 'text-amber-700 dark:text-amber-400' : 'text-gray-700 dark:text-gray-200'}`}>
-                  {getDayName(day)}
+            <span className={`font-bold ${today ? 'text-amber-700 dark:text-amber-300' : 'text-gray-800 dark:text-gray-200'}`}>
+              {getDayName(dayIndex)}
+            </span>
+            <div className="flex items-center gap-4">
+              <span className={`font-mono font-semibold ${!hourData ? 'text-gray-400' : 'text-gray-900 dark:text-white'}`}>
+                {hourData ? `${hourData.start} - ${hourData.end}` : 'Zárva'}
+              </span>
+              {today && hourData && (
+                <span className={`text-sm font-bold ${status.color}`}>
+                  • {status.text}
                 </span>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 text-right sm:text-left">
-                <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                  <i className="bi bi-clock text-sm opacity-70 hidden sm:inline"></i>
-                  <span className="font-medium text-lg">{hourData.start} - {hourData.end}</span>
-                </div>
-                
-                {today && (
-                  <div className={`text-sm font-bold ${status.class}`}>
-                    {status.text}
-                  </div>
-                )}
-              </div>
+              )}
             </div>
           </div>
-        );
+        )
       })}
     </div>
   );
@@ -97,9 +78,12 @@ const OfficeHours = ({ hours }: { hours: Record<string, { start: string; end: st
 // --- Main Contact Page Component ---
 export default function ContactPage() {
   const [activeTab, setActiveTab] = useState('tyukod');
-  const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'loading' | 'success' | 'error' | 'cooldown'>('idle');
   const [submissionMessage, setSubmissionMessage] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
+  const [cooldownActive, setCooldownActive] = useState(false);
+  const [cooldownRemaining, setCooldownRemaining] = useState(0);
+  const [cooldownEndTime, setCooldownEndTime] = useState<number | null>(null);
 
   const tyukodOfficeHours = {
     '1': { start: '8:00', end: '12:00' },
@@ -117,8 +101,55 @@ export default function ContactPage() {
     '5': { start: '8:00', end: '12:00' }
   };
 
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (cooldownActive && cooldownRemaining > 0) {
+      timer = setTimeout(() => {
+        setCooldownRemaining(cooldownRemaining - 1);
+      }, 1000);
+    } else if (cooldownActive && cooldownRemaining === 0) {
+      setCooldownActive(false);
+      setSubmissionStatus('idle'); // Reset status after cooldown
+      setCooldownEndTime(null);
+    }
+    return () => clearTimeout(timer);
+  }, [cooldownActive, cooldownRemaining]);
+
+  useEffect(() => {
+    // Check local storage for existing cooldown
+    const storedCooldownEndTime = localStorage.getItem('formCooldownEndTime');
+    if (storedCooldownEndTime) {
+      const remaining = Math.max(0, Math.ceil((parseInt(storedCooldownEndTime) - Date.now()) / 1000));
+      if (remaining > 0) {
+        setCooldownActive(true);
+        setCooldownRemaining(remaining);
+        setSubmissionStatus('cooldown');
+        setCooldownEndTime(parseInt(storedCooldownEndTime));
+      } else {
+        localStorage.removeItem('formCooldownEndTime');
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (cooldownEndTime) {
+      localStorage.setItem('formCooldownEndTime', cooldownEndTime.toString());
+    } else {
+      localStorage.removeItem('formCooldownEndTime');
+    }
+  }, [cooldownEndTime]);
+
+
+
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (cooldownActive) {
+      setSubmissionMessage(`Kérjük, várjon ${cooldownRemaining} másodpercet az újabb üzenet küldése előtt.`);
+      return;
+    }
+
     setSubmissionStatus('loading');
     setSubmissionMessage('');
 
@@ -150,6 +181,14 @@ export default function ContactPage() {
         setSubmissionMessage('Üzenet elküldve sikeresen!');
         form.reset(); // Clear the form
         setSelectedSubject(''); // Reset subject dropdown
+
+        // Start cooldown
+        setCooldownActive(true);
+        setCooldownRemaining(30);
+        setCooldownEndTime(Date.now() + 30 * 1000);
+        setSubmissionStatus('cooldown');
+        setSubmissionMessage('Kérjük, várjon fél percet az újabb üzenet küldése előtt.');
+
       } else {
         setSubmissionStatus('error');
         setSubmissionMessage(`Hiba történt: ${result.message || 'Ismeretlen hiba'}`);
@@ -209,8 +248,8 @@ export default function ContactPage() {
                   <div className="p-8 sm:p-10">
                     <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Küldjön üzenetet</h2>
                     <form onSubmit={handleSubmit} className="space-y-6">
-                      <input type="text" name="name" placeholder="Teljes név" className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-amber-500 focus:border-amber-500 transition-shadow duration-150" disabled={submissionStatus === 'loading'} />
-                      <input id="email" name="email" type="email" placeholder="Email cím" className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-amber-500 focus:border-amber-500 transition-shadow duration-150" disabled={submissionStatus === 'loading'} />
+                      <input type="text" name="name" placeholder="Teljes név" className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-amber-500 focus:border-amber-500 transition-shadow duration-150" disabled={submissionStatus === 'loading' || cooldownActive} />
+                      <input id="email" name="email" type="email" placeholder="Email cím" className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-amber-500 focus:border-amber-500 transition-shadow duration-150" disabled={submissionStatus === 'loading' || cooldownActive} />
                       <CustomSelect
                         name="subject"
                         options={[
@@ -222,17 +261,20 @@ export default function ContactPage() {
                         value={selectedSubject}
                         onChange={setSelectedSubject}
                         placeholder="Válasszon tárgyat"
-                        disabled={submissionStatus === 'loading'}
+                        disabled={submissionStatus === 'loading' || cooldownActive}
                       />
-                      <textarea id="message" name="message" rows={5} placeholder="Írja ide az üzenetét..." className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-amber-500 focus:border-amber-500 transition-shadow duration-150" disabled={submissionStatus === 'loading'}></textarea>
-                      <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-lg text-lg font-semibold text-white bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-all duration-150 transform hover:scale-105" disabled={submissionStatus === 'loading'}>
-                        {submissionStatus === 'loading' ? 'Küldés...' : 'Üzenet elküldése'}
+                      <textarea id="message" name="message" rows={5} placeholder="Írja ide az üzenetét..." className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-amber-500 focus:border-amber-500 transition-shadow duration-150" disabled={submissionStatus === 'loading' || cooldownActive}></textarea>
+                      <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-lg text-lg font-semibold text-white bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-all duration-150 transform hover:scale-105" disabled={submissionStatus === 'loading' || cooldownActive}>
+                        {cooldownActive ? `Kérjük, várjon ${cooldownRemaining} másodpercet...` : (submissionStatus === 'loading' ? 'Küldés...' : 'Üzenet elküldése')}
                       </button>
                       {submissionStatus === 'success' && (
                         <p className="text-center text-green-600 dark:text-green-400">{submissionMessage}</p>
                       )}
                       {submissionStatus === 'error' && (
                         <p className="text-center text-red-600 dark:text-red-400">{submissionMessage}</p>
+                      )}
+                      {cooldownActive && (
+                        <p className="text-center text-amber-600 dark:text-amber-400">{submissionMessage}</p>
                       )}
                     </form>
                   </div>

@@ -14,9 +14,7 @@ export default config({
     posts: collection({
       label: 'Hírek',
       slugField: 'title',
-      path: 'content/posts/*',
-      format: { contentField: 'content' },
-      columns: ['title', 'category', 'publishedDate'],
+      columns: ['title', 'category', 'publishedDate', 'publishedTime'], // Added publishedTime to columns
       schema: {
         title: fields.slug({ name: { label: 'Cím' } }),
         category: fields.select({
@@ -29,22 +27,18 @@ export default config({
           ],
           defaultValue: 'hirek',
         }),
-        featuredImage: fields.image({
-          label: 'Kiemelt kép',
-          directory: 'public/images/posts',
-          publicPath: '/images/posts/',
+        publishedDate: fields.date({ label: 'Közzététel dátuma', defaultValue: () => new Date().toISOString().split('T')[0] }),
+        publishedTime: fields.text({
+          label: 'Közzététel ideje',
+          defaultValue: () => new Date().toTimeString().split(' ')[0].substring(0, 5),
         }),
-        content: fields.markdoc({
-          label: 'Tartalom',
-        }),
-        publishedDate: fields.date({ label: 'Közzététel dátuma', defaultValue: new Date().toISOString().split('T')[0] }),
       },
     }),
     documents: collection({
       label: 'Dokumentumok',
       slugField: 'title',
       path: 'content/documents/*',
-      columns: ['title', 'category', 'publishedDate'],
+      columns: ['title', 'category', 'publishedDate', 'publishedTime'], // Added publishedTime to columns
       schema: {
         title: fields.slug({ name: { label: 'Cím' } }),
         category: fields.select({
@@ -71,19 +65,28 @@ export default config({
             isRequired: true,
           },
         }),
-        publishedDate: fields.date({ label: 'Közzététel dátuma', defaultValue: new Date().toISOString().split('T')[0] }),
+        publishedDate: fields.date({ label: 'Közzététel dátuma', defaultValue: () => new Date().toISOString().split('T')[0] }),
+        publishedTime: fields.text({
+          label: 'Közzététel ideje',
+          defaultValue: () => new Date().toTimeString().split(' ')[0].substring(0, 5),
+        }),
       },
     }),
     images: collection({
       label: 'Képek',
       slugField: 'title',
       path: 'content/images/*',
+      columns: ['title', 'album', 'publishedDate', 'publishedTime'], // Added publishedTime to columns
       schema: {
         title: fields.slug({ name: { label: 'Cím' } }),
         description: fields.text({
           label: 'Leírás',
           multiline: true,
           description: 'Rövid leírás a képről.',
+        }),
+        album: fields.text({
+          label: 'Album',
+          description: 'Adja meg az album nevét, ahova a kép tartozik.',
         }),
         image: fields.image({
           label: 'Kép',
@@ -93,7 +96,11 @@ export default config({
             isRequired: true,
           },
         }),
-        publishedDate: fields.date({ label: 'Feltöltés dátuma' }),
+        publishedDate: fields.date({ label: 'Feltöltés dátuma', defaultValue: () => new Date().toISOString().split('T')[0] }),
+        publishedTime: fields.text({
+          label: 'Feltöltés ideje',
+          defaultValue: () => new Date().toTimeString().split(' ')[0].substring(0, 5),
+        }),
       },
     }),
     locations: collection({
@@ -114,6 +121,20 @@ export default config({
             { label: 'Egyéb', value: 'Egyéb' },
           ],
           defaultValue: 'Egyéb',
+        }),
+        markerIcon: fields.select({
+          label: 'Térkép ikon',
+          description: 'Válassza ki a helyszínhez tartozó marker ikont a térképen.',
+          options: [
+            { label: 'Alapértelmezett (Tű)', value: 'MapPin' },
+            { label: 'Otthon', value: 'Home' },
+            { label: 'Épület', value: 'Building' },
+            { label: 'Kórház', value: 'Hospital' },
+            { label: 'Iskola', value: 'School' },
+            { label: 'Sztár', value: 'Star' },
+            { label: 'Információ', value: 'Info' },
+          ],
+          defaultValue: 'MapPin',
         }),
         description: fields.text({
           label: 'Leírás',

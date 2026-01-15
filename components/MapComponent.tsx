@@ -5,6 +5,18 @@ import 'leaflet/dist/leaflet.css';
 import { LatLngExpression, LatLngBoundsExpression } from 'leaflet';
 import { useEffect, useState } from 'react';
 import L from 'leaflet';
+import * as LucideIcons from 'lucide-react';
+import ReactDOM from 'react-dom'; // Will be used in useEffect for custom icon
+
+const IconComponents: Record<string, React.ElementType> = {
+  MapPin: LucideIcons.MapPin,
+  Home: LucideIcons.Home,
+  Building: LucideIcons.Building,
+  Hospital: LucideIcons.Hospital,
+  School: LucideIcons.School,
+  Star: LucideIcons.Star,
+  Info: LucideIcons.Info,
+};
 
 // Fix for default icon not appearing
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -19,6 +31,7 @@ interface Location {
   address: string;
   description?: string;
   category?: string;
+  markerIcon?: string; // Add markerIcon field
 }
 
 interface GeocodedLocation extends Location {
@@ -49,6 +62,22 @@ const geocodeAddress = async (address: string): Promise<{ lat: number; lon: numb
     console.error(`Geocoding error for address "${address}":`, error);
   }
   return null;
+};
+
+const createCustomIcon = (iconName: string) => {
+  const IconComponent = IconComponents[iconName] || LucideIcons.MapPin; // Default to MapPin
+
+  const iconDiv = document.createElement('div');
+  // Render the Lucide icon into the created div
+  ReactDOM.render(<IconComponent size={24} color="red" />, iconDiv);
+
+  return L.divIcon({
+    className: 'custom-map-marker', // Apply custom styling if needed
+    html: iconDiv.innerHTML,
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+    popupAnchor: [0, -30]
+  });
 };
 
 export default function MapComponent({ locations }: MapComponentProps) {
@@ -134,7 +163,7 @@ export default function MapComponent({ locations }: MapComponentProps) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {geocodedMarkers.map((marker, index) => (
-        <Marker key={index} position={[marker.lat, marker.lon]}>
+        <Marker key={index} position={[marker.lat, marker.lon]} icon={createCustomIcon(marker.markerIcon || 'MapPin')}>
           <Popup>
             <strong>{marker.title}</strong>
             {marker.description && <p>{marker.description}</p>}

@@ -3,19 +3,17 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 
-type CategoryDropdownProps = {
-  categories: string[];
-  selectedCategory: string;
-  onSelectCategory: (category: string) => void;
-  formatCategoryName: (category: string) => string;
+type SortDropdownProps = {
+  sortOptions: Record<string, string>;
+  currentSortOrder: string;
+  onSelectSortOrder: (sortOrder: string) => void;
 };
 
-export default function CategoryDropdown({
-  categories,
-  selectedCategory,
-  onSelectCategory,
-  formatCategoryName,
-}: CategoryDropdownProps) {
+export default function SortDropdown({
+  sortOptions,
+  currentSortOrder,
+  onSelectSortOrder,
+}: SortDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -32,8 +30,8 @@ export default function CategoryDropdown({
     };
   }, []);
 
-  const handleSelect = (category: string) => {
-    onSelectCategory(category);
+  const handleSelect = (sortOrder: string) => {
+    onSelectSortOrder(sortOrder);
     setIsOpen(false);
   };
 
@@ -46,7 +44,7 @@ export default function CategoryDropdown({
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        {formatCategoryName(selectedCategory)}
+        {sortOptions[currentSortOrder]}
         <ChevronDown
           className={`ml-1 h-4 w-4 transition duration-150 ease-in-out transform ${
             isOpen ? "rotate-180" : "rotate-0"
@@ -55,20 +53,20 @@ export default function CategoryDropdown({
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 mt-2 w-48 rounded-xl shadow-lg origin-top-left left-0">
-          <div className="rounded-xl ring-1 ring-red-300 dark:ring-red-900 ring-opacity-50 border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-1 space-y-1">
-            {categories.map((category) => (
+        <div className="absolute z-50 mt-2 w-64 rounded-xl shadow-lg origin-top-left left-0">
+          <div className="rounded-xl ring-1 ring-blue-300 dark:ring-blue-900 ring-opacity-50 border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-1 space-y-1">
+            {Object.entries(sortOptions).map(([key, label]) => (
               <button
-                key={category}
-                onClick={() => handleSelect(category)}
+                key={key}
+                onClick={() => handleSelect(key)}
                 className={`flex items-center w-full px-4 py-3 text-sm rounded-lg transition duration-150 group ${
-                  selectedCategory === category
-                    ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                    : "text-gray-700 dark:text-gray-200 hover:bg-red-100 dark:hover:bg-red-900/40 hover:text-red-600 dark:hover:text-red-400"
+                  currentSortOrder === key
+                    ? "bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400"
+                    : "text-gray-700 dark:text-gray-200 hover:bg-blue-100 dark:hover:bg-blue-900/40 hover:text-blue-600 dark:hover:text-blue-400"
                 }`}
                 role="menuitem"
               >
-                {formatCategoryName(category)}
+                {label}
               </button>
             ))}
           </div>

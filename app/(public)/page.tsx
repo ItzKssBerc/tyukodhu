@@ -1,21 +1,32 @@
 import Carousel from "@/components/Carousel";
 import { reader } from '@/keystatic/reader';
+import NewsCard from "@/components/NewsCard";
+import Link from "next/link";
 
 export default async function Home() {
-        const latestPosts = (await reader.collections.posts.all())
-          .sort((a, b) => {
-            const dateA = a.entry.publishedDate ? new Date(a.entry.publishedDate).getTime() : 0; // Fallback to 0 (epoch) if null
-            const dateB = b.entry.publishedDate ? new Date(b.entry.publishedDate).getTime() : 0; // Fallback to 0 (epoch) if null
-            return dateB - dateA;
-          })
-          .slice(0, 3);
-        const latestDocuments = (await reader.collections.documents.all())
-          .sort((a, b) => {
-            const dateA = a.entry.publishedDate ? new Date(a.entry.publishedDate).getTime() : 0; // Fallback to 0 (epoch) if null
-            const dateB = b.entry.publishedDate ? new Date(b.entry.publishedDate).getTime() : 0; // Fallback to 0 (epoch) if null
-            return dateB - dateA;
-          })
-          .slice(0, 3);
+  const latestPosts = (await reader.collections.posts.all())
+    .sort((a, b) => {
+      const dateA = a.entry.publishedDate ? new Date(a.entry.publishedDate).getTime() : 0;
+      const dateB = b.entry.publishedDate ? new Date(b.entry.publishedDate).getTime() : 0;
+      return dateB - dateA;
+    })
+    .slice(0, 3);
+  const latestDocuments = (await reader.collections.documents.all())
+    .sort((a, b) => {
+      const dateA = a.entry.publishedDate ? new Date(a.entry.publishedDate).getTime() : 0;
+      const dateB = b.entry.publishedDate ? new Date(b.entry.publishedDate).getTime() : 0;
+      return dateB - dateA;
+    })
+    .slice(0, 3);
+
+  // Local mapping for post categories to avoid importing the config
+  const postCategoryLabels: Record<string, string> = {
+    'hirek': 'Hírek',
+    'kozlemenyek': 'Közlemények',
+    'rendezvenyek': 'Rendezvények',
+    'egyeb': 'Egyéb',
+  };
+
   return (
     <>
       <Carousel />
@@ -121,39 +132,47 @@ export default async function Home() {
           <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">
             Legújabb dokumentumok
           </h3>
-                        <ul className="space-y-2">
-                          {latestDocuments.map((doc) => (                <li key={doc.slug}>
-                  <a
-                    href={`/onkormanyzat/dokumentumok/${doc.entry.category}/${doc.slug}`}
+          {latestDocuments.length > 0 ? (
+            <ul className="space-y-2">
+              {latestDocuments.map((doc) => (
+                <li key={doc.slug}>
+                  <Link
+                    href={doc.entry.file}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
                     className="text-blue-600 dark:text-blue-400 hover:underline"
                   >
-                    {doc.entry.title} ({doc.entry.publishedDate ? new Date(doc.entry.publishedDate).toLocaleDateString('hu-HU') : 'N/A'})
-                  </a>
-                </li>
-              ))}
-            </ul>
+                                {doc.entry.title} ({doc.entry.publishedDate ? new Date(doc.entry.publishedDate).toLocaleDateString('hu-HU') : 'N/A'})
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+          ) : (
+            <p className="text-gray-500 dark:text-gray-400 text-sm italic">Nincsenek feltöltött dokumentumok.</p>
+          )}
 
           <div className="mt-8">
             <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">
               Friss hírek
             </h3>
-            <ul className="space-y-4">
-              {latestPosts.map((post) => (
-                <li key={post.slug}>
-                  <a
-                    href={`/hirek/${post.entry.category}/${post.slug}`}
-                    className="block p-4 bg-white dark:bg-gray-700 rounded-lg shadow hover:shadow-md transition-all duration-300"
-                  >
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {post.entry.publishedDate ? new Date(post.entry.publishedDate).toLocaleDateString('hu-HU') : 'N/A'}
-                    </p>
-                    <p className="font-semibold text-gray-800 dark:text-gray-200">
-                      {post.entry.title}
-                    </p>
-                  </a>
-                </li>
-              ))}
-            </ul>
+            {latestPosts.length > 0 ? (
+              <div className="space-y-4">
+                {latestPosts.map((post) => (
+                  <NewsCard
+                    key={post.slug}
+                    slug={post.slug}
+                    title={post.entry.title}
+                    publishedDate={post.entry.publishedDate}
+                    featuredImage={null}
+                    category={postCategoryLabels[post.entry.category] || post.entry.category}
+                    categorySlug={post.entry.category}
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 dark:text-gray-400 text-sm italic">Nincsenek feltöltött hírek.</p>
+            )}
           </div>
         </div>
       </div>

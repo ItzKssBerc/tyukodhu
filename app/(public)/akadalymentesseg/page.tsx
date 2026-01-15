@@ -43,7 +43,7 @@ export default function AkadalymentessegPage() {
       icon: "bi-file-earmark-text-fill",
       content: (
         <p>
-          Ezt a nyilatkozatot 2024. május 20-án készítettük. A nyilatkozatot a szervezet által végzett önértékelés alapján állítottuk össze.
+          Ezt a nyilatkozatot 2026. január 13-án készítettük. A nyilatkozatot a szervezet által végzett önértékelés alapján állítottuk össze.
         </p>
       )
     },
@@ -63,7 +63,7 @@ export default function AkadalymentessegPage() {
               </div>
               <div>
                 <span className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">E-mail</span>
-                <a href="mailto:onkormanyzat@tyukod.hu" className="text-gray-900 dark:text-white font-medium hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">onkormanyzat@tyukod.hu</a>
+                <a href="mailto:onkormanyzat@tyukod.hu" className="text-gray-900 dark:text-white font-medium hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">tyukod@outlook.hu</a>
               </div>
             </li>
             <li className="flex items-center p-3 bg-gray-50 dark:bg-gray-700/30 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors group">
@@ -72,7 +72,7 @@ export default function AkadalymentessegPage() {
               </div>
               <div>
                 <span className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Telefon</span>
-                <a href="tel:+3644366001" className="text-gray-900 dark:text-white font-medium hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">+36 44 366 001</a>
+                <a href="tel:+3644366001" className="text-gray-900 dark:text-white font-medium hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">+36 44 556 062</a>
               </div>
             </li>
             <li className="flex items-center p-3 bg-gray-50 dark:bg-gray-700/30 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors group">
@@ -81,7 +81,7 @@ export default function AkadalymentessegPage() {
               </div>
               <div>
                 <span className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Cím</span>
-                <span className="text-gray-900 dark:text-white font-medium">4762 Tyukod, Kossuth Lajos utca 23.</span>
+                <span className="text-gray-900 dark:text-white font-medium">4762 Tyukod, Árpád u. 33.</span>
               </div>
             </li>
           </ul>

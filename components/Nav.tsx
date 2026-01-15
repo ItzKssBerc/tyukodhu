@@ -98,7 +98,7 @@ export default function Nav() {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <div className="flex items-center space-x-2 lg:space-x-4">
               <Link href="/" className={getLinkClasses(isActive("/"))}>
                 <i className="bi bi-house-door-fill mr-2"></i>Kezdőlap
@@ -310,11 +310,11 @@ export default function Nav() {
           {/* Right Side: Dark Mode & Mobile Toggle */}
           <div className="flex items-center">
             {/* Desktop Dark Mode Toggle */}
-            <div className="hidden md:flex items-center ml-4">
+            <div className="hidden lg:flex items-center ml-4">
               <ThemeToggle />
             </div>
 
-            <div className="-mr-2 flex md:hidden items-center gap-2">
+            <div className="-mr-2 flex lg:hidden items-center gap-2">
               {/* Mobile Dark Mode Toggle */}
               <ThemeToggle />
 
@@ -368,7 +368,7 @@ export default function Nav() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div
-          className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800"
+          className="lg:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800"
           id="mobile-menu"
         >
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -381,7 +381,7 @@ export default function Nav() {
             </Link>
 
             {/* Mobile Média */}
-            <div className="pt-4 pb-2">
+            <div className>
               <button
                 onClick={() => setMobileMediaOpen(!mobileMediaOpen)}
                 className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${
@@ -429,7 +429,7 @@ export default function Nav() {
             </div>
 
             {/* Mobile Önkormányzat */}
-            <div className="pt-4 pb-2">
+            <div>
               <button
                 onClick={() => setMobileOnkormanyzatOpen(!mobileOnkormanyzatOpen)}
                 className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${
@@ -492,7 +492,7 @@ export default function Nav() {
             </Link>
 
             {/* Mobile Információk */}
-            <div className="pt-4 pb-2">
+            <div>
               <button
                 onClick={() => setMobileInfoOpen(!mobileInfoOpen)}
                 className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${

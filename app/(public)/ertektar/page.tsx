@@ -173,7 +173,7 @@ export default function ErtektarPage() {
           Kulturális örökség (Részletes lista)
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-          {values.slice(0, Math.ceil(values.length / 2)).map((value, index) => (
+          {values.map((value, index) => (
             <div key={index} className="flex items-start p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg border-l-4 border-green-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-150">
               <span className="font-extrabold text-green-700 dark:text-green-400 w-8 flex-shrink-0 text-lg">
                 {index + 1}.
@@ -183,18 +183,6 @@ export default function ErtektarPage() {
               </span>
             </div>
           ))}
-          <div className="space-y-4">
-            {values.slice(Math.ceil(values.length / 2)).map((value, index) => (
-              <div key={index} className="flex items-start p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg border-l-4 border-green-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-150">
-                <span className="font-extrabold text-green-700 dark:text-green-400 w-8 flex-shrink-0 text-lg">
-                  {index + Math.ceil(values.length / 2) + 1}.
-                </span>
-                <span className="text-gray-800 dark:text-gray-200 font-medium">
-                  {value}
-                </span>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
