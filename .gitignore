@@ -43,3 +43,4 @@ next-env.d.ts
 # keystatic
 .keystatic-data/
 public/keystatic-images/
+.env.local
