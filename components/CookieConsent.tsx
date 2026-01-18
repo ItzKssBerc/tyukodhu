@@ -45,7 +45,7 @@ export default function CookieConsent() {
         return (
             <button
                 onClick={openConsentManager}
-                className="fixed bottom-4 right-4 z-50 h-14 w-14 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg flex items-center justify-center text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                className="fixed bottom-4 right-4 z-40 h-14 w-14 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg flex items-center justify-center text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
                 aria-label="Süti beállítások megnyitása"
             >
                 <Cookie className="h-7 w-7" />

@@ -14,7 +14,7 @@ export default function InfoButton() {
             {/* The Floating Action Button */}
             <button
                 onClick={openModal}
-                className="fixed bottom-20 right-4 z-50 h-14 w-14 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg flex items-center justify-center text-blue-600 dark:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                className="fixed bottom-20 right-4 z-40 h-14 w-14 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg flex items-center justify-center text-blue-600 dark:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
                 aria-label="Információ az oldalról"
             >
                 <Info className="h-7 w-7" />
