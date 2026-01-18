@@ -201,12 +201,14 @@ export default function Footer() {
             </div>
             <div className="bg-gray-100 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
                 <div className="max-w-7xl mx-auto py-4 px-4">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-gray-600 dark:text-gray-400">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-600 dark:text-gray-400">
+                        {/* Left: Copyright */}
                         <p className="text-center md:text-left order-2 md:order-1">
                             &copy; {new Date().getFullYear()} Tyukod Nagyközség Önkormányzata. Minden jog fenntartva.
-                            <br/><span className="text-gray-800 dark:text-gray-200">Készítette:</span> <span className="text-emerald-600 dark:text-emerald-400">Kiss Bercel</span>
                         </p>
-                        <div className="flex flex-wrap justify-center gap-4 order-1 md:order-2 mb-3 md:mb-0">
+
+                        {/* Right: Links */}
+                        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 order-1 md:order-2">
                             <a href="/adatvedelem" className="text-red-600 dark:text-red-500 hover:text-red-800 dark:hover:text-red-400 font-medium">Adatvédelmi nyilatkozat</a>
                             <a href="/akadalymentesseg" className="text-red-600 dark:text-red-500 hover:text-red-800 dark:hover:text-red-400 font-medium">Akadálymentesség</a>
                         </div>
