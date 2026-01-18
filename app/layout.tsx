@@ -3,7 +3,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import CookieConsent from "@/components/CookieConsent";
 import InfoButton from "@/components/InfoButton";
 import "./globals.css";
-import { Analytics } from '@vercel/analytics/react'; // Import Vercel Analytics
+import { Analytics } from "@vercel/analytics/next"
 
 
 export const metadata: Metadata = {
