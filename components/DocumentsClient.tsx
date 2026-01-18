@@ -145,8 +145,8 @@ export default function DocumentsClient({ initialDocuments }: { initialDocuments
           <div className="w-full md:w-px h-px md:h-8 my-1 md:my-0 bg-gray-200 dark:bg-gray-600 md:mx-2"></div>
 
           {/* Dropdowns Area */}
-          <div className="flex w-full md:w-auto h-12 md:h-full items-center justify-around md:justify-end py-1 md:py-2 px-0 md:pr-2 gap-2">
-            <div className="flex-1 md:flex-auto h-full">
+          <div className="flex flex-col sm:flex-row w-full md:w-auto items-center gap-2 px-0 md:pr-2">
+            <div className="w-full sm:flex-1 md:flex-auto h-12">
               <CategoryDropdown
                 categories={categories}
                 selectedCategory={selectedCategory}
@@ -154,7 +154,7 @@ export default function DocumentsClient({ initialDocuments }: { initialDocuments
                 formatCategoryName={formatCategoryName}
               />
             </div>
-            <div className="flex-1 md:flex-auto h-full">
+            <div className="w-full sm:flex-1 md:flex-auto h-12">
               <SortDropdown
                 sortOptions={sortOptions}
                 currentSortOrder={sortOrder}
