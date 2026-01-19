@@ -6,9 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import { LatLngExpression, LatLngBoundsExpression } from 'leaflet';
 import { useEffect, useState } from 'react';
 import L from 'leaflet';
-import MarkerClusterGroup from 'react-leaflet-markercluster';
-
-const TypedMarkerClusterGroup: any = MarkerClusterGroup;
+import MarkerClusterGroup from 'react-leaflet-cluster';
 
 // Mapping from Keystatic values to Bootstrap Icon class names
 const bootstrapIconMap: Record<string, string> = {
@@ -134,7 +132,7 @@ export default function MapComponent({ locations }: MapComponentProps) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <TypedMarkerClusterGroup {...{}} >
+      <MarkerClusterGroup>
         {geocodedMarkers.map((marker, index) => (
           <Marker 
               key={index} 
@@ -148,7 +146,7 @@ export default function MapComponent({ locations }: MapComponentProps) {
             </Popup>
           </Marker>
         ))}
-      </TypedMarkerClusterGroup>
+      </MarkerClusterGroup>
     </MapContainer>
   );
 }
