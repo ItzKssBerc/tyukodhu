@@ -34,8 +34,18 @@ const gallerySortOptions = {
       <span className="text-xs opacity-80">legrégebbi</span>
     </span>
   ),
-  'title-asc': 'Cím (A-Z)',
-  'title-desc': 'Cím (Z-A)',
+  'title-asc': (
+    <span>
+      Cím <br />
+      <span className="text-xs opacity-80">A-Z</span>
+    </span>
+  ),
+  'title-desc': (
+    <span>
+      Cím <br />
+      <span className="text-xs opacity-80">Z-A</span>
+    </span>
+  ),
 };
 
 export default function GalleryClient({ initialGalleryItems }: { initialGalleryItems: GalleryItem[] }) {
