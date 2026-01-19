@@ -1,21 +1,8 @@
 'use server'
 
-import Redis from 'ioredis';
+import { kv } from '@vercel/kv';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
-
-// Initialize Redis client
-// Removed lazyConnect to see if it fixes connection issues
-const redis = new Redis(process.env.REDIS_URL || '', {
-  maxRetriesPerRequest: 1,
-  connectTimeout: 10000,
-  retryStrategy: (times) => {
-    if (times > 3) {
-      return null;
-    }
-    return Math.min(times * 50, 2000);
-  },
-});
 
 export async function vote(pollId: string, optionIndex: number, allowChange: boolean = false) {
   const cookieStore = await cookies();
@@ -39,7 +26,7 @@ export async function vote(pollId: string, optionIndex: number, allowChange: boo
 
         if (!isNaN(oldOptionIndex)) {
           try {
-            await redis.hincrby(`poll:${pollId}`, `option:${oldOptionIndex}`, -1);
+            await kv.hincrby(`poll:${pollId}`, `option:${oldOptionIndex}`, -1);
           } catch (error) {
             console.error('Error decrementing old vote:', error);
           }
@@ -49,7 +36,7 @@ export async function vote(pollId: string, optionIndex: number, allowChange: boo
 
   try {
     // Increment the new vote count
-    await redis.hincrby(`poll:${pollId}`, `option:${optionIndex}`, 1);
+    await kv.hincrby(`poll:${pollId}`, `option:${optionIndex}`, 1);
     
     // Set cookie with the option index
     cookieStore.set(cookieName, optionIndex.toString(), { 
@@ -64,22 +51,15 @@ export async function vote(pollId: string, optionIndex: number, allowChange: boo
     return { success: true };
   } catch (error) {
     console.error('Vote error:', error);
-    // Return the actual error message in development for debugging
-    const errorMessage = process.env.NODE_ENV === 'development' 
-        ? `Hiba: ${error instanceof Error ? error.message : String(error)}`
-        : 'Hiba történt a szavazás során. Kérjük, próbálja újra!';
-        
-    return { success: false, message: errorMessage };
+    return { success: false, message: 'Hiba történt a szavazás során.' };
   }
 }
 
 export async function getPollResults(pollId: string): Promise<Record<string, number>> {
   try {
-    const results = await Promise.race([
-        redis.hgetall(`poll:${pollId}`),
-        new Promise<null>((_, reject) => setTimeout(() => reject(new Error('Redis timeout')), 2000))
-    ]) as Record<string, string> | null;
+    const results = await kv.hgetall(`poll:${pollId}`);
     
+    // @vercel/kv returns Record<string, unknown>, need to cast/convert
     const numericResults: Record<string, number> = {};
     
     if (results) {
