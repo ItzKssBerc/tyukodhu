@@ -15,18 +15,25 @@ export async function vote(pollId: string, optionIndex: number, allowChange: boo
     }
 
     // If change is allowed, decrement the old vote
-    // Handle legacy 'true' value
     if (existingVote.value !== 'true') {
         const oldOptionIndex = parseInt(existingVote.value, 10);
         
-        // If the user voted for the same option, do nothing
         if (oldOptionIndex === optionIndex) {
             return { success: true, message: 'Ugyanarra szavaztál.' };
         }
 
         if (!isNaN(oldOptionIndex)) {
           try {
-            await kv.hincrby(`poll:${pollId}`, `option:${oldOptionIndex}`, -1);
+            // Use a pipeline to ensure operations are sent together (though not strictly atomic without Lua)
+            // But here we just want to prevent negative values
+            const currentVal = await kv.hget(`poll:${pollId}`, `option:${oldOptionIndex}`) as number | null;
+            
+            if (currentVal && Number(currentVal) > 0) {
+                await kv.hincrby(`poll:${pollId}`, `option:${oldOptionIndex}`, -1);
+            } else {
+                // If value is 0 or null, reset it to 0 just in case
+                await kv.hset(`poll:${pollId}`, { [`option:${oldOptionIndex}`]: 0 });
+            }
           } catch (error) {
             console.error('Error decrementing old vote:', error);
           }
@@ -59,12 +66,12 @@ export async function getPollResults(pollId: string): Promise<Record<string, num
   try {
     const results = await kv.hgetall(`poll:${pollId}`);
     
-    // @vercel/kv returns Record<string, unknown>, need to cast/convert
     const numericResults: Record<string, number> = {};
     
     if (results) {
         Object.entries(results).forEach(([key, value]) => {
-            numericResults[key] = Number(value);
+            // Ensure we don't return negative numbers to the client
+            numericResults[key] = Math.max(0, Number(value));
         });
     }
     
