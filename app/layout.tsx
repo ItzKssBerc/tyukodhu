@@ -4,6 +4,7 @@ import CookieConsent from "@/components/CookieConsent";
 import InfoButton from "@/components/InfoButton";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 
 export const metadata: Metadata = {
@@ -34,6 +35,7 @@ export default function RootLayout({
           <CookieConsent />
           <InfoButton />
           <Analytics /> {/* Add Vercel Analytics component */}
+          <SpeedInsights /> {/* Add Vercel Speed Insights component */}
         </ThemeProvider>
       </body>
     </html>
