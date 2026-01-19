@@ -4,8 +4,19 @@ import Redis from 'ioredis';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
-// Initialize Redis client
-const redis = new Redis(process.env.REDIS_URL || '');
+// Initialize Redis client with optimized settings for Serverless
+const redis = new Redis(process.env.REDIS_URL || '', {
+  maxRetriesPerRequest: 1, // Fail fast if connection is lost
+  connectTimeout: 10000, // 10 seconds timeout
+  lazyConnect: true, // Connect only when needed
+  retryStrategy: (times) => {
+    // Retry up to 3 times with increasing delay
+    if (times > 3) {
+      return null;
+    }
+    return Math.min(times * 50, 2000);
+  },
+});
 
 export async function vote(pollId: string, optionIndex: number, allowChange: boolean = false) {
   const cookieStore = await cookies();
@@ -32,6 +43,7 @@ export async function vote(pollId: string, optionIndex: number, allowChange: boo
             await redis.hincrby(`poll:${pollId}`, `option:${oldOptionIndex}`, -1);
           } catch (error) {
             console.error('Error decrementing old vote:', error);
+            // Continue even if decrement fails, to allow new vote
           }
         }
     }
@@ -54,13 +66,18 @@ export async function vote(pollId: string, optionIndex: number, allowChange: boo
     return { success: true };
   } catch (error) {
     console.error('Vote error:', error);
-    return { success: false, message: 'Hiba történt a szavazás során.' };
+    return { success: false, message: 'Hiba történt a szavazás során. Kérjük, próbálja újra!' };
   }
 }
 
 export async function getPollResults(pollId: string): Promise<Record<string, number>> {
   try {
-    const results = await redis.hgetall(`poll:${pollId}`);
+    // Set a timeout for the read operation to avoid blocking the page load too long
+    // If Redis is slow, we return empty results rather than crashing/hanging
+    const results = await Promise.race([
+        redis.hgetall(`poll:${pollId}`),
+        new Promise<null>((_, reject) => setTimeout(() => reject(new Error('Redis timeout')), 2000))
+    ]) as Record<string, string> | null;
     
     const numericResults: Record<string, number> = {};
     
@@ -73,6 +90,7 @@ export async function getPollResults(pollId: string): Promise<Record<string, num
     return numericResults;
   } catch (error) {
     console.error('Get results error:', error);
+    // Return empty object on error so the page still loads
     return {};
   }
 }
