@@ -2,17 +2,11 @@
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import 'react-leaflet-markercluster/dist/styles.min.css'; // Import cluster styles
 import { LatLngExpression, LatLngBoundsExpression } from 'leaflet';
 import { useEffect, useState } from 'react';
 import L from 'leaflet';
-
-// Fix for default icon not appearing
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'leaflet/images/marker-icon-2x.png',
-  iconUrl: 'leaflet/images/marker-icon.png',
-  shadowUrl: 'leaflet/images/marker-shadow.png',
-});
+import MarkerClusterGroup from 'react-leaflet-markercluster'; // Import the cluster group
 
 // Mapping from Keystatic values to Bootstrap Icon class names
 const bootstrapIconMap: Record<string, string> = {
@@ -25,12 +19,21 @@ const bootstrapIconMap: Record<string, string> = {
   Info: 'bi-info-circle-fill',
 };
 
+// Fix for default icon not appearing
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'leaflet/images/marker-icon-2x.png',
+  iconUrl: 'leaflet/images/marker-icon.png',
+  shadowUrl: 'leaflet/images/marker-shadow.png',
+});
+
 interface Location {
   title: string;
   address: string;
   description?: string;
   category?: string;
   markerIcon?: string;
+  markerColor?: string;
   coordinates?: { lat: number; lng: number } | null;
 }
 
@@ -68,12 +71,12 @@ const geocodeAddress = async (address: string): Promise<{ lat: number; lon: numb
   return null;
 };
 
-const createCustomIcon = (iconName: string) => {
-  const iconClass = bootstrapIconMap[iconName] || 'bi-geo-alt-fill'; // Default to MapPin
+const createCustomIcon = (iconName: string, color: string) => {
+  const iconClass = bootstrapIconMap[iconName] || 'bi-geo-alt-fill';
 
   return L.divIcon({
-    className: 'custom-map-marker', // This class can be used for base styling
-    html: `<i class="${iconClass}" style="font-size: 28px; color: #C62828;"></i>`, // Using a strong red color
+    className: 'custom-map-marker',
+    html: `<i class="${iconClass}" style="font-size: 28px; color: ${color};"></i>`,
     iconSize: [30, 30],
     iconAnchor: [15, 30],
     popupAnchor: [0, -30]
@@ -129,15 +132,21 @@ export default function MapComponent({ locations }: MapComponentProps) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {geocodedMarkers.map((marker, index) => (
-        <Marker key={index} position={[marker.lat, marker.lon]} icon={createCustomIcon(marker.markerIcon || 'MapPin')}>
-          <Popup>
-            <strong>{marker.title}</strong>
-            {marker.description && <p>{marker.description}</p>}
-            {marker.address && <p>{marker.address}</p>}
-          </Popup>
-        </Marker>
-      ))}
+      <MarkerClusterGroup>
+        {geocodedMarkers.map((marker, index) => (
+          <Marker 
+              key={index} 
+              position={[marker.lat, marker.lon]} 
+              icon={createCustomIcon(marker.markerIcon || 'MapPin', marker.markerColor || '#C62828')}
+          >
+            <Popup>
+              <strong>{marker.title}</strong>
+              {marker.description && <p>{marker.description}</p>}
+              {marker.address && <p>{marker.address}</p>}
+            </Popup>
+          </Marker>
+        ))}
+      </MarkerClusterGroup>
     </MapContainer>
   );
 }

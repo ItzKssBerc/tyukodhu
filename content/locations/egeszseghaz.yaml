@@ -5,5 +5,6 @@ coordinates:
   lng: 22.555694424098796
 category: Egészségügy
 markerIcon: Hospital
+markerColor: '#C62828' # Piros
 description: >-
   Egészségház.

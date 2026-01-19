@@ -5,5 +5,6 @@ coordinates:
   lng: 22.55958844481824
 category: Oktatás
 markerIcon: School
+markerColor: '#2E7D32' # Zöld
 description: >-
   Tyukodi Óvoda. Telefonszám: +36 44 356 252.

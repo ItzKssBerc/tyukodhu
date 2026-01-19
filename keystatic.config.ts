@@ -152,7 +152,6 @@ export default config({
         }),
         markerIcon: fields.select({
           label: 'Térkép ikon',
-          description: 'Válassza ki a helyszínhez tartozó marker ikont a térképen.',
           options: [
             { label: 'Alapértelmezett (Tű)', value: 'MapPin' },
             { label: 'Otthon', value: 'Home' },
@@ -163,6 +162,17 @@ export default config({
             { label: 'Információ', value: 'Info' },
           ],
           defaultValue: 'MapPin',
+        }),
+        markerColor: fields.select({
+            label: 'Marker színe',
+            options: [
+                { label: 'Piros', value: '#C62828' },
+                { label: 'Kék', value: '#1565C0' },
+                { label: 'Zöld', value: '#2E7D32' },
+                { label: 'Lila', value: '#6A1B9A' },
+                { label: 'Narancs', value: '#EF6C00' },
+            ],
+            defaultValue: '#C62828',
         }),
         description: fields.text({
           label: 'Leírás',

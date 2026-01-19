@@ -5,5 +5,6 @@ coordinates:
   lng: 22.555836160495602
 category: Önkormányzat
 markerIcon: Building
+markerColor: '#1565C0' # Kék
 description: >-
   Család és Gyermekjoléti Szolgálat.

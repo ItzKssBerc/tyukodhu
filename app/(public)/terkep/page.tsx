@@ -8,9 +8,10 @@ interface KeystaticLocationEntry {
   entry: {
     title: string;
     address: string;
-    coordinates?: { lat: number; lng: number } | null; // Added coordinates
+    coordinates?: { lat: number; lng: number } | null;
     category: 'Önkormányzat' | 'Kultúra' | 'Oktatás' | 'Egészségügy' | 'Sport' | 'Egyéb';
     markerIcon: 'MapPin' | 'Home' | 'Building' | 'Hospital' | 'School' | 'Star' | 'Info';
+    markerColor: string; // Added markerColor
     description: string; 
     images: readonly (string | null)[]; 
   };
@@ -22,8 +23,9 @@ interface LocationProps {
   address: string;
   description?: string;
   category?: string;
-  coordinates?: { lat: number; lng: number } | null; // Added coordinates
+  coordinates?: { lat: number; lng: number } | null;
   markerIcon?: string;
+  markerColor?: string; // Added markerColor
 }
 
 export default async function MapPage() {
@@ -41,6 +43,7 @@ export default async function MapPage() {
       category: loc.entry.category,
       coordinates: loc.entry.coordinates,
       markerIcon: loc.entry.markerIcon,
+      markerColor: loc.entry.markerColor,
     }));
   } catch (err: any) {
     console.error("Failed to fetch locations from Keystatic in Server Component:", err);

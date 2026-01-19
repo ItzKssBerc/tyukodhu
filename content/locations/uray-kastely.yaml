@@ -5,5 +5,6 @@ coordinates:
   lng: 22.55933612466199
 category: Kultúra
 markerIcon: Building
+markerColor: '#6A1B9A' # Lila
 description: >-
   Uray-kastély.
