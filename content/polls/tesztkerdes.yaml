@@ -1,0 +1,8 @@
+question: tesztkerdes
+options:
+  - valasz1
+  - valasz2
+  - valasz3
+isActive: true
+allowChange: true
+publishedDate: 2026-01-19
