@@ -15,35 +15,31 @@ export default function NewsCard({ slug, title, publishedDate, publishedTime, fe
   const postUrl = `/hirek/${categorySlug}/${slug}`;
 
   return (
-    <div className="group rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col overflow-hidden">
+    <Link href={postUrl} className="group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-row overflow-hidden h-24">
       {featuredImage && (
-        <Link href={postUrl} className="block overflow-hidden">
-          <div className="relative w-full" style={{ paddingTop: '75%' /* 4:3 Aspect Ratio */ }}>
-            <Image
-              src={featuredImage}
-              alt={title || "Kiemelt kép"}
-              fill
-              style={{ objectFit: 'cover' }}
-              className="absolute top-0 left-0 w-full h-full transition-transform duration-300 group-hover:scale-105"
-            />
-          </div>
-        </Link>
+        <div className="block w-1/3 flex-shrink-0 relative h-full overflow-hidden">
+          <Image
+            src={featuredImage}
+            alt={title || "Kiemelt kép"}
+            fill
+            style={{ objectFit: 'cover' }}
+            className="transition-transform duration-500 group-hover:scale-110"
+          />
+        </div>
       )}
-      <div className="p-5 flex flex-col flex-grow">
-        <div className="flex justify-between items-center mb-3">
-          <span className="inline-block bg-amber-100 text-amber-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full dark:bg-amber-200 dark:text-amber-900">
+      <div className={`p-3 flex flex-col justify-between flex-grow ${featuredImage ? 'w-2/3' : 'w-full'}`}>
+        <div className="flex justify-between items-center mb-1">
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+              {publishedDate ? `${new Date(publishedDate).toLocaleDateString('hu-HU')}` : ''}
+            </p>
+          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300">
             {category}
           </span>
-            <p className="text-gray-500 dark:text-gray-400 text-xs">
-              {publishedDate ? `${new Date(publishedDate).toLocaleDateString('hu-HU')} ${publishedTime || ''}` : 'N/A'}
-            </p>
         </div>
-        <Link href={postUrl} className="flex-grow">
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white leading-tight hover:text-red-600 dark:hover:text-red-500 transition-colors duration-200">
+          <h2 className="text-sm font-bold text-gray-900 dark:text-white leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200 line-clamp-2">
             {title}
           </h2>
-        </Link>
       </div>
-    </div>
+    </Link>
   );
 }

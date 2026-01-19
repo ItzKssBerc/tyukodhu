@@ -5,6 +5,7 @@ import DocumentsClient from "@/components/DocumentsClient";
 export default async function DocumentsPage() {
   const reader = createReader(process.cwd(), config);
   const documents = await reader.collections.documents.all();
+  console.log("Documents found by reader.collections.documents.all():", documents);
 
   return (
     <div className="container mx-auto px-4 py-8">

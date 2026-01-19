@@ -31,8 +31,10 @@ const categoryColors: Record<string, string> = {
 
 export default async function PostPage({ params }: PageProps) {
     const { slug, category } = await params;
+    console.log("Individual Post Page - Slug:", slug, "Category:", category);
     const reader = createReader(process.cwd(), config);
     const post = await reader.collections.posts.read(slug);
+    console.log("Individual Post Page - Post from reader:", post);
 
     // If the post doesn't exist or the category from the URL doesn't match the post's category, return 404.
     // This prevents the same content from appearing under multiple URLs.

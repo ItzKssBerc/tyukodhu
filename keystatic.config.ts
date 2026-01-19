@@ -14,6 +14,7 @@ export default config({
     posts: collection({
       label: 'Hírek',
       slugField: 'title',
+      path: 'content/posts/*',
       columns: ['title', 'category', 'publishedDate', 'publishedTime'], // Added publishedTime to columns
       schema: {
         title: fields.slug({ name: { label: 'Cím' } }),
@@ -47,7 +48,7 @@ export default config({
             directory: 'public/images/posts',
             publicPath: '/images/posts/',
             validation: {
-                isRequired: false,
+                isRequired: true,
             },
         }),
       },

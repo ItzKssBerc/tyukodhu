@@ -17,6 +17,7 @@ type PageProps = {
 export default async function NewsPage({ searchParams }: PageProps) {
   const reader = createReader(process.cwd(), config);
   const posts = await reader.collections.posts.all();
+  console.log("Posts found by reader.collections.posts.all():", posts);
   
   // Sort posts by date (newest first)
   const sortedPosts = posts.sort((a, b) => {

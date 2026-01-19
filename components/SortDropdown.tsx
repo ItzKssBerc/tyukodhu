@@ -39,37 +39,35 @@ export default function SortDropdown({
     <div className="relative" ref={dropdownRef}>
       <button
         type="button"
-        className="flex justify-between items-center h-full w-full outline-none text-sm text-gray-700 dark:text-gray-200 bg-transparent pl-3 pr-2 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded-lg whitespace-nowrap"
+        className="flex justify-between items-center w-full outline-none text-base text-gray-800 dark:text-gray-100 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 rounded-xl whitespace-nowrap"
         onClick={() => setIsOpen(!isOpen)}
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        {sortOptions[currentSortOrder]}
+        <span className="truncate mr-2">{sortOptions[currentSortOrder]}</span>
         <ChevronDown
-          className={`ml-1 h-4 w-4 transition duration-150 ease-in-out transform ${
+          className={`flex-shrink-0 h-5 w-5 text-gray-500 transition-transform duration-200 ${
             isOpen ? "rotate-180" : "rotate-0"
           }`}
         />
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 mt-2 w-64 rounded-xl shadow-lg origin-top-left left-0">
-          <div className="rounded-xl ring-1 ring-blue-300 dark:ring-blue-900 ring-opacity-50 border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-1 space-y-1">
-            {Object.entries(sortOptions).map(([key, label]) => (
-              <button
-                key={key}
-                onClick={() => handleSelect(key)}
-                className={`flex items-center w-full px-4 py-3 text-sm rounded-lg transition duration-150 group ${
-                  currentSortOrder === key
-                    ? "bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400"
-                    : "text-gray-700 dark:text-gray-200 hover:bg-blue-100 dark:hover:bg-blue-900/40 hover:text-blue-600 dark:hover:text-blue-400"
-                }`}
-                role="menuitem"
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+        <div className="absolute z-50 top-full mt-2 w-full rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-100 origin-top">
+          {Object.entries(sortOptions).map(([key, label]) => (
+            <button
+              key={key}
+              onClick={() => handleSelect(key)}
+              className={`flex items-center w-full px-4 py-2.5 text-sm rounded-lg transition-colors duration-150 ${
+                currentSortOrder === key
+                  ? "bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium"
+                  : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50"
+              }`}
+              role="menuitem"
+            >
+              {label}
+            </button>
+          ))}
         </div>
       )}
     </div>

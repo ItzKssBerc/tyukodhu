@@ -1,6 +1,6 @@
 "use client";
 
-import NewsCard from "./NewsCard";
+import NewsCardClassic from "./NewsCardClassic";
 import {useEffect, useState} from "react";
 
 // Assuming the post type from the page
@@ -36,7 +36,7 @@ export default function NewsGrid({ posts }: NewsGridProps) {
                         className={`transition-all duration-500 ease-out ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
                         style={{ transitionDelay: `${index * 100}ms` }}
                     >
-                        <NewsCard
+                        <NewsCardClassic
                             slug={post.slug}
                             title={post.entry.title}
                             publishedDate={post.entry.publishedDate}
