@@ -7,13 +7,8 @@ interface KeystaticLocationEntry {
   slug: string;
   entry: {
     title: string;
-    // Structured address fields
-    zipCode: string;
-    city: string;
-    streetName: string;
-    streetType: string;
-    houseNumber?: string;
-    
+    address: string;
+    coordinates?: { lat: number; lng: number } | null; // Added coordinates
     category: 'Önkormányzat' | 'Kultúra' | 'Oktatás' | 'Egészségügy' | 'Sport' | 'Egyéb';
     markerIcon: 'MapPin' | 'Home' | 'Building' | 'Hospital' | 'School' | 'Star' | 'Info';
     description: string; 
@@ -27,6 +22,7 @@ interface LocationProps {
   address: string;
   description?: string;
   category?: string;
+  coordinates?: { lat: number; lng: number } | null; // Added coordinates
   markerIcon?: string;
 }
 
@@ -38,18 +34,14 @@ export default async function MapPage() {
     // @ts-ignore - Keystatic types can be tricky
     const keystaticLocations = await reader.collections.locations.all() as unknown as KeystaticLocationEntry[];
     
-    locations = keystaticLocations.map((loc) => {
-        // Construct full address from parts
-        const fullAddress = `${loc.entry.zipCode} ${loc.entry.city}, ${loc.entry.streetName} ${loc.entry.streetType} ${loc.entry.houseNumber || ''}`.trim();
-
-        return {
-            title: loc.entry.title,
-            address: fullAddress,
-            description: loc.entry.description,
-            category: loc.entry.category,
-            markerIcon: loc.entry.markerIcon,
-        };
-    });
+    locations = keystaticLocations.map((loc) => ({
+      title: loc.entry.title,
+      address: loc.entry.address,
+      description: loc.entry.description,
+      category: loc.entry.category,
+      coordinates: loc.entry.coordinates,
+      markerIcon: loc.entry.markerIcon,
+    }));
   } catch (err: any) {
     console.error("Failed to fetch locations from Keystatic in Server Component:", err);
     error = "Hiba történt a helyszínek betöltésekor.";

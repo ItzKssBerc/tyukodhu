@@ -32,6 +32,7 @@ interface Location {
   description?: string;
   category?: string;
   markerIcon?: string;
+  coordinates?: { lat: number; lng: number } | null; // Added coordinates
 }
 
 interface GeocodedLocation extends Location {
@@ -44,11 +45,7 @@ interface MapComponentProps {
 }
 
 const geocodeAddress = async (address: string): Promise<{ lat: number; lon: number } | null> => {
-  // Try searching with structured query first if possible, but here we have a full string.
-  // Nominatim works best with comma separated parts.
-  console.log(`Geocoding address: "${address}"`);
-  
-  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`;
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
   try {
     const response = await fetch(url, {
       headers: {
@@ -57,13 +54,10 @@ const geocodeAddress = async (address: string): Promise<{ lat: number; lon: numb
     });
     const data = await response.json();
     if (data && data.length > 0) {
-      console.log(`Geocoding success for "${address}":`, data[0].lat, data[0].lon);
       return {
         lat: parseFloat(data[0].lat),
         lon: parseFloat(data[0].lon),
       };
-    } else {
-        console.warn(`Geocoding failed (no results) for "${address}"`);
     }
   } catch (error) {
     console.error(`Geocoding error for address "${address}":`, error);
@@ -99,9 +93,15 @@ export default function MapComponent({ locations }: MapComponentProps) {
       const newMarkers: GeocodedLocation[] = [];
 
       for (const loc of locations) {
-        const coords = await geocodeAddress(loc.address);
-        if (coords) {
-            newMarkers.push({ ...loc, lat: coords.lat, lon: coords.lon });
+        // If coordinates are provided in CMS, use them
+        if (loc.coordinates && loc.coordinates.lat && loc.coordinates.lng) {
+             newMarkers.push({ ...loc, lat: loc.coordinates.lat, lon: loc.coordinates.lng });
+        } else {
+            // Fallback to geocoding
+            const coords = await geocodeAddress(loc.address);
+            if (coords) {
+                newMarkers.push({ ...loc, lat: coords.lat, lon: coords.lon });
+            }
         }
       }
       setGeocodedMarkers(newMarkers);
