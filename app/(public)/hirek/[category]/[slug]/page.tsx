@@ -8,15 +8,6 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Tag } from 'lucide-react';
 
-import { createReader } from '@keystatic/core/reader';
-import config from '../../../../../keystatic.config';
-import { notFound } from 'next/navigation';
-import Image from 'next/image';
-import Markdoc from '@markdoc/markdoc';
-import { DocumentRenderer } from '@keystatic/core/renderer';
-import React from 'react';
-import Link from 'next/link';
-import { ArrowLeft, Calendar, Tag } from 'lucide-react';
 
 type PageProps = {
     params: {
