@@ -1,10 +1,14 @@
 import { config, fields, collection } from '@keystatic/core';
 
+const isDev = process.env.NODE_ENV === 'development';
+
 export default config({
-  storage: {
-    kind: 'github',
-    repo: 'ElectronSama/tyukodhu',
-  },
+  storage: isDev
+    ? { kind: 'local' }
+    : {
+        kind: 'github',
+        repo: 'ElectronSama/tyukodhu',
+      },
   ui: {
     brand: {
       name: 'TYUKOD.HU',
@@ -206,6 +210,24 @@ export default config({
                 publicPath: '/images/people/',
             }),
         },
+    }),
+    polls: collection({
+      label: 'Szavazások',
+      slugField: 'question',
+      path: 'content/polls/*',
+      schema: {
+        question: fields.slug({ name: { label: 'Kérdés' } }),
+        options: fields.array(
+          fields.text({ label: 'Válaszlehetőség' }),
+          {
+            label: 'Válaszok',
+            itemLabel: (props) => props.value || 'Opció',
+          }
+        ),
+        isActive: fields.checkbox({ label: 'Aktív szavazás', defaultValue: true }),
+        allowChange: fields.checkbox({ label: 'Szavazat módosítása engedélyezve', defaultValue: false, description: 'Ha be van pipálva, a felhasználók megváltoztathatják a leadott szavazatukat.' }),
+        publishedDate: fields.date({ label: 'Létrehozva', defaultValue: { kind: 'today' } }),
+      },
     }),
 
   },

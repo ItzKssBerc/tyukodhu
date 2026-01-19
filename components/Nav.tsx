@@ -13,16 +13,19 @@ export default function Nav() {
   const [mediaOpen, setMediaOpen] = useState(false);
   const [onkormanyzatOpen, setOnkormanyzatOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
+  const [interaktivOpen, setInteraktivOpen] = useState(false); // New state
 
   // Mobile Dropdown States
   const [mobileMediaOpen, setMobileMediaOpen] = useState(false);
   const [mobileOnkormanyzatOpen, setMobileOnkormanyzatOpen] = useState(false);
   const [mobileInfoOpen, setMobileInfoOpen] = useState(false);
+  const [mobileInteraktivOpen, setMobileInteraktivOpen] = useState(false); // New state
 
   // Refs for click outside
   const mediaRef = useRef<HTMLDivElement>(null);
   const onkormanyzatRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
+  const interaktivRef = useRef<HTMLDivElement>(null); // New ref
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,6 +37,9 @@ export default function Nav() {
       }
       if (infoRef.current && !infoRef.current.contains(event.target as Node)) {
         setInfoOpen(false);
+      }
+      if (interaktivRef.current && !interaktivRef.current.contains(event.target as Node)) {
+        setInteraktivOpen(false);
       }
     };
 
@@ -233,19 +239,83 @@ export default function Nav() {
                 )}
               </div>
 
-              <Link
-                href="/elokozvetites"
-                className={getLinkClasses(isActive("/elokozvetites"))}
-              >
-                <i className="bi bi-camera-video-fill mr-2"></i>Élő közvetítés
-              </Link>
+              {/* Interaktív Dropdown (ÚJ) */}
+              <div className="relative" ref={interaktivRef}>
+                <button
+                  onClick={() => setInteraktivOpen(!interaktivOpen)}
+                  className={`${getLinkClasses(
+                    isActive("/elokozvetites") || isActive("/terkep") || isActive("/szavazasok")
+                  )} inline-flex focus:outline-none`}
+                >
+                  <i className="bi bi-cursor-fill mr-2"></i>Interaktív
+                  <svg
+                    className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${
+                      interaktivOpen ? "rotate-180" : "rotate-0"
+                    }`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+
+                {interaktivOpen && (
+                  <div className="absolute z-10 mt-2 w-64 rounded-xl shadow-2xl origin-top-center left-1/2 transform -translate-x-1/2">
+                    <div className="rounded-xl ring-1 ring-red-300 dark:ring-red-900 ring-opacity-50 border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-2">
+                      <Link
+                        href="/elokozvetites"
+                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${
+                          isActive("/elokozvetites")
+                            ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                            : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                        }`}
+                        onClick={() => setInteraktivOpen(false)}
+                      >
+                        <i className="bi bi-camera-video-fill mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
+                        Élő közvetítés
+                      </Link>
+                      <div className="border-t border-gray-100 dark:border-gray-800 my-1"></div>
+                      <Link
+                        href="/terkep"
+                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${
+                          isActive("/terkep")
+                            ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                            : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                        }`}
+                        onClick={() => setInteraktivOpen(false)}
+                      >
+                        <i className="bi bi-map-fill mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
+                        Térkép
+                      </Link>
+                      <div className="border-t border-gray-100 dark:border-gray-800 my-1"></div>
+                      <Link
+                        href="/szavazasok"
+                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${
+                          isActive("/szavazasok")
+                            ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                            : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                        }`}
+                        onClick={() => setInteraktivOpen(false)}
+                      >
+                        <i className="bi bi-bar-chart-fill mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
+                        Szavazások
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
 
               {/* Információk Dropdown */}
               <div className="relative" ref={infoRef}>
                 <button
                   onClick={() => setInfoOpen(!infoOpen)}
                   className={`${getLinkClasses(
-                    isActive("/terkep") || isActive("/kozsegunkrol")
+                    isActive("/kozsegunkrol")
                   )} inline-flex focus:outline-none`}
                 >
                   <i className="bi bi-info-circle-fill mr-2"></i>Információk
@@ -279,19 +349,6 @@ export default function Nav() {
                       >
                         <i className="bi bi-info-square-fill mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
                         Községünkről
-                      </Link>
-                      <div className="border-t border-gray-100 dark:border-gray-800 my-1"></div>
-                      <Link
-                        href="/terkep"
-                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${
-                          isActive("/terkep")
-                            ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                            : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
-                        }`}
-                        onClick={() => setInfoOpen(false)}
-                      >
-                        <i className="bi bi-map-fill mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
-                        Térkép
                       </Link>
                     </div>
                   </div>
@@ -483,20 +540,67 @@ export default function Nav() {
               )}
             </div>
 
-            <Link
-              href="/elokozvetites"
-              className={getMobileLinkClasses(isActive("/elokozvetites"))}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <i className="bi bi-camera-video-fill mr-2"></i>Élő közvetítés
-            </Link>
+            {/* Mobile Interaktív (ÚJ) */}
+            <div>
+              <button
+                onClick={() => setMobileInteraktivOpen(!mobileInteraktivOpen)}
+                className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${
+                  isActive("/elokozvetites") || isActive("/terkep") || isActive("/szavazasok")
+                    ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                    : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
+                }`}
+              >
+                <span className="flex items-center">
+                  <i className="bi bi-cursor-fill mr-2"></i>Interaktív
+                </span>
+                <svg
+                  className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${
+                    mobileInteraktivOpen ? "rotate-180" : "rotate-0"
+                  }`}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              {mobileInteraktivOpen && (
+                <div className="mt-1 space-y-1">
+                  <Link
+                    href="/elokozvetites"
+                    className={getMobileSubLinkClasses(isActive("/elokozvetites"))}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <i className="bi bi-camera-video-fill mr-2"></i>Élő közvetítés
+                  </Link>
+                  <Link
+                    href="/terkep"
+                    className={getMobileSubLinkClasses(isActive("/terkep"))}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <i className="bi bi-map-fill mr-2"></i>Térkép
+                  </Link>
+                  <Link
+                    href="/szavazasok"
+                    className={getMobileSubLinkClasses(isActive("/szavazasok"))}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <i className="bi bi-bar-chart-fill mr-2"></i>Szavazások
+                  </Link>
+                </div>
+              )}
+            </div>
 
             {/* Mobile Információk */}
             <div>
               <button
                 onClick={() => setMobileInfoOpen(!mobileInfoOpen)}
                 className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${
-                  isActive("/terkep") || isActive("/kozsegunkrol")
+                  isActive("/kozsegunkrol")
                     ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
                     : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
                 }`}
@@ -527,13 +631,6 @@ export default function Nav() {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <i className="bi bi-info-square-fill mr-2"></i>Községünkről
-                  </Link>
-                  <Link
-                    href="/terkep"
-                    className={getMobileSubLinkClasses(isActive("/terkep"))}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <i className="bi bi-map-fill mr-2"></i>Térkép
                   </Link>
                 </div>
               )}
