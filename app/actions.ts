@@ -4,13 +4,12 @@ import Redis from 'ioredis';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
-// Initialize Redis client with optimized settings for Serverless
+// Initialize Redis client
+// Removed lazyConnect to see if it fixes connection issues
 const redis = new Redis(process.env.REDIS_URL || '', {
-  maxRetriesPerRequest: 1, // Fail fast if connection is lost
-  connectTimeout: 10000, // 10 seconds timeout
-  lazyConnect: true, // Connect only when needed
+  maxRetriesPerRequest: 1,
+  connectTimeout: 10000,
   retryStrategy: (times) => {
-    // Retry up to 3 times with increasing delay
     if (times > 3) {
       return null;
     }
@@ -43,7 +42,6 @@ export async function vote(pollId: string, optionIndex: number, allowChange: boo
             await redis.hincrby(`poll:${pollId}`, `option:${oldOptionIndex}`, -1);
           } catch (error) {
             console.error('Error decrementing old vote:', error);
-            // Continue even if decrement fails, to allow new vote
           }
         }
     }
@@ -66,14 +64,17 @@ export async function vote(pollId: string, optionIndex: number, allowChange: boo
     return { success: true };
   } catch (error) {
     console.error('Vote error:', error);
-    return { success: false, message: 'Hiba történt a szavazás során. Kérjük, próbálja újra!' };
+    // Return the actual error message in development for debugging
+    const errorMessage = process.env.NODE_ENV === 'development' 
+        ? `Hiba: ${error instanceof Error ? error.message : String(error)}`
+        : 'Hiba történt a szavazás során. Kérjük, próbálja újra!';
+        
+    return { success: false, message: errorMessage };
   }
 }
 
 export async function getPollResults(pollId: string): Promise<Record<string, number>> {
   try {
-    // Set a timeout for the read operation to avoid blocking the page load too long
-    // If Redis is slow, we return empty results rather than crashing/hanging
     const results = await Promise.race([
         redis.hgetall(`poll:${pollId}`),
         new Promise<null>((_, reject) => setTimeout(() => reject(new Error('Redis timeout')), 2000))
@@ -90,7 +91,6 @@ export async function getPollResults(pollId: string): Promise<Record<string, num
     return numericResults;
   } catch (error) {
     console.error('Get results error:', error);
-    // Return empty object on error so the page still loads
     return {};
   }
 }

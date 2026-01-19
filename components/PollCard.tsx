@@ -7,7 +7,7 @@ import { Check } from 'lucide-react';
 type PollProps = {
   id: string;
   question: string;
-  options: readonly string[]; // Changed from string[] to readonly string[]
+  options: readonly string[];
   initialResults?: Record<string, number>;
   userVote?: number | null; // Index of the option user voted for, or null
   allowChange?: boolean;
@@ -33,6 +33,10 @@ export default function PollCard({ id, question, options, initialResults = {}, u
   const hasVoted = votedOption !== null;
 
   const handleVote = (index: number) => {
+    // Save previous state for rollback
+    const prevVotedOption = votedOption;
+    const prevResults = { ...results };
+
     startTransition(async () => {
       // Optimistic update
       const newResults = { ...results };
@@ -51,10 +55,18 @@ export default function PollCard({ id, question, options, initialResults = {}, u
       setVotedOption(index);
       setIsEditing(false);
 
-      const response = await vote(id, index, allowChange);
-      if (!response.success) {
-        // Revert/Error handling could go here
-        console.error(response.message);
+      try {
+          const response = await vote(id, index, allowChange);
+          if (!response.success) {
+            throw new Error(response.message || 'Hiba történt');
+          }
+      } catch (error) {
+          // Rollback on error
+          console.error("Vote failed:", error);
+          alert("Nem sikerült elmenteni a szavazatot. Kérjük, próbálja újra!");
+          setResults(prevResults);
+          setVotedOption(prevVotedOption);
+          setIsEditing(true); // Go back to editing mode
       }
     });
   };
