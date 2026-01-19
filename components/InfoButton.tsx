@@ -58,7 +58,7 @@ export default function InfoButton() {
                                 <ul className="list-disc list-inside space-y-1 pl-2 text-sm text-gray-600 dark:text-gray-400">
                                     <li><span className="font-medium text-gray-800 dark:text-gray-200">Keretrendszer:</span> Next.js (React)</li>
                                     <li><span className="font-medium text-gray-800 dark:text-gray-200">Stílus:</span> Tailwind CSS</li>
-                                    <li><span className="font-medium text-gray-800 dark:text-gray-200">Tartalomkezelés:</span> Keystatic</li>
+                                    <li><span className="font-medium text-gray-800 dark:text-gray-200">Tartalomkezelés:</span> Headless CMS</li>
                                     <li><span className="font-medium text-gray-800 dark:text-gray-200">Térkép:</span> Leaflet.js</li>
                                 </ul>
                             </div>
