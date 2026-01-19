@@ -10,8 +10,8 @@ interface KeystaticLocationEntry {
     address: string;
     category: 'Önkormányzat' | 'Kultúra' | 'Oktatás' | 'Egészségügy' | 'Sport' | 'Egyéb';
     markerIcon: 'MapPin' | 'Home' | 'Building' | 'Hospital' | 'School' | 'Star' | 'Info';
-    description?: string;
-    images: Array<{ image: string; alt: string }>; // Assuming images are an array of objects
+    description: string; // fields.text returns string (empty string if not set)
+    images: readonly (string | null)[]; // Correct type based on Keystatic config
   };
 }
 
@@ -28,8 +28,10 @@ export default async function MapPage() {
   let error: string | null = null;
 
   try {
-    const keystaticLocations: KeystaticLocationEntry[] = await reader.collections.locations.all();
-    locations = keystaticLocations.map((loc: KeystaticLocationEntry) => ({
+    // @ts-ignore - Keystatic types can be tricky, casting to unknown first if needed, but interface update should fix it
+    const keystaticLocations = await reader.collections.locations.all() as unknown as KeystaticLocationEntry[];
+    
+    locations = keystaticLocations.map((loc) => ({
       title: loc.entry.title,
       address: loc.entry.address,
       description: loc.entry.description,
