@@ -6,8 +6,7 @@ import { LatLngExpression, LatLngBoundsExpression } from 'leaflet';
 import { useEffect, useState } from 'react';
 import L from 'leaflet';
 import * as LucideIcons from 'lucide-react';
-import ReactDOM from 'react-dom'; // Keep this for now for compatibility in case other parts rely on it
-import { createRoot } from 'react-dom/client'; // Import createRoot
+import { createRoot } from 'react-dom/client';
 
 const IconComponents: Record<string, React.ElementType> = {
   MapPin: LucideIcons.MapPin,
@@ -32,7 +31,7 @@ interface Location {
   address: string;
   description?: string;
   category?: string;
-  markerIcon?: string; // Add markerIcon field
+  markerIcon?: string;
 }
 
 interface GeocodedLocation extends Location {
@@ -49,7 +48,7 @@ const geocodeAddress = async (address: string): Promise<{ lat: number; lon: numb
   try {
     const response = await fetch(url, {
       headers: {
-        'User-Agent': 'Tyukod.hu Map Application (info@tyukod.hu)' // IMPORTANT: Replace with your actual contact email
+        'User-Agent': 'Tyukod.hu Map Application (info@tyukod.hu)'
       }
     });
     const data = await response.json();
@@ -66,15 +65,14 @@ const geocodeAddress = async (address: string): Promise<{ lat: number; lon: numb
 };
 
 const createCustomIcon = (iconName: string) => {
-  const IconComponent = IconComponents[iconName] || LucideIcons.MapPin; // Default to MapPin
+  const IconComponent = IconComponents[iconName] || LucideIcons.MapPin;
 
   const iconDiv = document.createElement('div');
-  // Render the Lucide icon into the created div
   const root = createRoot(iconDiv);
   root.render(<IconComponent size={24} color="red" />);
 
   return L.divIcon({
-    className: 'custom-map-marker', // Apply custom styling if needed
+    className: 'custom-map-marker',
     html: iconDiv.innerHTML,
     iconSize: [30, 30],
     iconAnchor: [15, 30],
@@ -83,83 +81,46 @@ const createCustomIcon = (iconName: string) => {
 };
 
 export default function MapComponent({ locations }: MapComponentProps) {
-  // Use hardcoded values for center and zoom
   const initialCenter: LatLngExpression = [47.8530348, 22.5568265]; // Tyukod, Hungary
-  const initialZoom = 15; // A higher zoom for a locked view (more zoomed in)
+  const initialZoom = 15;
+  const maxBounds: LatLngBoundsExpression = [[47.84, 22.50], [47.88, 22.60]];
 
-    const maxBounds: LatLngBoundsExpression = [[47.84, 22.50], [47.88, 22.60]]; // Approx. bounds around Tyukod
+  const [geocodedMarkers, setGeocodedMarkers] = useState<GeocodedLocation[]>([]);
 
-  
+  useEffect(() => {
+    const fetchGeocodedLocations = async () => {
+      const newMarkers: GeocodedLocation[] = [];
 
-    const [geocodedMarkers, setGeocodedMarkers] = useState<GeocodedLocation[]>([]);
-
-  
-
-    useEffect(() => {
-
-      const fetchGeocodedLocations = async () => {
-
-        const newMarkers: GeocodedLocation[] = [];
-
-        for (const loc of locations) {
-
-          const coords = await geocodeAddress(loc.address);
-
-          if (coords) {
-
+      for (const loc of locations) {
+        const coords = await geocodeAddress(loc.address);
+        if (coords) {
             newMarkers.push({ ...loc, lat: coords.lat, lon: coords.lon });
-
-          }
-
         }
-
-        setGeocodedMarkers(newMarkers);
-
-      };
-
-  
-
-      if (locations && locations.length > 0) {
-
-        fetchGeocodedLocations();
-
       }
+      setGeocodedMarkers(newMarkers);
+    };
 
-    }, [locations]);
+    if (locations && locations.length > 0) {
+      fetchGeocodedLocations();
+    }
+  }, [locations]);
 
-  
-
-    return (
-
-      <MapContainer
-
-        center={initialCenter}
-
-        zoom={initialZoom}
-
-        scrollWheelZoom={true}
-
-        dragging={true}
-
-        doubleClickZoom={false}
-
-        boxZoom={false}
-
-        keyboard={false}
-
-        zoomControl={true}
-
-        attributionControl={true}
-
-        maxBounds={maxBounds}          // Restrict panning
-
-        maxBoundsViscosity={1.0}       // Make bounds hard
-
-        className="z-0"
-
-        style={{ height: '600px', width: '100%' }}
-
-      >
+  return (
+    <MapContainer
+      center={initialCenter}
+      zoom={initialZoom}
+      scrollWheelZoom={true}
+      dragging={true}
+      doubleClickZoom={false}
+      boxZoom={false}
+      keyboard={false}
+      zoomControl={true}
+      attributionControl={true}
+      maxBounds={maxBounds}
+      maxBoundsViscosity={1.0}
+      className="z-0"
+      style={{ height: '600px', width: '100%' }}
+    >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

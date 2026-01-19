@@ -7,11 +7,17 @@ interface KeystaticLocationEntry {
   slug: string;
   entry: {
     title: string;
-    address: string;
+    // Structured address fields
+    zipCode: string;
+    city: string;
+    streetName: string;
+    streetType: string;
+    houseNumber?: string;
+    
     category: 'Önkormányzat' | 'Kultúra' | 'Oktatás' | 'Egészségügy' | 'Sport' | 'Egyéb';
     markerIcon: 'MapPin' | 'Home' | 'Building' | 'Hospital' | 'School' | 'Star' | 'Info';
-    description: string; // fields.text returns string (empty string if not set)
-    images: readonly (string | null)[]; // Correct type based on Keystatic config
+    description: string; 
+    images: readonly (string | null)[]; 
   };
 }
 
@@ -21,6 +27,7 @@ interface LocationProps {
   address: string;
   description?: string;
   category?: string;
+  markerIcon?: string;
 }
 
 export default async function MapPage() {
@@ -28,15 +35,21 @@ export default async function MapPage() {
   let error: string | null = null;
 
   try {
-    // @ts-ignore - Keystatic types can be tricky, casting to unknown first if needed, but interface update should fix it
+    // @ts-ignore - Keystatic types can be tricky
     const keystaticLocations = await reader.collections.locations.all() as unknown as KeystaticLocationEntry[];
     
-    locations = keystaticLocations.map((loc) => ({
-      title: loc.entry.title,
-      address: loc.entry.address,
-      description: loc.entry.description,
-      category: loc.entry.category,
-    }));
+    locations = keystaticLocations.map((loc) => {
+        // Construct full address from parts
+        const fullAddress = `${loc.entry.zipCode} ${loc.entry.city}, ${loc.entry.streetName} ${loc.entry.streetType} ${loc.entry.houseNumber || ''}`.trim();
+
+        return {
+            title: loc.entry.title,
+            address: fullAddress,
+            description: loc.entry.description,
+            category: loc.entry.category,
+            markerIcon: loc.entry.markerIcon,
+        };
+    });
   } catch (err: any) {
     console.error("Failed to fetch locations from Keystatic in Server Component:", err);
     error = "Hiba történt a helyszínek betöltésekor.";

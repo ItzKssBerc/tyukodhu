@@ -132,7 +132,23 @@ export default config({
       path: 'content/locations/*',
       schema: {
         title: fields.slug({ name: { label: 'Megnevezés' } }),
-        address: fields.text({ label: 'Cím', validation: { isRequired: true } }),
+        // Structured address fields
+        zipCode: fields.text({ label: 'Irányítószám', defaultValue: '4762', validation: { length: { min: 4, max: 4 } } }),
+        city: fields.text({ label: 'Település', defaultValue: 'Tyukod' }),
+        streetName: fields.text({ label: 'Közterület neve', validation: { isRequired: true } }),
+        streetType: fields.select({
+            label: 'Közterület típusa',
+            options: [
+                { label: 'utca', value: 'utca' },
+                { label: 'út', value: 'út' },
+                { label: 'tér', value: 'tér' },
+                { label: 'köz', value: 'köz' },
+                { label: 'sor', value: 'sor' },
+            ],
+            defaultValue: 'utca',
+        }),
+        houseNumber: fields.text({ label: 'Házszám' }),
+        
         category: fields.select({
           label: 'Kategória',
           options: [
