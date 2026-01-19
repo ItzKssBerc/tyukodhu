@@ -50,6 +50,12 @@ export default async function PostPage({ params }: PageProps) {
     // If the post doesn't exist or the category from the URL doesn't match the post's category, return 404.
     // This prevents the same content from appearing under multiple URLs.
     if (!post || post.category !== category) {
+        console.error("PostPage: Post not found or category mismatch. Post data:", JSON.stringify(post), "URL Category:", category);
+        if (!post) {
+            console.error("PostPage: Reason: Post object is null/undefined.");
+        } else if (post.category !== category) {
+            console.error("PostPage: Reason: Category mismatch. Expected:", category, "Got:", post.category);
+        }
         notFound();
     }
 
