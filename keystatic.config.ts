@@ -130,6 +130,7 @@ export default config({
       label: 'Helyszínek',
       slugField: 'title',
       path: 'content/locations/*',
+      format: 'yaml', // Set format to YAML
       schema: {
         title: fields.slug({ name: { label: 'Megnevezés' } }),
         address: fields.text({ label: 'Cím (Megjelenítéshez)', validation: { isRequired: true } }),
