@@ -7,7 +7,7 @@ import { Check } from 'lucide-react';
 type PollProps = {
   id: string;
   question: string;
-  options: string[];
+  options: readonly string[]; // Changed from string[] to readonly string[]
   initialResults?: Record<string, number>;
   userVote?: number | null; // Index of the option user voted for, or null
   allowChange?: boolean;
