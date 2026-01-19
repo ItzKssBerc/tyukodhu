@@ -2,11 +2,11 @@
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import 'react-leaflet-markercluster/dist/styles.min.css'; // Import cluster styles
+// CSS is now imported in globals.css
 import { LatLngExpression, LatLngBoundsExpression } from 'leaflet';
 import { useEffect, useState } from 'react';
 import L from 'leaflet';
-import MarkerClusterGroup from 'react-leaflet-markercluster'; // Import the cluster group
+import MarkerClusterGroup from '@changey/react-leaflet-markercluster';
 
 // Mapping from Keystatic values to Bootstrap Icon class names
 const bootstrapIconMap: Record<string, string> = {

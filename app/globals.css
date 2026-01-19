@@ -1,3 +1,4 @@
 @import "tailwindcss";
+@import "@changey/react-leaflet-markercluster/dist/styles.min.css";
 
 @variant dark (&:where(.dark, .dark *));
