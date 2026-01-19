@@ -44,7 +44,11 @@ interface MapComponentProps {
 }
 
 const geocodeAddress = async (address: string): Promise<{ lat: number; lon: number } | null> => {
-  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+  // Try searching with structured query first if possible, but here we have a full string.
+  // Nominatim works best with comma separated parts.
+  console.log(`Geocoding address: "${address}"`);
+  
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`;
   try {
     const response = await fetch(url, {
       headers: {
@@ -53,10 +57,13 @@ const geocodeAddress = async (address: string): Promise<{ lat: number; lon: numb
     });
     const data = await response.json();
     if (data && data.length > 0) {
+      console.log(`Geocoding success for "${address}":`, data[0].lat, data[0].lon);
       return {
         lat: parseFloat(data[0].lat),
         lon: parseFloat(data[0].lon),
       };
+    } else {
+        console.warn(`Geocoding failed (no results) for "${address}"`);
     }
   } catch (error) {
     console.error(`Geocoding error for address "${address}":`, error);
