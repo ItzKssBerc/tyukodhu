@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 
 type SortDropdownProps = {
-  sortOptions: Record<string, string>;
+  sortOptions: Record<string, React.ReactNode>;
   currentSortOrder: string;
   onSelectSortOrder: (sortOrder: string) => void;
 };
@@ -39,12 +39,12 @@ export default function SortDropdown({
     <div className="relative" ref={dropdownRef}>
       <button
         type="button"
-        className="flex justify-between items-center w-full outline-none text-base text-gray-800 dark:text-gray-100 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 rounded-xl whitespace-nowrap"
+        className="flex justify-between items-center w-full outline-none text-base text-gray-800 dark:text-gray-100 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 rounded-xl"
         onClick={() => setIsOpen(!isOpen)}
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        <span className="truncate mr-2">{sortOptions[currentSortOrder]}</span>
+        <span className="mr-2 text-left leading-tight">{sortOptions[currentSortOrder]}</span>
         <ChevronDown
           className={`flex-shrink-0 h-5 w-5 text-gray-500 transition-transform duration-200 ${
             isOpen ? "rotate-180" : "rotate-0"
@@ -58,14 +58,14 @@ export default function SortDropdown({
             <button
               key={key}
               onClick={() => handleSelect(key)}
-              className={`flex items-center w-full px-4 py-2.5 text-sm rounded-lg transition-colors duration-150 ${
+              className={`flex items-center w-full px-4 py-2.5 text-sm rounded-lg transition-colors duration-150 text-left ${
                 currentSortOrder === key
                   ? "bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium"
                   : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50"
               }`}
               role="menuitem"
             >
-              {label}
+              <span className="leading-tight">{label}</span>
             </button>
           ))}
         </div>

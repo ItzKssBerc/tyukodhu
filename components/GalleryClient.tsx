@@ -22,8 +22,18 @@ type GalleryItem = {
 
 // Define sort options for gallery
 const gallerySortOptions = {
-  'date-desc': 'Feltöltés dátuma (legújabb elöl)',
-  'date-asc': 'Feltöltés dátuma (legrégebbi elöl)',
+  'date-desc': (
+    <span>
+      Feltöltés dátuma <br />
+      <span className="text-xs opacity-80">legújabb</span>
+    </span>
+  ),
+  'date-asc': (
+    <span>
+      Feltöltés dátuma <br />
+      <span className="text-xs opacity-80">legrégebbi</span>
+    </span>
+  ),
   'title-asc': 'Cím (A-Z)',
   'title-desc': 'Cím (Z-A)',
 };
