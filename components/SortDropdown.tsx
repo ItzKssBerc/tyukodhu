@@ -36,10 +36,10 @@ export default function SortDropdown({
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative h-full" ref={dropdownRef}>
       <button
         type="button"
-        className="flex justify-between items-center w-full outline-none text-base text-gray-800 dark:text-gray-100 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 rounded-xl"
+        className="flex justify-between items-center w-full h-full outline-none text-base text-gray-800 dark:text-gray-100 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 rounded-xl"
         onClick={() => setIsOpen(!isOpen)}
         aria-haspopup="true"
         aria-expanded={isOpen}
