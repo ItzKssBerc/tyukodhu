@@ -5,18 +5,6 @@ import 'leaflet/dist/leaflet.css';
 import { LatLngExpression, LatLngBoundsExpression } from 'leaflet';
 import { useEffect, useState } from 'react';
 import L from 'leaflet';
-import * as LucideIcons from 'lucide-react';
-import { createRoot } from 'react-dom/client';
-
-const IconComponents: Record<string, React.ElementType> = {
-  MapPin: LucideIcons.MapPin,
-  Home: LucideIcons.Home,
-  Building: LucideIcons.Building,
-  Hospital: LucideIcons.Hospital,
-  School: LucideIcons.School,
-  Star: LucideIcons.Star,
-  Info: LucideIcons.Info,
-};
 
 // Fix for default icon not appearing
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -26,13 +14,24 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'leaflet/images/marker-shadow.png',
 });
 
+// Mapping from Keystatic values to Bootstrap Icon class names
+const bootstrapIconMap: Record<string, string> = {
+  MapPin: 'bi-geo-alt-fill',
+  Home: 'bi-house-door-fill',
+  Building: 'bi-building-fill',
+  Hospital: 'bi-hospital-fill',
+  School: 'bi-book-fill',
+  Star: 'bi-star-fill',
+  Info: 'bi-info-circle-fill',
+};
+
 interface Location {
   title: string;
   address: string;
   description?: string;
   category?: string;
   markerIcon?: string;
-  coordinates?: { lat: number; lng: number } | null; // Added coordinates
+  coordinates?: { lat: number; lng: number } | null;
 }
 
 interface GeocodedLocation extends Location {
@@ -45,7 +44,8 @@ interface MapComponentProps {
 }
 
 const geocodeAddress = async (address: string): Promise<{ lat: number; lon: number } | null> => {
-  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+  console.log(`Geocoding address: "${address}"`);
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`;
   try {
     const response = await fetch(url, {
       headers: {
@@ -54,10 +54,13 @@ const geocodeAddress = async (address: string): Promise<{ lat: number; lon: numb
     });
     const data = await response.json();
     if (data && data.length > 0) {
+      console.log(`Geocoding success for "${address}":`, data[0].lat, data[0].lon);
       return {
         lat: parseFloat(data[0].lat),
         lon: parseFloat(data[0].lon),
       };
+    } else {
+        console.warn(`Geocoding failed (no results) for "${address}"`);
     }
   } catch (error) {
     console.error(`Geocoding error for address "${address}":`, error);
@@ -66,15 +69,11 @@ const geocodeAddress = async (address: string): Promise<{ lat: number; lon: numb
 };
 
 const createCustomIcon = (iconName: string) => {
-  const IconComponent = IconComponents[iconName] || LucideIcons.MapPin;
-
-  const iconDiv = document.createElement('div');
-  const root = createRoot(iconDiv);
-  root.render(<IconComponent size={24} color="red" />);
+  const iconClass = bootstrapIconMap[iconName] || 'bi-geo-alt-fill'; // Default to MapPin
 
   return L.divIcon({
-    className: 'custom-map-marker',
-    html: iconDiv.innerHTML,
+    className: 'custom-map-marker', // This class can be used for base styling
+    html: `<i class="${iconClass}" style="font-size: 28px; color: #C62828;"></i>`, // Using a strong red color
     iconSize: [30, 30],
     iconAnchor: [15, 30],
     popupAnchor: [0, -30]
@@ -93,11 +92,9 @@ export default function MapComponent({ locations }: MapComponentProps) {
       const newMarkers: GeocodedLocation[] = [];
 
       for (const loc of locations) {
-        // If coordinates are provided in CMS, use them
         if (loc.coordinates && loc.coordinates.lat && loc.coordinates.lng) {
              newMarkers.push({ ...loc, lat: loc.coordinates.lat, lon: loc.coordinates.lng });
         } else {
-            // Fallback to geocoding
             const coords = await geocodeAddress(loc.address);
             if (coords) {
                 newMarkers.push({ ...loc, lat: coords.lat, lon: coords.lon });
