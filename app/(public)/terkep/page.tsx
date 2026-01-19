@@ -2,7 +2,21 @@
 import { reader } from '@/keystatic/reader'; // Adjust path if necessary
 import MapClientPage from './client-page'; // Import the client component
 
-interface Location {
+// Interface for the Keystatic entry structure
+interface KeystaticLocationEntry {
+  slug: string;
+  entry: {
+    title: string;
+    address: string;
+    category: 'Önkormányzat' | 'Kultúra' | 'Oktatás' | 'Egészségügy' | 'Sport' | 'Egyéb';
+    markerIcon: 'MapPin' | 'Home' | 'Building' | 'Hospital' | 'School' | 'Star' | 'Info';
+    description?: string;
+    images: Array<{ image: string; alt: string }>; // Assuming images are an array of objects
+  };
+}
+
+// Interface for the simplified Location object passed to the client component
+interface LocationProps {
   title: string;
   address: string;
   description?: string;
@@ -10,12 +24,12 @@ interface Location {
 }
 
 export default async function MapPage() {
-  let locations: Location[] = [];
+  let locations: LocationProps[] = [];
   let error: string | null = null;
 
   try {
-    const keystaticLocations = await reader.collections.locations.all();
-    locations = keystaticLocations.map(loc => ({
+    const keystaticLocations: KeystaticLocationEntry[] = await reader.collections.locations.all();
+    locations = keystaticLocations.map((loc: KeystaticLocationEntry) => ({
       title: loc.entry.title,
       address: loc.entry.address,
       description: loc.entry.description,

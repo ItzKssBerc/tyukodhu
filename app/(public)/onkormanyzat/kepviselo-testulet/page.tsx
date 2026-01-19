@@ -1,6 +1,17 @@
 import { reader } from "@/keystatic/reader";
 import Image from 'next/image';
 
+interface Person {
+  slug: string;
+  entry: {
+    name: string;
+    body: 'kepviselo-testulet' | 'penzugyi-bizottsag' | 'egeszsegugyi-es-szocialis-bizottsag';
+    position: string | null;
+    committees: { name: string; position: string }[];
+    image: string | null;
+  };
+}
+
 export default async function KepviseloTestuletPage() {
   const people = await reader.collections.people.all();
 
@@ -24,9 +35,9 @@ export default async function KepviseloTestuletPage() {
     borderColor: "border-gray-400",
   };
 
-  const members = people
-    .filter(person => person.entry.body === 'kepviselo-testulet')
-    .map(person => {
+  const members = (people as Person[]) // Cast to Person[] for type safety
+    .filter((person: Person) => person.entry.body === 'kepviselo-testulet')
+    .map((person: Person) => {
       const role = person.entry.position || 'képviselő';
       return {
         name: person.entry.name,
@@ -35,6 +46,7 @@ export default async function KepviseloTestuletPage() {
         ...(roleMetadata[role.toLowerCase()] || defaultMetadata),
       };
     });
+
 
   const roleOrder: { [key: string]: number } = {
     'polgármester': 1,

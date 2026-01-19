@@ -10,10 +10,10 @@ import { ArrowLeft, Calendar, Tag } from 'lucide-react';
 
 
 type PageProps = {
-    params: {
+    params: Promise<{
         slug: string;
         category: string;
-    }
+    }>
 }
 
 const categoryLabels: Record<string, string> = {
@@ -41,7 +41,7 @@ export async function generateStaticParams() {
 }
 
 export default async function PostPage({ params }: PageProps) {
-    const { slug, category } = params;
+    const { slug, category } = await params;
     console.log("Individual Post Page - Slug:", slug, "Category:", category);
     const reader = createReader(process.cwd(), config);
     const post = await reader.collections.posts.read(slug);

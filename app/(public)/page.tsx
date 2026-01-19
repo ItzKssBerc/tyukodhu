@@ -3,16 +3,40 @@ import { reader } from '@/keystatic/reader';
 import NewsCard from "@/components/NewsCard";
 import Link from "next/link";
 
+interface Post {
+  slug: string;
+  entry: {
+    title: string;
+    category: 'hirek' | 'kozlemenyek' | 'rendezvenyek' | 'egyeb';
+    publishedDate: string | null;
+    publishedTime: string;
+    content: any;
+    featuredImage: string | null;
+  };
+}
+
+interface Document {
+  slug: string;
+  entry: {
+    title: string;
+    category: 'jegyzokonyvek' | 'hatarozatok' | 'rendeletek' | 'meghivok' | 'egyeb';
+    description: string;
+    file: string;
+    publishedDate: string | null;
+    publishedTime: string;
+  };
+}
+
 export default async function Home() {
   const latestPosts = (await reader.collections.posts.all())
-    .sort((a, b) => {
+    .sort((a: Post, b: Post) => {
       const dateA = a.entry.publishedDate ? new Date(a.entry.publishedDate).getTime() : 0;
       const dateB = b.entry.publishedDate ? new Date(b.entry.publishedDate).getTime() : 0;
       return dateB - dateA;
     })
     .slice(0, 3);
   const latestDocuments = (await reader.collections.documents.all())
-    .sort((a, b) => {
+    .sort((a: Document, b: Document) => {
       const dateA = a.entry.publishedDate ? new Date(a.entry.publishedDate).getTime() : 0;
       const dateB = b.entry.publishedDate ? new Date(b.entry.publishedDate).getTime() : 0;
       return dateB - dateA;
@@ -26,6 +50,7 @@ export default async function Home() {
     'rendezvenyek': 'Rendezvények',
     'egyeb': 'Egyéb',
   };
+
 
   return (
     <>
@@ -134,7 +159,7 @@ export default async function Home() {
           </h3>
           {latestDocuments.length > 0 ? (
             <ul className="space-y-2">
-              {latestDocuments.map((doc) => (
+              {latestDocuments.map((doc: Document) => (
                 <li key={doc.slug}>
                   <Link
                     href={doc.entry.file}
@@ -158,7 +183,7 @@ export default async function Home() {
             </h3>
             {latestPosts.length > 0 ? (
               <div className="space-y-4">
-                {latestPosts.map((post) => (
+                {latestPosts.map((post: Post) => (
                   <NewsCard
                     key={post.slug}
                     slug={post.slug}
