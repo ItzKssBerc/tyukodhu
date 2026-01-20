@@ -216,20 +216,22 @@ export default function TyukodKozsegertPage() {
           Kapcsolódó dokumentumok
         </h3>
         <ul className="space-y-2">
-          <li className="flex items-center text-red-600 dark:text-red-400 font-semibold hover:underline cursor-pointer">
-            <svg
-              className="w-5 h-5 mr-2"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                fillRule="evenodd"
-                d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-            Alapító okirat (PDF)
-          </li>
+          <a href="/tyukodkozsegeertalapitvany/alapító okirat.pdf" target="_blank" rel="noopener noreferrer">
+            <li className="flex items-center text-red-600 dark:text-red-400 font-semibold hover:underline cursor-pointer">
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+              Alapító okirat (PDF)
+            </li>
+          </a>
         </ul>
       </div>
     </div>
