@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createReader } from "@keystatic/core/reader";
-import config from "@/keystatic.config";
-import * as fs from 'fs';
-import * as path from 'path';
+import { createReader } from '@keystatic/core/reader';
+import config from '@/keystatic.config';
 
 export async function GET(
   request: NextRequest,
@@ -20,25 +18,20 @@ export async function GET(
         doc.slug === documentSlug
     );
 
-    if (!document) {
+    if (!document || !document.entry.file) {
       return new NextResponse('Document not found', { status: 404 });
     }
 
-    const filePath = path.join(process.cwd(), 'public', document.entry.file);
+    // `document.entry.file` should contain the path relative to the public folder,
+    // e.g., '/documents/my-file.pdf'.
+    // We construct a new URL object to ensure the path is correctly resolved
+    // against the request's base URL.
+    const fileUrl = new URL(document.entry.file, request.url);
 
-    if (!fs.existsSync(filePath)) {
-      return new NextResponse('File not found on disk', { status: 404 });
-    }
-
-    const fileBuffer = fs.readFileSync(filePath);
-
-    const headers = new Headers();
-    headers.set('Content-Type', 'application/pdf');
-    headers.set('Content-Disposition', 'inline; filename="' + path.basename(filePath) + '"');
-
-    return new NextResponse(fileBuffer, { headers });
+    // Redirect the client to the static file.
+    return NextResponse.redirect(fileUrl);
   } catch (error) {
-    console.error('Error serving document:', error);
+    console.error('Error redirecting to document:', error);
     return new NextResponse('Internal Server Error', { status: 500 });
   }
 }
