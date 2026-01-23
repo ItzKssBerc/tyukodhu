@@ -50,7 +50,7 @@ export default function CustomSelect({
   return (
     <div className="relative" ref={selectRef}>
       {/* Hidden input to ensure form submission includes the value if not handled by JS directly */}
-      {name && <input type="hidden" name={name} value={value} />}
+      {name && <input type="hidden" name={name} defaultValue={value} />}
 
       <button
         type="button"
