@@ -3,12 +3,10 @@ import { config, fields, collection } from '@keystatic/core';
 const isDev = process.env.NODE_ENV === 'development';
 
 export default config({
-  storage: isDev
-    ? { kind: 'local' }
-    : {
-        kind: 'github',
-        repo: 'oldalhosting2026/tyukodhu',
-      },
+  storage: {
+    kind: 'github',
+    repo: 'oldalhosting2026/tyukodhu',
+  },
   ui: {
     brand: {
       name: 'TYUKOD.HU',
