@@ -1,11 +1,12 @@
 import { config, fields, collection } from '@keystatic/core';
 
-const isDev = process.env.NODE_ENV === 'development';
-
 export default config({
   storage: {
     kind: 'github',
-    repo: 'oldalhosting2026/tyukodhu',
+    repo: {
+      owner: 'oldalhosting2026',
+      name: 'tyukodhu',
+    },
   },
   ui: {
     brand: {

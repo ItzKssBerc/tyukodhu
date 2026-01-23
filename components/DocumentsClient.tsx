@@ -28,6 +28,8 @@ const formatCategoryName = (category: string): string => {
     hatarozatok: "Határozatok",
     jegyzokonyvek: "Jegyzőkönyvek",
     koltsegvetes: "Költségvetés",
+    egyeb: "Egyéb",
+    meghivok: "Meghívók",
   };
   return categoryDisplayNames[category.toLowerCase()] || category.charAt(0).toUpperCase() + category.slice(1);
 };
