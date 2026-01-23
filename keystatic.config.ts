@@ -7,7 +7,7 @@ export default config({
     ? { kind: 'local' }
     : {
         kind: 'github',
-        repo: 'ElectronSama/tyukodhu',
+        repo: 'oldalhosting2026/tyukodhu',
       },
   ui: {
     brand: {
