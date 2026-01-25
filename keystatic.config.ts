@@ -1,13 +1,15 @@
 import { config, fields, collection } from '@keystatic/core';
 
 export default config({
-  storage: {
-    kind: 'github',
-    repo: {
-      owner: 'oldalhosting2026',
-      name: 'tyukodhu',
-    },
-  },
+  storage: process.env.NODE_ENV === 'development'
+    ? { kind: 'local' }
+    : {
+        kind: 'github',
+        repo: {
+          owner: 'oldalhosting2026',
+          name: 'tyukodhu',
+        },
+      },
   ui: {
     brand: {
       name: 'TYUKOD.HU',
