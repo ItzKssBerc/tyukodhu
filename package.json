@@ -3,13 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run tina-dev\" \"npm run next-dev\"",
-    "tina-dev": "echo \"TINA_PUBLIC_IS_LOCAL is: $TINA_PUBLIC_IS_LOCAL\" && tinacms dev",
-    "next-dev": "next dev",
-    "build": "npm run tina-build-local && next build",
-    "start": "next start",
-    "lint": "next lint",
-    "tina-build-local": "node scripts/run-tinacms-build.js"
+    "dev": "tinacms dev -c \"next dev\"",
+    "build": "tinacms build && next build",
+    "start": "tinacms build && next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@markdoc/markdoc": "^0.5.4",
