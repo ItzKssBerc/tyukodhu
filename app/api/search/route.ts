@@ -1,13 +1,9 @@
-import { createTinaSearch } from '@tinacms/search';
-import database from '../../../tina/__generated__/database';
-import config from '../../../tina/config';
+import { NextRequest, NextResponse } from 'next/server';
 
-// This is a temporary workaround to remove the search property from the config
-// to avoid a circular dependency issue.
-const { search, ...rest } = config;
+export async function GET(request: NextRequest) {
+  return new NextResponse('Search API route not yet implemented with TinaCMS', { status: 501 });
+}
 
-export const { GET, POST } = createTinaSearch({
-  config: rest,
-  database,
-  isLocal: process.env.TINA_PUBLIC_IS_LOCAL === 'true',
-});
+export async function POST(request: NextRequest) {
+  return new NextResponse('Search API route not yet implemented with TinaCMS', { status: 501 });
+}

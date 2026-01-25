@@ -50,6 +50,7 @@ export default function Nav() {
   }, []);
 
   const isActive = (path: string, exact = true) => {
+    if (pathname === null) return false; // Handle null pathname
     if (exact) return pathname === path;
     return pathname.startsWith(path);
   };

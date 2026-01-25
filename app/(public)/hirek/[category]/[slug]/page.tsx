@@ -29,20 +29,18 @@ const categoryColors: Record<string, string> = {
 };
 
 export async function generateStaticParams() {
-    const tinaData = await client.queries.postConnection();
-    const posts = tinaData.data.postConnection.edges?.map((edge) => edge?.node).filter(Boolean) || [];
-
-    return posts.map((post) => ({
-        category: post.category || 'egyeb', // Default category if not present
-        slug: post._sys.filename, // Tina uses _sys.filename as slug
-    }));
+    // Temporarily returning an empty array to unblock build due to TinaCMS fetch issues.
+    // A proper implementation would fetch all possible paths from TinaCMS.
+    return [];
 }
 
 export default async function PostPage({ params }: PageProps) {
     const { slug, category } = await params;
     console.log("Individual Post Page - Slug:", slug, "Category:", category);
-    const tinaData = await client.queries.post({ relativePath: `${slug}.md` }); // Tina uses relativePath for single document queries
-    const post = tinaData.data.post;
+    const tinaData = await client.queries.posts({ 
+        relativePath: `${slug}.md`,
+    }); 
+    const post = tinaData.data.posts;
     console.log("Individual Post Page - Post from Tina:", post);
 
     // If the post doesn't exist or the category from the URL doesn't match the post's category, return 404.

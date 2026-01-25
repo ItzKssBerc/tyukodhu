@@ -64,12 +64,10 @@ export default defineConfig({
           {
             type: "datetime",
             name: "publishedDate",
-            label: "Közzététel dátuma",
-          },
-          {
-            type: "string",
-            name: "publishedTime",
-            label: "Közzététel ideje",
+            label: "Közzététel dátuma és ideje",
+            ui: {
+              defaultValue: () => new Date().toISOString(),
+            },
           },
           {
             type: "rich-text",
@@ -126,12 +124,10 @@ export default defineConfig({
           {
             type: "datetime",
             name: "publishedDate",
-            label: "Közzététel dátuma",
-          },
-          {
-            type: "string",
-            name: "publishedTime",
-            label: "Közzététel ideje",
+            label: "Közzététel dátuma és ideje",
+            ui: {
+              defaultValue: () => new Date().toISOString(),
+            },
           },
         ],
       },
@@ -169,12 +165,10 @@ export default defineConfig({
           {
             type: "datetime",
             name: "publishedDate",
-            label: "Feltöltés dátuma",
-          },
-          {
-            type: "string",
-            name: "publishedTime",
-            label: "Feltöltés ideje",
+            label: "Feltöltés dátuma és ideje",
+            ui: {
+              defaultValue: () => new Date().toISOString(),
+            },
           },
         ],
       },

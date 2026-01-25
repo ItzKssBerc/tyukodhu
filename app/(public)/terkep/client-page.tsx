@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 // Dynamically import MapComponent to ensure client-side rendering
@@ -21,6 +21,12 @@ interface MapPageProps {
 }
 
 export default function MapPage({ locations }: MapPageProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
       <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-lg shadow-indigo-100/50 dark:shadow-none overflow-hidden border border-indigo-50 dark:border-gray-700">
@@ -35,11 +41,11 @@ export default function MapPage({ locations }: MapPageProps) {
 
         <div className="p-4">
           {/* Pass only locations to DynamicMapComponent */}
-          {locations && locations.length > 0 ? (
-            <DynamicMapComponent locations={locations} />
+          {mounted ? (
+            <DynamicMapComponent locations={locations || []} />
           ) : (
             <div className="text-center py-20 text-gray-500 dark:text-gray-400">
-              Nincs megjeleníthető helyszín.
+              Térkép betöltése...
             </div>
           )}
         </div>

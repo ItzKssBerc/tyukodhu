@@ -6,12 +6,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 export default function SearchBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [query, setQuery] = useState(searchParams.get("q") || "");
+  const [query, setQuery] = useState(searchParams?.get("q") || "");
   const [isFocused, setIsFocused] = useState(false);
 
   // Simple debounce implementation inside the component
   useEffect(() => {
     const timer = setTimeout(() => {
+      if (searchParams === null) return; // Add this null check
       if (query !== (searchParams.get("q") || "")) {
          if (query.trim()) {
             router.push(`/hirek?q=${encodeURIComponent(query)}`);

@@ -89,9 +89,22 @@ export default function MapComponent({ locations }: MapComponentProps) {
   const maxBounds: LatLngBoundsExpression = [[47.84, 22.50], [47.88, 22.60]];
 
   const [geocodedMarkers, setGeocodedMarkers] = useState<GeocodedLocation[]>([]);
+  const [loading, setLoading] = useState(true); // Add loading state
+
+  useEffect(() => {
+    // Manual cleanup of the Leaflet container ID to prevent "Map container is already initialized" error
+    // This is necessary because React Strict Mode can cause race conditions with Leaflet's cleanup
+    return () => {
+      const container = document.getElementById('tyukod-map-container');
+      if (container) {
+        (container as any)._leaflet_id = null;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const fetchGeocodedLocations = async () => {
+      setLoading(true); // Start loading
       const newMarkers: GeocodedLocation[] = [];
 
       for (const loc of locations) {
@@ -105,16 +118,21 @@ export default function MapComponent({ locations }: MapComponentProps) {
         }
       }
       setGeocodedMarkers(newMarkers);
+      setLoading(false); // End loading
     };
 
+    // Only fetch if locations are provided, otherwise just set loading to false
     if (locations && locations.length > 0) {
       fetchGeocodedLocations();
+    } else {
+      setLoading(false); // No locations to fetch, so not loading
+      setGeocodedMarkers([]); // Ensure empty if no locations provided
     }
   }, [locations]);
 
   return (
     <MapContainer
-      key="map-container"
+      id="tyukod-map-container"
       center={initialCenter}
       zoom={initialZoom}
       scrollWheelZoom={true}
@@ -133,21 +151,31 @@ export default function MapComponent({ locations }: MapComponentProps) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <MarkerClusterGroup>
-        {geocodedMarkers.map((marker, index) => (
-          <Marker 
-              key={index} 
-              position={[marker.lat, marker.lon]} 
-              icon={createCustomIcon(marker.markerIcon || 'MapPin', marker.markerColor || '#C62828')}
-          >
-            <Popup>
-              <strong>{marker.title}</strong>
-              {marker.description && <p>{marker.description}</p>}
-              {marker.address && <p>{marker.address}</p>}
-            </Popup>
-          </Marker>
-        ))}
-      </MarkerClusterGroup>
+      {loading ? (
+        <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center z-[1000]">
+          Térkép betöltése...
+        </div>
+      ) : geocodedMarkers.length === 0 ? (
+        <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center z-[1000]">
+          Nincs megjeleníthető helyszín.
+        </div>
+      ) : (
+        <MarkerClusterGroup>
+          {geocodedMarkers.map((marker, index) => (
+            <Marker 
+                key={index} 
+                position={[marker.lat, marker.lon]} 
+                icon={createCustomIcon(marker.markerIcon || 'MapPin', marker.markerColor || '#C62828')}
+            >
+              <Popup>
+                <strong>{marker.title}</strong>
+                {marker.description && <p>{marker.description}</p>}
+                {marker.address && <p>{marker.address}</p>}
+              </Popup>
+            </Marker>
+          ))}
+        </MarkerClusterGroup>
+      )}
     </MapContainer>
   );
 }

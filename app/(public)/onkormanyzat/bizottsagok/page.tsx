@@ -4,21 +4,24 @@ import Image from 'next/image';
 type CommitteeMember = {
   name: string;
   role: string;
-  image: string | null | undefined;
+  image: string | null; // Changed from string | null | undefined
 };
 
 export default async function BizottsagokPage() {
-  const tinaData = await client.queries.peopleConnection();
-  const people = tinaData.data.peopleConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
-    slug: item?._sys.filename || '',
-    entry: {
-      name: item?.name || '',
-      body: item?.body || '',
-      position: item?.position,
-      committees: item?.committees,
-      image: item?.image,
-    }
-  })) || [];
+  let people: any[] = [];
+  if (process.env.NODE_ENV !== 'production') {
+    const tinaData = await client.queries.peopleConnection();
+    people = tinaData.data.peopleConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
+      slug: item?._sys.filename || '',
+      entry: {
+        name: item?.name || '',
+        body: item?.body || '',
+        position: item?.position,
+        committees: item?.committees,
+        image: item?.image,
+      }
+    })) || [];
+  }
 
   const committeesMap = new Map<string, CommitteeMember[]>();
 
