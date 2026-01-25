@@ -9,7 +9,6 @@ interface Post {
     title: string;
     category: string;
     publishedDate: string | null;
-    publishedTime: string | null;
     content?: any;
     featuredImage: string | null;
   };
@@ -22,9 +21,7 @@ interface Document {
     category: string;
     description: string | null;
     file: string;
-    publishedDate: string | null;
-    publishedTime: string | null;
-  };
+            publishedDate: string | null;  };
 }
 
 export default async function Home() {
@@ -44,7 +41,6 @@ export default async function Home() {
           title: item?.title || '',
           category: item?.category || '',
           publishedDate: item?.publishedDate ?? null,
-          publishedTime: item?.publishedTime ?? null,
           content: item?.content,
           featuredImage: item?.featuredImage ?? null,
         }
@@ -72,9 +68,7 @@ export default async function Home() {
         category: item?.category || '',
         description: item?.description || null,
         file: item?.file || '',
-        publishedDate: item?.publishedDate || null,
-        publishedTime: item?.publishedTime || null,
-      }
+              publishedDate: item?.publishedDate || null,      }
     })) || [];
   }
 
@@ -232,7 +226,6 @@ export default async function Home() {
                     slug={post.slug}
                     title={post.entry.title}
                     publishedDate={post.entry.publishedDate}
-                    publishedTime={post.entry.publishedTime}
                     featuredImage={post.entry.featuredImage}
                     category={postCategoryLabels[post.entry.category] || post.entry.category}
                     categorySlug={post.entry.category}

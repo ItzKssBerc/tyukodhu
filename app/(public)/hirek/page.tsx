@@ -33,7 +33,6 @@ export default async function NewsPage({ searchParams }: PageProps) {
           title: item?.title || '',
           category: item?.category || '',
           publishedDate: item?.publishedDate ?? null,
-          publishedTime: item?.publishedTime ?? null,
           content: item?.content,
           featuredImage: item?.featuredImage ?? null,
         }

@@ -5,13 +5,12 @@ interface NewsCardProps {
   slug: string;
   title: string;
   publishedDate: string | null;
-  publishedTime: string | null; // Added publishedTime field
   featuredImage: string | null;
   category: string; // This is the display label
   categorySlug: string; // This is the raw value for the URL
 }
 
-export default function NewsCard({ slug, title, publishedDate, publishedTime, featuredImage, category, categorySlug }: NewsCardProps) {
+export default function NewsCard({ slug, title, publishedDate, featuredImage, category, categorySlug }: NewsCardProps) {
   const postUrl = `/hirek/${categorySlug}/${slug}`;
 
   return (

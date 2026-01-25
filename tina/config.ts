@@ -13,9 +13,9 @@ export default defineConfig({
   branch,
 
   // Get this from tina.io
-  clientId: isLocal ? null : process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
+  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
   // Get this from tina.io
-  token: isLocal ? null : process.env.TINA_TOKEN,
+  token: process.env.TINA_TOKEN,
 
   build: {
     outputFolder: "admin",
@@ -66,7 +66,7 @@ export default defineConfig({
             name: "publishedDate",
             label: "Közzététel dátuma és ideje",
             ui: {
-              defaultValue: () => new Date().toISOString(),
+              defaultValue: new Date().toISOString(),
             },
           },
           {
@@ -124,9 +124,8 @@ export default defineConfig({
           {
             type: "datetime",
             name: "publishedDate",
-            label: "Közzététel dátuma és ideje",
             ui: {
-              defaultValue: () => new Date().toISOString(),
+              defaultValue: new Date().toISOString(),
             },
           },
         ],
@@ -167,7 +166,7 @@ export default defineConfig({
             name: "publishedDate",
             label: "Feltöltés dátuma és ideje",
             ui: {
-              defaultValue: () => new Date().toISOString(),
+              defaultValue: new Date().toISOString(),
             },
           },
         ],
@@ -363,6 +362,9 @@ export default defineConfig({
             type: "datetime",
             name: "publishedDate",
             label: "Létrehozva",
+            ui: {
+              defaultValue: new Date().toISOString(),
+            },
           },
         ],
       },
