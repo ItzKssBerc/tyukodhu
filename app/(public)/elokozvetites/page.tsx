@@ -32,13 +32,8 @@ function getYouTubeEmbedUrl(url: string): string | null {
 export default async function LiveStreamPage() {
   let liveStream: { isLive?: boolean | null; embedCode?: string | null; streamUrl?: string | null; } | null = null;
 
-  if (process.env.NODE_ENV === 'production') {
-    // In production build, assume offline for now to allow build to pass
-    liveStream = { isLive: false, embedCode: "", streamUrl: "" };
-  } else {
-    const tinaData = await client.queries.liveStream({ relativePath: 'index.yaml' });
-    liveStream = tinaData.data.liveStream;
-  }
+  const tinaData = await client.queries.liveStream({ relativePath: 'index.yaml' });
+  liveStream = tinaData.data.liveStream;
 
   // Ha nincs konfigurálva a liveStream, vagy nincs aktív, alapértelmezett offline állapot
   const isLive = liveStream?.isLive || false;

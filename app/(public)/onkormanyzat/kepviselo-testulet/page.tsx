@@ -15,25 +15,17 @@ interface Person {
 export default async function KepviseloTestuletPage() {
   let people: Person[] = [];
 
-  if (process.env.NODE_ENV === 'production') {
-    // In production build, we might not have TinaCMS running,
-    // so we return an empty array for now to allow the build to pass.
-    // A more robust solution for production would involve fetching
-    // pre-built content or a deployed TinaCMS content API.
-    people = [];
-  } else {
-    const tinaData = await client.queries.peopleConnection();
-    people = tinaData.data.peopleConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
-      slug: item?._sys.filename || '',
-      entry: {
-        name: item?.name || '',
-        body: item?.body || '',
-        position: item?.position,
-        committees: item?.committees?.filter(Boolean) as ({ name?: string | null; position?: string | null } | null)[],
-        image: item?.image,
-      }
-    })) || [];
-  }
+  const tinaData = await client.queries.peopleConnection();
+  people = tinaData.data.peopleConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
+    slug: item?._sys.filename || '',
+    entry: {
+      name: item?.name || '',
+      body: item?.body || '',
+      position: item?.position,
+      committees: item?.committees?.filter(Boolean) as ({ name?: string | null; position?: string | null } | null)[],
+      image: item?.image,
+    }
+  })) || [];
 
   const roleMetadata: { [key:string]: { icon: string; borderColor: string } } = {
     "polgármester": {
