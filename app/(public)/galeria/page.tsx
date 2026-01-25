@@ -15,6 +15,7 @@ export default async function GalleryPage() {
       album: item?.album || '',
       image: item?.image || '',
       publishedDate: item?.publishedDate ?? null,
+      publishedTime: null,
     }
   })) || [];
   console.log("Gallery items found by Tina:", galleryItems);
