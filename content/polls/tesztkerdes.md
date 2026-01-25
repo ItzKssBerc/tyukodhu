@@ -1,3 +1,4 @@
+---
 question: tesztkerdes
 options:
   - option: valasz1
@@ -6,3 +7,4 @@ options:
 isActive: true
 allowChange: true
 publishedDate: 2026-01-19T00:00:00.000Z
+---

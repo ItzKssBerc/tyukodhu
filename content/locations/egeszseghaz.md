@@ -1,3 +1,4 @@
+---
 title: Egészségház
 address: 4762 Tyukod, Árpád út 24.
 coordinates:
@@ -8,3 +9,4 @@ markerIcon: Hospital
 markerColor: '#C62828' # Piros
 description: >-
   Egészségház.
+---

@@ -1,3 +1,4 @@
+---
 title: Általános Iskola
 address: 4762 Tyukod, Árpád út 29.
 coordinates:
@@ -8,3 +9,4 @@ markerIcon: School
 markerColor: '#2E7D32' # Zöld
 description: >-
   Tyukodi Általános Iskola. Telefonszám: +36 44 356 269.
+---

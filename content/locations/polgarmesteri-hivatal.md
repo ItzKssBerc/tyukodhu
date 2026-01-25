@@ -1,3 +1,4 @@
+---
 title: Polgármesteri Hivatal
 address: 4762 Tyukod, Árpád út 33.
 coordinates:
@@ -8,3 +9,4 @@ markerIcon: Building
 markerColor: '#1565C0' # Kék
 description: >-
   Polgármesteri Hivatal Tyukod. Telefonszám: +36 44 556 062. Nyitvatartás: Hétfő, Kedd, Csütörtök, Péntek: 8:00 – 12:00, Szerda: 8:00 – 16:00.
+---

@@ -1,6 +1,8 @@
-name: Kerezsi Józsefné
+---
+name: Kócsi Norbert
 body: kepviselo-testulet
 position: Képviselő
 committees:
-  - name: Egészségügyi és Szociális bizottság
+  - name: Pénzügyi bizottság
     position: tag
+---

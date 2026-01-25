@@ -1,3 +1,4 @@
+---
 title: Uray-kastély
 address: 4762 Tyukod, Ady Endre u. 1.
 coordinates:
@@ -8,3 +9,4 @@ markerIcon: Building
 markerColor: '#6A1B9A' # Lila
 description: >-
   Uray-kastély.
+---

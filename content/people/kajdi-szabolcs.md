@@ -1,3 +1,5 @@
+---
 name: Kajdi Szabolcs
 body: kepviselo-testulet
 position: Polgármester
+---

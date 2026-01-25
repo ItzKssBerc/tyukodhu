@@ -1,3 +1,4 @@
+---
 title: Tyukodi horgásztó
 address: 4762 Tyukod, Bem u. 2.
 coordinates:
@@ -8,3 +9,4 @@ markerIcon: MapPin
 markerColor: '#1565C0' # Kék
 description: >-
   Tyukodi horgásztó.
+---

@@ -1,3 +1,4 @@
+---
 title: Orvosi Rendelő
 address: 4762 Tyukod, Árpád út 42.
 coordinates:
@@ -8,3 +9,4 @@ markerIcon: Hospital
 markerColor: '#C62828' # Piros
 description: >-
   Orvosi Rendelő. Telefonszám: +36 44 356 264.
+---

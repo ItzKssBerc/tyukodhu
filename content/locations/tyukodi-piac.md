@@ -1,3 +1,4 @@
+---
 title: Tyukodi Piac
 address: 4762 Tyukod, Piac tér
 coordinates:
@@ -8,3 +9,4 @@ markerIcon: MapPin
 markerColor: '#EF6C00' # Narancs
 description: >-
   Tyukodi Piac.
+---

@@ -1,3 +1,4 @@
+---
 title: Óvoda
 address: 4762 Tyukod, Árpád út 10.
 coordinates:
@@ -8,3 +9,4 @@ markerIcon: School
 markerColor: '#2E7D32' # Zöld
 description: >-
   Tyukodi Óvoda. Telefonszám: +36 44 356 252.
+---

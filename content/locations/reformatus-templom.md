@@ -1,3 +1,4 @@
+---
 title: Református templom
 address: 4762 Tyukod, Kis u. 24.
 coordinates:
@@ -8,3 +9,4 @@ markerIcon: Star
 markerColor: '#6A1B9A' # Lila
 description: >-
   Tyukodi Református templom. Telefonszám: +36 44 356 249.
+---

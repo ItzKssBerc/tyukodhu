@@ -89,7 +89,6 @@ export default defineConfig({
         name: "documents",
         label: "Dokumentumok",
         path: "content/documents",
-        format: 'yaml',
         fields: [
           {
             type: "string",
@@ -137,7 +136,6 @@ export default defineConfig({
         name: "images",
         label: "Képek",
         path: "content/images",
-        format: 'yaml',
         fields: [
           {
             type: "string",
@@ -179,7 +177,6 @@ export default defineConfig({
         name: "locations",
         label: "Helyszínek",
         path: "content/locations",
-        format: 'yaml',
         fields: [
           {
             type: "string",
@@ -277,7 +274,6 @@ export default defineConfig({
         name: "people",
         label: "Személyek",
         path: "content/people",
-        format: 'yaml',
         fields: [
           {
             type: "string",
@@ -330,7 +326,6 @@ export default defineConfig({
         name: "polls",
         label: "Szavazások",
         path: "content/polls",
-        format: 'yaml',
         fields: [
           {
             type: "string",
@@ -376,7 +371,7 @@ export default defineConfig({
         name: "liveStream",
         label: "Élő Adás Beállítások",
         path: "content/live-stream",
-        format: 'yaml',
+        format: 'md',
         fields: [
           {
             type: "string",
@@ -397,9 +392,6 @@ export default defineConfig({
             label: "Élő Adás Aktív",
           },
         ],
-        match: {
-          include: 'index',
-        },
       },
     ],
   },
