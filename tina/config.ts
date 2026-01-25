@@ -87,6 +87,7 @@ export default defineConfig({
         name: "documents",
         label: "Dokumentumok",
         path: "content/documents",
+        format: 'yaml',
         fields: [
           {
             type: "string",
@@ -134,6 +135,7 @@ export default defineConfig({
         name: "images",
         label: "Képek",
         path: "content/images",
+        format: 'yaml',
         fields: [
           {
             type: "string",
