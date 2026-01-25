@@ -1,19 +1,29 @@
-import { reader } from "@/keystatic/reader";
+import { client } from '@/tina/__generated__/client';
 import Image from 'next/image';
 
 interface Person {
   slug: string;
   entry: {
     name: string;
-    body: 'kepviselo-testulet' | 'penzugyi-bizottsag' | 'egeszsegugyi-es-szocialis-bizottsag';
-    position: string | null;
-    committees: { name: string; position: string }[];
-    image: string | null;
+    body: string; // Tina's body field is a string
+    position?: string | null;
+    committees?: { name?: string | null; position?: string | null }[]; // Tina's committees field
+    image?: string | null;
   };
 }
 
 export default async function KepviseloTestuletPage() {
-  const people = await reader.collections.people.all();
+  const tinaData = await client.queries.peopleConnection();
+  const people = tinaData.data.peopleConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
+    slug: item?._sys.filename || '',
+    entry: {
+      name: item?.name || '',
+      body: item?.body || '',
+      position: item?.position,
+      committees: item?.committees,
+      image: item?.image,
+    }
+  })) || [];
 
   const roleMetadata: { [key:string]: { icon: string; borderColor: string } } = {
     "polgármester": {

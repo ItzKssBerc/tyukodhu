@@ -1,5 +1,5 @@
 import Carousel from "@/components/Carousel";
-import { reader } from '@/keystatic/reader';
+import { client } from '@/tina/__generated__/client';
 import NewsCard from "@/components/NewsCard";
 import Link from "next/link";
 
@@ -7,11 +7,11 @@ interface Post {
   slug: string;
   entry: {
     title: string;
-    category: 'hirek' | 'kozlemenyek' | 'rendezvenyek' | 'egyeb';
+    category: string;
     publishedDate: string | null;
-    publishedTime: string;
-    content: any;
-    featuredImage: string | null;
+    publishedTime?: string | null;
+    content?: any;
+    featuredImage?: string | null;
   };
 }
 
@@ -19,23 +19,50 @@ interface Document {
   slug: string;
   entry: {
     title: string;
-    category: 'jegyzokonyvek' | 'hatarozatok' | 'rendeletek' | 'meghivok' | 'egyeb';
-    description: string;
+    category: string;
+    description?: string | null;
     file: string;
     publishedDate: string | null;
-    publishedTime: string;
+    publishedTime?: string | null;
   };
 }
 
 export default async function Home() {
-  const latestPosts = (await reader.collections.posts.all())
+  const tinaPostData = await client.queries.postsConnection();
+  const posts = tinaPostData.data.postsConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
+    slug: item?._sys.filename || '',
+    entry: {
+      title: item?.title || '',
+      category: item?.category || '',
+      publishedDate: item?.publishedDate || null,
+      publishedTime: item?.publishedTime || null,
+      content: item?.content,
+      featuredImage: item?.featuredImage,
+    }
+  })) || [];
+
+  const latestPosts = posts
     .sort((a: Post, b: Post) => {
       const dateA = a.entry.publishedDate ? new Date(a.entry.publishedDate).getTime() : 0;
       const dateB = b.entry.publishedDate ? new Date(b.entry.publishedDate).getTime() : 0;
       return dateB - dateA;
     })
     .slice(0, 3);
-  const latestDocuments = (await reader.collections.documents.all())
+
+  const tinaDocumentData = await client.queries.documentsConnection();
+  const documents = tinaDocumentData.data.documentsConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
+    slug: item?._sys.filename || '',
+    entry: {
+      title: item?.title || '',
+      category: item?.category || '',
+      description: item?.description || null,
+      file: item?.file || '',
+      publishedDate: item?.publishedDate || null,
+      publishedTime: item?.publishedTime || null,
+    }
+  })) || [];
+
+  const latestDocuments = documents
     .sort((a: Document, b: Document) => {
       const dateA = a.entry.publishedDate ? new Date(a.entry.publishedDate).getTime() : 0;
       const dateB = b.entry.publishedDate ? new Date(b.entry.publishedDate).getTime() : 0;

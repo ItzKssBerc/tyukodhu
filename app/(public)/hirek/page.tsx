@@ -1,5 +1,4 @@
-import { createReader } from "@keystatic/core/reader";
-import config from "../../../keystatic.config";
+import { client } from '@/tina/__generated__/client';
 import NewsClient from "@/components/NewsClient";
 
 // Hardcoded category options from keystatic.config.ts for runtime lookup
@@ -15,9 +14,19 @@ type PageProps = {
 };
 
 export default async function NewsPage({ searchParams }: PageProps) {
-  const reader = createReader(process.cwd(), config);
-  const posts = await reader.collections.posts.all();
-  console.log("Posts found by reader.collections.posts.all():", posts);
+  const tinaData = await client.queries.postsConnection();
+  const posts = tinaData.data.postsConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
+    slug: item?.id,
+    entry: {
+      title: item?.title || '',
+      category: item?.category || '',
+      publishedDate: item?.publishedDate,
+      publishedTime: item?.publishedTime,
+      content: item?.content,
+      featuredImage: item?.featuredImage,
+    }
+  })) || [];
+  console.log("Posts found by Tina:", posts);
   
   // Sort posts by date (newest first)
   const sortedPosts = posts.sort((a, b) => {

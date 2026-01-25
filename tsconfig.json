@@ -30,7 +30,6 @@
     }
   },
   "include": [
-    "keystatic.config.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

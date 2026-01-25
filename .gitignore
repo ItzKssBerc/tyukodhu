@@ -45,3 +45,6 @@ next-env.d.ts
 public/keystatic-images/
 .env.local
 .env*.local
+
+node_modules
+.env

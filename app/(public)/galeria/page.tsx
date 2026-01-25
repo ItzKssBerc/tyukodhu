@@ -1,12 +1,22 @@
-import { createReader } from "@keystatic/core/reader";
-import config from "../../../keystatic.config";
+import { client } from '@/tina/__generated__/client';
 import GalleryClient from "@/components/GalleryClient";
 
 export default async function GalleryPage() {
-  const reader = createReader(process.cwd(), config);
-  // Ensure the reader is picking up the latest schema, including 'album'
-  const galleryItems = await reader.collections.images.all();
-  console.log("Gallery items found by reader.collections.images.all():", galleryItems);
+  const tinaData = await client.queries.imagesConnection();
+  const galleryItems = tinaData.data.imagesConnection.edges?.map(
+    (edge) => edge?.node
+  ).filter(Boolean).map(item => ({
+    slug: item?.id, // Use Tina's id as slug
+    entry: {
+      title: item?.title || '',
+      description: item?.description || '',
+      album: item?.album || '',
+      image: item?.image || '',
+      publishedDate: item?.publishedDate,
+      publishedTime: item?.publishedTime,
+    }
+  })) || [];
+  console.log("Gallery items found by Tina:", galleryItems);
 
   return (
     <div className="container mx-auto py-8 px-4">

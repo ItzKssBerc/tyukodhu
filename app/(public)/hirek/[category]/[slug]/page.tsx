@@ -1,9 +1,7 @@
-import { createReader } from '@keystatic/core/reader';
-import config from '../../../../../keystatic.config';
+import { client } from '@/tina/__generated__/client';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import Markdoc from '@markdoc/markdoc';
-import { DocumentRenderer } from '@keystatic/core/renderer';
+import { TinaMarkdown } from 'tinacms/dist/rich-text'; // Assuming TinaMarkdown is available
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Tag } from 'lucide-react';
@@ -31,21 +29,21 @@ const categoryColors: Record<string, string> = {
 };
 
 export async function generateStaticParams() {
-    const reader = createReader(process.cwd(), config);
-    const posts = await reader.collections.posts.all();
+    const tinaData = await client.queries.postConnection();
+    const posts = tinaData.data.postConnection.edges?.map((edge) => edge?.node).filter(Boolean) || [];
 
     return posts.map((post) => ({
-        category: post.entry.category,
-        slug: post.slug,
+        category: post.category || 'egyeb', // Default category if not present
+        slug: post._sys.filename, // Tina uses _sys.filename as slug
     }));
 }
 
 export default async function PostPage({ params }: PageProps) {
     const { slug, category } = await params;
     console.log("Individual Post Page - Slug:", slug, "Category:", category);
-    const reader = createReader(process.cwd(), config);
-    const post = await reader.collections.posts.read(slug);
-    console.log("Individual Post Page - Post from reader:", post);
+    const tinaData = await client.queries.post({ relativePath: `${slug}.md` }); // Tina uses relativePath for single document queries
+    const post = tinaData.data.post;
+    console.log("Individual Post Page - Post from Tina:", post);
 
     // If the post doesn't exist or the category from the URL doesn't match the post's category, return 404.
     // This prevents the same content from appearing under multiple URLs.
@@ -118,7 +116,7 @@ export default async function PostPage({ params }: PageProps) {
                             prose-strong:text-gray-900 dark:prose-strong:text-white
                             prose-ul:list-disc prose-ul:pl-6
                             prose-ol:list-decimal prose-ol:pl-6">
-                            <DocumentRenderer document={await post.content()} />
+                            {post.content && <TinaMarkdown content={post.content} />}
                         </div>                    </div>
                 </article>
             </div>

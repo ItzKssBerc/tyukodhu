@@ -1,11 +1,20 @@
-import { createReader } from "@keystatic/core/reader";
-import config from "../../../../keystatic.config";
+import { client } from '@/tina/__generated__/client';
 import DocumentsClient from "@/components/DocumentsClient";
 
 export default async function DocumentsPage() {
-  const reader = createReader(process.cwd(), config);
-  const documents = await reader.collections.documents.all();
-  console.log("Documents found by reader.collections.documents.all():", documents);
+  const tinaData = await client.queries.documentsConnection();
+  const documents = tinaData.data.documentsConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
+    slug: item?._sys.filename || '',
+    entry: {
+      title: item?.title || '',
+      category: item?.category || '',
+      description: item?.description || '',
+      file: item?.file || '',
+      publishedDate: item?.publishedDate,
+      publishedTime: item?.publishedTime,
+    }
+  })) || [];
+  console.log("Documents found by Tina:", documents);
 
   return (
     <div className="container mx-auto px-4 py-8">

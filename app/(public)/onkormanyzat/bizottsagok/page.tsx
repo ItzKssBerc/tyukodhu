@@ -1,4 +1,4 @@
-import { reader } from "@/keystatic/reader";
+import { client } from '@/tina/__generated__/client';
 import Image from 'next/image';
 
 type CommitteeMember = {
@@ -8,7 +8,17 @@ type CommitteeMember = {
 };
 
 export default async function BizottsagokPage() {
-  const people = await reader.collections.people.all();
+  const tinaData = await client.queries.peopleConnection();
+  const people = tinaData.data.peopleConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
+    slug: item?._sys.filename || '',
+    entry: {
+      name: item?.name || '',
+      body: item?.body || '',
+      position: item?.position,
+      committees: item?.committees,
+      image: item?.image,
+    }
+  })) || [];
 
   const committeesMap = new Map<string, CommitteeMember[]>();
 

@@ -1,5 +1,4 @@
-import { createReader } from "@keystatic/core/reader";
-import config from "../../../keystatic.config";
+import { client } from '@/tina/__generated__/client';
 
 // Helper function to convert YouTube URL to embed URL
 function getYouTubeEmbedUrl(url: string): string | null {
@@ -31,8 +30,8 @@ function getYouTubeEmbedUrl(url: string): string | null {
 
 // Live Stream Page Component
 export default async function LiveStreamPage() {
-  const reader = createReader(process.cwd(), config);
-  const liveStream = await reader.singletons.liveStream.read();
+  const tinaData = await client.queries.liveStream({ relativePath: 'index.yaml' });
+  const liveStream = tinaData.data.liveStream;
 
   // Ha nincs konfigurálva a liveStream, vagy nincs aktív, alapértelmezett offline állapot
   const isLive = liveStream?.isLive || false;

@@ -1,5 +1,4 @@
-import { createReader } from '@keystatic/core/reader';
-import config from '../../../keystatic.config';
+import { client } from '@/tina/__generated__/client';
 import PollCard from '@/components/PollCard';
 import { getPollResults } from '@/app/actions';
 import { cookies } from 'next/headers';
@@ -10,8 +9,17 @@ export const metadata = {
 };
 
 export default async function PollsPage() {
-  const reader = createReader(process.cwd(), config);
-  const polls = await reader.collections.polls.all();
+  const tinaData = await client.queries.pollsConnection();
+  const polls = tinaData.data.pollsConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
+    slug: item?._sys.filename || '',
+    entry: {
+      question: item?.question || '',
+      options: item?.options || [],
+      isActive: item?.isActive || false,
+      allowChange: item?.allowChange || false,
+      publishedDate: item?.publishedDate,
+    }
+  })) || [];
   
   // Filter active polls
   const activePolls = polls.filter(poll => poll.entry.isActive);

@@ -114,6 +114,7 @@ export default function MapComponent({ locations }: MapComponentProps) {
 
   return (
     <MapContainer
+      key="map-container"
       center={initialCenter}
       zoom={initialZoom}
       scrollWheelZoom={true}

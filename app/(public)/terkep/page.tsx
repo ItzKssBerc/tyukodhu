@@ -1,20 +1,18 @@
 // app/(public)/terkep/page.tsx (Server Component)
-import { reader } from '@/keystatic/reader'; // Adjust path if necessary
+import { client } from '@/tina/__generated__/client'; // Import Tina client
 import MapClientPage from './client-page'; // Import the client component
 
-// Interface for the Keystatic entry structure
-interface KeystaticLocationEntry {
-  slug: string;
-  entry: {
-    title: string;
-    address: string;
-    coordinates?: { lat: number; lng: number } | null;
-    category: 'Önkormányzat' | 'Kultúra' | 'Oktatás' | 'Egészségügy' | 'Sport' | 'Egyéb';
-    markerIcon: 'MapPin' | 'Home' | 'Building' | 'Hospital' | 'School' | 'Star' | 'Info';
-    markerColor: string; // Added markerColor
-    description: string; 
-    images: readonly (string | null)[]; 
-  };
+// Interface for the Tina entry structure
+interface TinaLocationEntry {
+  id: string; // Tina nodes usually have an id
+  title: string;
+  address: string;
+  coordinates?: { lat: number; lng: number } | null;
+  category: string; // Tina categories are strings, not necessarily fixed enums
+  markerIcon: string;
+  markerColor: string;
+  description?: string; 
+  images?: { image?: string | null }[]; // Tina images field is an array of objects with an image field
 }
 
 // Interface for the simplified Location object passed to the client component
@@ -25,7 +23,7 @@ interface LocationProps {
   category?: string;
   coordinates?: { lat: number; lng: number } | null;
   markerIcon?: string;
-  markerColor?: string; // Added markerColor
+  markerColor?: string;
 }
 
 export default async function MapPage() {
@@ -33,20 +31,22 @@ export default async function MapPage() {
   let error: string | null = null;
 
   try {
-    // @ts-ignore - Keystatic types can be tricky
-    const keystaticLocations = await reader.collections.locations.all() as unknown as KeystaticLocationEntry[];
+    const tinaData = await client.queries.locationsConnection();
+    const tinaLocations: TinaLocationEntry[] = tinaData.data.locationsConnection.edges?.map(
+      (edge) => edge?.node
+    ).filter(Boolean) as TinaLocationEntry[];
     
-    locations = keystaticLocations.map((loc) => ({
-      title: loc.entry.title,
-      address: loc.entry.address,
-      description: loc.entry.description,
-      category: loc.entry.category,
-      coordinates: loc.entry.coordinates,
-      markerIcon: loc.entry.markerIcon,
-      markerColor: loc.entry.markerColor,
+    locations = tinaLocations.map((loc) => ({
+      title: loc.title,
+      address: loc.address,
+      description: loc.description,
+      category: loc.category,
+      coordinates: loc.coordinates,
+      markerIcon: loc.markerIcon,
+      markerColor: loc.markerColor,
     }));
   } catch (err: any) {
-    console.error("Failed to fetch locations from Keystatic in Server Component:", err);
+    console.error("Failed to fetch locations from TinaCMS in Server Component:", err);
     error = "Hiba történt a helyszínek betöltésekor.";
   }
 

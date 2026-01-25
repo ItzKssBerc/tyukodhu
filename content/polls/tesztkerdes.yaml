@@ -1,8 +1,8 @@
 question: tesztkerdes
 options:
-  - valasz1
-  - valasz2
-  - valasz3
+  - option: valasz1
+  - option: valasz2
+  - option: valasz3
 isActive: true
 allowChange: true
-publishedDate: 2026-01-19
+publishedDate: 2026-01-19T00:00:00.000Z
