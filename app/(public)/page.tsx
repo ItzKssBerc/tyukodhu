@@ -9,9 +9,9 @@ interface Post {
     title: string;
     category: string;
     publishedDate: string | null;
-    publishedTime?: string | null;
+    publishedTime: string | null;
     content?: any;
-    featuredImage?: string | null;
+    featuredImage: string | null;
   };
 }
 
@@ -20,26 +20,36 @@ interface Document {
   entry: {
     title: string;
     category: string;
-    description?: string | null;
+    description: string | null;
     file: string;
     publishedDate: string | null;
-    publishedTime?: string | null;
+    publishedTime: string | null;
   };
 }
 
 export default async function Home() {
-  const tinaPostData = await client.queries.postsConnection();
-  const posts = tinaPostData.data.postsConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
-    slug: item?._sys.filename || '',
-    entry: {
-      title: item?.title || '',
-      category: item?.category || '',
-      publishedDate: item?.publishedDate || null,
-      publishedTime: item?.publishedTime || null,
-      content: item?.content,
-      featuredImage: item?.featuredImage,
-    }
-  })) || [];
+  let posts: Post[] = [];
+
+  if (process.env.NODE_ENV === 'production') {
+    posts = [];
+  } else {
+    const tinaPostData = await client.queries.postsConnection();
+    posts = tinaPostData.data.postsConnection.edges
+      ?.map((edge) => edge?.node)
+      .filter(Boolean) // Remove null/undefined nodes
+      .filter(item => item?._sys.filename !== undefined && item._sys.filename !== null) // Ensure filename is defined
+      .map(item => ({
+        slug: item!._sys.filename, // Now filename is guaranteed to be string
+        entry: {
+          title: item?.title || '',
+          category: item?.category || '',
+          publishedDate: item?.publishedDate ?? null,
+          publishedTime: item?.publishedTime ?? null,
+          content: item?.content,
+          featuredImage: item?.featuredImage ?? null,
+        }
+      })) || [];
+  }
 
   const latestPosts = posts
     .sort((a: Post, b: Post) => {
@@ -49,18 +59,24 @@ export default async function Home() {
     })
     .slice(0, 3);
 
-  const tinaDocumentData = await client.queries.documentsConnection();
-  const documents = tinaDocumentData.data.documentsConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
-    slug: item?._sys.filename || '',
-    entry: {
-      title: item?.title || '',
-      category: item?.category || '',
-      description: item?.description || null,
-      file: item?.file || '',
-      publishedDate: item?.publishedDate || null,
-      publishedTime: item?.publishedTime || null,
-    }
-  })) || [];
+  let documents: Document[] = [];
+
+  if (process.env.NODE_ENV === 'production') {
+    documents = [];
+  } else {
+    const tinaDocumentData = await client.queries.documentsConnection();
+    documents = tinaDocumentData.data.documentsConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
+      slug: item?._sys.filename || '',
+      entry: {
+        title: item?.title || '',
+        category: item?.category || '',
+        description: item?.description || null,
+        file: item?.file || '',
+        publishedDate: item?.publishedDate || null,
+        publishedTime: item?.publishedTime || null,
+      }
+    })) || [];
+  }
 
   const latestDocuments = documents
     .sort((a: Document, b: Document) => {
