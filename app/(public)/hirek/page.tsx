@@ -28,7 +28,7 @@ export default async function NewsPage({ searchParams }: PageProps) {
       .filter(Boolean)
       .filter(item => item?.id !== undefined && item.id !== null) // Ensure id is defined
       .map(item => ({
-        slug: item!.id,
+        slug: item!._sys?.filename?.replace(/\.(md|mdoc)$/, '') || item!.id,
         entry: {
           title: item?.title || '',
           category: item?.category || '',

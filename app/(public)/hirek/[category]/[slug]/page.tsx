@@ -29,18 +29,48 @@ const categoryColors: Record<string, string> = {
 };
 
 export async function generateStaticParams() {
-    // Temporarily returning an empty array to unblock build due to TinaCMS fetch issues.
-    // A proper implementation would fetch all possible paths from TinaCMS.
-    return [];
+    const postsResponse = await client.queries.postsConnection();
+    const posts = postsResponse.data.postsConnection.edges?.map((edge) => edge?.node).filter(Boolean);
+
+    if (!posts) {
+        return [];
+    }
+
+    return posts.map((post) => {
+        // Extract filename without extension and use as slug
+        const filename = post!._sys.filename;
+        const slug = filename.replace(/\.(md|mdoc)$/, '');
+        return {
+            slug: slug,
+            category: post!.category,
+        };
+    });
 }
 
 export default async function PostPage({ params }: PageProps) {
     const { slug, category } = await params;
     console.log("Individual Post Page - Slug:", slug, "Category:", category);
-    const tinaData = await client.queries.posts({ 
-        relativePath: `${slug}.md`,
-    }); 
-    const post = tinaData.data.posts;
+    
+    // Try to fetch with .md extension first, then .mdoc
+    let tinaData;
+    let post;
+    
+    try {
+        tinaData = await client.queries.posts({ 
+            relativePath: `${slug}.md`,
+        }); 
+        post = tinaData.data.posts;
+    } catch (error) {
+        try {
+            tinaData = await client.queries.posts({ 
+                relativePath: `${slug}.mdoc`,
+            }); 
+            post = tinaData.data.posts;
+        } catch (error2) {
+            post = null;
+        }
+    }
+    
     console.log("Individual Post Page - Post from Tina:", post);
 
     // If the post doesn't exist or the category from the URL doesn't match the post's category, return 404.
