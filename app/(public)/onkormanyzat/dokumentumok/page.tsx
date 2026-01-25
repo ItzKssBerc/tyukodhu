@@ -6,16 +6,20 @@ export default async function DocumentsPage() {
   const documents = tinaData.data.documentsConnection.edges?.map((edge) => edge?.node)
   .filter(Boolean)
   .filter(item => item?._sys.filename !== undefined && item._sys.filename !== null) // Ensure filename is defined
-  .map(item => ({
-    slug: item!._sys.filename, // Now filename is guaranteed to be string
-    entry: {
-      title: item?.title || '',
-      category: item?.category || '',
-      description: item?.description || '',
-      file: item?.file || '',
-      publishedDate: item?.publishedDate ?? null,
-    }
-  })) || [];
+  .map(item => {
+    const publishedDateTime = item?.publishedDate ? new Date(item.publishedDate) : null;
+    return {
+      slug: item!._sys.filename, // Now filename is guaranteed to be string
+      entry: {
+        title: item?.title || '',
+        category: item?.category || '',
+        description: item?.description || '',
+        file: item?.file || '',
+        publishedDate: publishedDateTime ? publishedDateTime.toISOString().split('T')[0] : null,
+        publishedTime: publishedDateTime ? publishedDateTime.toTimeString().split(' ')[0].substring(0, 5) : null,
+      }
+    };
+  }) || [];
   console.log("Documents found by Tina:", documents);
 
   return (
