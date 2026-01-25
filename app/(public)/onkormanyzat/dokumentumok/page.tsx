@@ -2,22 +2,21 @@ import { client } from '@/tina/__generated__/client';
 import DocumentsClient from "@/components/DocumentsClient";
 
 export default async function DocumentsPage() {
-// const tinaData = await client.queries.documentsConnection();
-  const documents: any[] = []; // Temporarily set to empty array to unblock build
-  // const documents = tinaData.data.documentsConnection.edges?.map((edge) => edge?.node)
-  // .filter(Boolean)
-  // .filter(item => item?._sys.filename !== undefined && item._sys.filename !== null) // Ensure filename is defined
-  // .map(item => ({
-  //   slug: item!._sys.filename, // Now filename is guaranteed to be string
-  //   entry: {
-  //     title: item?.title || '',
-  //     category: item?.category || '',
-  //     description: item?.description || '',
-  //     file: item?.file || '',
-  //     publishedDate: item?.publishedDate ?? null,
-  //     publishedTime: item?.publishedTime ?? null,
-  //   }
-  // })) || [];
+  const tinaData = await client.queries.documentsConnection();
+  const documents = tinaData.data.documentsConnection.edges?.map((edge) => edge?.node)
+  .filter(Boolean)
+  .filter(item => item?._sys.filename !== undefined && item._sys.filename !== null) // Ensure filename is defined
+  .map(item => ({
+    slug: item!._sys.filename, // Now filename is guaranteed to be string
+    entry: {
+      title: item?.title || '',
+      category: item?.category || '',
+      description: item?.description || '',
+      file: item?.file || '',
+      publishedDate: item?.publishedDate ?? null,
+      publishedTime: item?.publishedTime ?? null,
+    }
+  })) || [];
   console.log("Documents found by Tina:", documents);
 
   return (
