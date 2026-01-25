@@ -14,7 +14,6 @@ export default async function DocumentsPage() {
       description: item?.description || '',
       file: item?.file || '',
       publishedDate: item?.publishedDate ?? null,
-      publishedTime: item?.publishedTime ?? null,
     }
   })) || [];
   console.log("Documents found by Tina:", documents);
