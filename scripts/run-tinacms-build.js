@@ -8,7 +8,7 @@ const tinacmsExecutable = path.join(__dirname, '..', 'node_modules', '.bin', 'ti
 
 const tinacmsBuild = spawn(tinacmsExecutable, ['build'], {
   stdio: 'inherit',
-  env: { ...process.env, TINA_PUBLIC_IS_LOCAL: 'true' },
+  env: { ...process.env },
   shell: true, // Use shell to ensure tinacms executable is found and run
 });
 
