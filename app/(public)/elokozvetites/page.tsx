@@ -32,7 +32,7 @@ function getYouTubeEmbedUrl(url: string): string | null {
 
 // Live Stream Page Component
 export default async function LiveStreamPage() {
-  const filePath = path.join(process.cwd(), 'content', 'live-stream', 'config.md');
+  const filePath = path.join(process.cwd(), 'content', 'live-stream-config.md');
   let liveStream: { isLive?: boolean; embedCode?: string; streamUrl?: string; } | null = null;
 
   try {

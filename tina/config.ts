@@ -368,28 +368,66 @@ export default defineConfig({
         ],
       },
       {
-        name: "liveStream",
-        label: "Élő Adás Beállítások",
+        name: "liveStream", // This will be for actual live stream posts
+        label: "Élő Adások (Közlemények)", // Changed label to differentiate
         path: "content/live-stream",
         format: 'md',
         fields: [
+          // Existing fields for live stream posts (e.g., title, description, date, etc.)
           {
             type: "string",
-            name: "streamUrl",
-            label: "Stream URL (YouTube/Vimeo beágyazási link)",
+            name: "title",
+            label: "Cím",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Tartalom",
+            isBody: true,
+          },
+          {
+            type: "datetime",
+            name: "publishedDate",
+            label: "Közzététel dátuma és ideje",
+            ui: {
+              defaultValue: new Date().toISOString(),
+            },
+          },
+        ],
+      },
+      {
+        name: "liveStreamConfig", // New collection for the singleton config
+        label: "Élő Adás Beállítások (Konfiguráció)", // Differentiated label
+        path: "content", // Point to the directory where the config file resides
+        match: { include: "live-stream-config" }, // Match the specific config file
+        format: 'md',
+        ui: {
+          // Prevent creation/deletion via TinaCMS UI for this singleton config
+          allowedActions: {
+            create: false,
+            delete: false,
+          },
+        },
+        fields: [
+          {
+            type: "boolean",
+            name: "isLive",
+            label: "Élő Adás Aktív",
           },
           {
             type: "string",
             name: "embedCode",
             label: "Beágyazási kód (iframe)",
-            // ui: {
-            //   component: "textarea",
-            // },
+            ui: {
+              component: "textarea", // Add textarea component for better usability
+            },
           },
           {
-            type: "boolean",
-            name: "isLive",
-            label: "Élő Adás Aktív",
+            type: "string",
+            name: "streamUrl",
+            label: "Stream URL (YouTube/Vimeo beágyazási link)",
           },
         ],
       },
