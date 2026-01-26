@@ -367,36 +367,7 @@ export default defineConfig({
           },
         ],
       },
-      {
-        name: "liveStream", // This will be for actual live stream posts
-        label: "Élő Adások (Közlemények)", // Changed label to differentiate
-        path: "content/live-stream",
-        format: 'md',
-        fields: [
-          // Existing fields for live stream posts (e.g., title, description, date, etc.)
-          {
-            type: "string",
-            name: "title",
-            label: "Cím",
-            isTitle: true,
-            required: true,
-          },
-          {
-            type: "rich-text",
-            name: "body",
-            label: "Tartalom",
-            isBody: true,
-          },
-          {
-            type: "datetime",
-            name: "publishedDate",
-            label: "Közzététel dátuma és ideje",
-            ui: {
-              defaultValue: new Date().toISOString(),
-            },
-          },
-        ],
-      },
+
       {
         name: "liveStreamConfig", // New collection for the singleton config
         label: "Élő Adás Beállítások (Konfiguráció)", // Differentiated label
