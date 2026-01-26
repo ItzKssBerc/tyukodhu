@@ -1,4 +1,6 @@
-import { client } from '@/tina/__generated__/client';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
 
 // Helper function to convert YouTube URL to embed URL
 function getYouTubeEmbedUrl(url: string): string | null {
@@ -30,10 +32,18 @@ function getYouTubeEmbedUrl(url: string): string | null {
 
 // Live Stream Page Component
 export default async function LiveStreamPage() {
-  let liveStream: { isLive?: boolean | null; embedCode?: string | null; streamUrl?: string | null; } | null = null;
+  const filePath = path.join(process.cwd(), 'content', 'live-stream', 'config.md');
+  let liveStream: { isLive?: boolean; embedCode?: string; streamUrl?: string; } | null = null;
 
-  const tinaData = await client.queries.liveStream({ relativePath: 'config.md' });
-  liveStream = tinaData.data.liveStream;
+  try {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    const { data } = matter(fileContent);
+    liveStream = data as { isLive?: boolean; embedCode?: string; streamUrl?: string; };
+  } catch (error) {
+    console.error('Error reading live stream config:', error);
+    // Fallback to default offline state if config file cannot be read
+    liveStream = { isLive: false, embedCode: "", streamUrl: "" };
+  }
 
   // Ha nincs konfigurálva a liveStream, vagy nincs aktív, alapértelmezett offline állapot
   const isLive = liveStream?.isLive || false;
