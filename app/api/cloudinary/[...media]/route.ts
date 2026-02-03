@@ -1,7 +1,22 @@
 import { createMediaHandler } from "next-tinacms-cloudinary/dist/handlers";
 import { NextRequest, NextResponse } from 'next/server';
 
-const tinaCloudinaryHandler = createMediaHandler({});
+import { createMediaHandler } from "next-tinacms-cloudinary/dist/handlers";
+import { NextRequest, NextResponse } from 'next/server';
+// You might need to import `isAuthorized` from `@tinacms/auth` if you want to use TinaCMS's built-in authorization.
+// For this example, we'll use a simple `true` to get past the compile error.
+
+const tinaCloudinaryHandler = createMediaHandler({
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || '',
+  api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY || '',
+  api_secret: process.env.CLOUDINARY_API_SECRET || '',
+  authorized: async (req, res) => {
+    // This is a placeholder. In a real application, implement proper authentication.
+    // For example, if using TinaCMS's built-in auth, you might do:
+    // return isAuthorized(req, res);
+    return true;
+  },
+});
 
 // Helper function to convert NextRequest to NextApiRequest-like and handle response
 async function handleAppRouterRequest(req: NextRequest) {

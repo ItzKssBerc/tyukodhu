@@ -11,6 +11,7 @@
   "dependencies": {
     "@markdoc/markdoc": "^0.5.4",
     "@tailwindcss/postcss": "^4.1.18",
+    "@tinacms/auth": "^1.1.2",
     "@tinacms/search": "^1.2.0",
     "@vercel/analytics": "^1.6.1",
     "@vercel/blob": "^2.0.1",
