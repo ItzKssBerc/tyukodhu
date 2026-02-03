@@ -1,8 +1,4 @@
-import { createMediaHandler } from "next-tinacms-cloudinary/dist/handlers";
-import { NextRequest, NextResponse } from 'next/server';
 
-import { createMediaHandler } from "next-tinacms-cloudinary/dist/handlers";
-import { NextRequest, NextResponse } from 'next/server';
 // You might need to import `isAuthorized` from `@tinacms/auth` if you want to use TinaCMS's built-in authorization.
 // For this example, we'll use a simple `true` to get past the compile error.
 
@@ -64,7 +60,7 @@ async function handleAppRouterRequest(req: NextRequest) {
     method: req.method,
     headers: Object.fromEntries(req.headers.entries()),
     query: query,
-    cookies: Object.fromEntries(req.cookies.entries()),
+    cookies: req.cookies.getAll().reduce((obj, cookie) => ({ ...obj, [cookie.name]: cookie.value }), {}),
     body: undefined, // Will be populated for POST/PUT/DELETE
   };
 
@@ -88,10 +84,23 @@ async function handleAppRouterRequest(req: NextRequest) {
 
   // Execute the original Pages Router handler
   await new Promise<void>((resolve) => {
-    // The createMediaHandler expects a third argument (next() function) when used as middleware.
-    // For direct API route, it usually handles the response and calls end().
-    // We pass resolve as the 'next' function which signals completion.
-    tinaCloudinaryHandler(mockReq, mockRes, resolve);
+    const originalJson = mockRes.json;
+    mockRes.json = (...args: any[]) => {
+        originalJson(...args);
+        resolve();
+    };
+    const originalSend = mockRes.send;
+    mockRes.send = (...args: any[]) => {
+        originalSend(...args);
+        resolve();
+    };
+    const originalEnd = mockRes.end;
+    mockRes.end = (...args: any[]) => {
+        originalEnd(...args);
+        resolve();
+    };
+
+    tinaCloudinaryHandler(mockReq, mockRes);
   });
 
   // Convert the captured response to NextResponse
