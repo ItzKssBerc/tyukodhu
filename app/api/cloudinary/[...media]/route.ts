@@ -1,4 +1,7 @@
 
+import { createMediaHandler } from "next-tinacms-cloudinary/dist/handlers";
+import { NextRequest, NextResponse } from 'next/server';
+
 // You might need to import `isAuthorized` from `@tinacms/auth` if you want to use TinaCMS's built-in authorization.
 // For this example, we'll use a simple `true` to get past the compile error.
 
