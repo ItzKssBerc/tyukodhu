@@ -2,22 +2,23 @@
 
 import { useState, useEffect } from "react";
 
-const slides = [
-  { id: 1, src: "/images/welcome/1.jpg" },
-  { id: 2, src: "/images/welcome/2.jpg" },
-  { id: 3, src: "/images/welcome/3.jpg" },
-];
+// Update props to accept bannerImages
+export default function Carousel({ bannerImages }: { bannerImages: { image: string }[] }) {
+  // Map bannerImages to a format similar to old slides, adding an 'id'
+  const slides = bannerImages.map((img, index) => ({ id: index + 1, src: img.image }));
 
-export default function Carousel() {
   const [activeSlide, setActiveSlide] = useState(1);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveSlide((current) => (current === slides.length ? 1 : current + 1));
-    }, 5000);
+    // Only set up interval if there are slides
+    if (slides.length > 0) {
+      const interval = setInterval(() => {
+        setActiveSlide((current) => (current === slides.length ? 1 : current + 1));
+      }, 5000);
 
-    return () => clearInterval(interval);
-  }, []);
+      return () => clearInterval(interval);
+    }
+  }, [slides.length]); // Dependency on slides.length to re-run effect if images change
 
   const setSlide = (id: number) => {
     setActiveSlide(id);
@@ -30,6 +31,11 @@ export default function Carousel() {
   const prevSlide = () => {
     setActiveSlide((current) => (current === 1 ? slides.length : current - 1));
   };
+
+  // Render nothing if no slides
+  if (slides.length === 0) {
+    return null;
+  }
 
   return (
     <div className="relative w-full">
@@ -52,33 +58,37 @@ export default function Carousel() {
       </div>
 
       {/* Controls */}
-      <div className="absolute inset-0 flex items-center justify-between px-4">
-        <button
-          onClick={prevSlide}
-          className="bg-black bg-opacity-25 text-white p-2 rounded-full hover:bg-opacity-50 focus:outline-none cursor-pointer"
-        >
-          <i className="bi bi-chevron-left text-xl"></i>
-        </button>
-        <button
-          onClick={nextSlide}
-          className="bg-black bg-opacity-25 text-white p-2 rounded-full hover:bg-opacity-50 focus:outline-none cursor-pointer"
-        >
-          <i className="bi bi-chevron-right text-xl"></i>
-        </button>
-      </div>
+      {slides.length > 1 && ( // Only show controls if more than one slide
+        <div className="absolute inset-0 flex items-center justify-between px-4">
+          <button
+            onClick={prevSlide}
+            className="bg-black bg-opacity-25 text-white p-2 rounded-full hover:bg-opacity-50 focus:outline-none cursor-pointer"
+          >
+            <i className="bi bi-chevron-left text-xl"></i>
+          </button>
+          <button
+            onClick={nextSlide}
+            className="bg-black bg-opacity-25 text-white p-2 rounded-full hover:bg-opacity-50 focus:outline-none cursor-pointer"
+          >
+            <i className="bi bi-chevron-right text-xl"></i>
+          </button>
+        </div>
+      )}
 
       {/* Indicators */}
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex space-x-2">
-        {slides.map((slide) => (
-          <button
-            key={slide.id}
-            onClick={() => setSlide(slide.id)}
-            className={`w-3 h-3 rounded-full hover:bg-white focus:outline-none transition-colors duration-300 ${
-              activeSlide === slide.id ? "bg-white" : "bg-white/50"
-            }`}
-          ></button>
-        ))}
-      </div>
+      {slides.length > 1 && ( // Only show indicators if more than one slide
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex space-x-2">
+          {slides.map((slide) => (
+            <button
+              key={slide.id}
+              onClick={() => setSlide(slide.id)}
+              className={`w-3 h-3 rounded-full hover:bg-white focus:outline-none transition-colors duration-300 ${
+                activeSlide === slide.id ? "bg-white" : "bg-white/50"
+              }`}
+            ></button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

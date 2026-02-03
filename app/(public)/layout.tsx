@@ -7,6 +7,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import "./../globals.css";
+import { client } from '@/tina/__generated__/client'; // Import client for TinaCMS query
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
@@ -14,11 +15,16 @@ export const metadata: Metadata = {
   description: "Tyukod község hivatalos weboldala",
 };
 
-export default function PublicLayout({
+export default async function PublicLayout({ // Make this an async component
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Fetch siteConfig data
+  const tinaSiteConfigData = await client.queries.siteConfig({ relativePath: 'site-config.md' });
+  const siteConfig = tinaSiteConfigData.data.siteConfig;
+  const siteEmblem = siteConfig?.siteEmblem || '';
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -32,9 +38,9 @@ export default function PublicLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Nav />
+          <Nav siteEmblem={siteEmblem} />
           <main className="flex-grow">{children}</main>
-          <Footer />
+          <Footer siteEmblem={siteEmblem} />
           <CookieConsent />
           <InfoButton />
           <Analytics />

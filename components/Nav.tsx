@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 
-export default function Nav() {
+export default function Nav({ siteEmblem }: { siteEmblem: string }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -89,7 +89,7 @@ export default function Nav() {
               <div className="h-20 w-20 bg-gray-100 dark:bg-gray-800 p-3 rounded-full shadow-lg transform hover:scale-105 transition-transform duration-200 flex items-center justify-center border-2 border-gray-400 dark:border-gray-700">
                 <img
                   className="max-h-full max-w-full"
-                  src="/images/cimer.png"
+                  src={siteEmblem}
                   alt="Tyukod Címere"
                 />
               </div>

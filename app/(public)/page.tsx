@@ -27,6 +27,10 @@ interface Document {
 export default async function Home() {
   let posts: Post[] = [];
 
+  // Fetch siteConfig data
+  const tinaSiteConfigData = await client.queries.siteConfig({ relativePath: 'site-config.md' });
+  const siteConfig = tinaSiteConfigData.data.siteConfig;
+
   const tinaPostData = await client.queries.postsConnection();
   posts = tinaPostData.data.postsConnection.edges
     ?.map((edge) => edge?.node)
@@ -84,7 +88,7 @@ export default async function Home() {
 
   return (
     <>
-      <Carousel />
+      <Carousel bannerImages={siteConfig.bannerImages || []} /> {/* Pass bannerImages to Carousel */}
 
       <div className="container mx-auto mt-5 py-2 flex flex-wrap justify-center gap-4 px-4">
         <a

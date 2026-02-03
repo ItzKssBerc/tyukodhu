@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-export default function Footer() {
+export default function Footer({ siteEmblem }: { siteEmblem: string }) {
     const [currentDay, setCurrentDay] = useState<number | null>(null); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
 
     useEffect(() => {
@@ -20,8 +20,7 @@ export default function Footer() {
                     {/* LOGÓ */}
                     <div className="py-6 px-4 border-b border-gray-100 dark:border-gray-700">
                         <a href="/" className="flex items-center justify-center">
-                            <div className="h-14 w-14 bg-gray-100 dark:bg-gray-800 p-2 rounded-full shadow flex items-center justify-center border-2 border-gray-300 dark:border-gray-600">
-                                <img className="max-h-full max-w-full" src="/images/cimer.png" alt="Tyukod Címere" />
+                                <img className="max-h-full max-w-full" src={siteEmblem} alt="Tyukod Címere" />
                             </div>
                             <div className="ml-3 flex flex-col leading-none">
                                 <span className="text-lg font-bold tracking-tight text-red-600 dark:text-red-500">TYUKOD</span>
@@ -122,7 +121,7 @@ export default function Footer() {
                         <div className="flex flex-col">
                             <a href="/" className="flex items-center mb-6">
                                 <div className="h-16 w-16 bg-gray-100 dark:bg-gray-800 p-2 rounded-full shadow-lg flex items-center justify-center border-2 border-gray-300 dark:border-gray-600">
-                                    <img className="max-h-full max-w-full" src="/images/cimer.png" alt="Tyukod Címere" />
+                                    <img className="max-h-full max-w-full" src={siteEmblem} alt="Tyukod Címere" />
                                 </div>
                                 <div className="ml-4 flex flex-col leading-none">
                                     <span className="text-xl font-bold tracking-tight text-red-600 dark:text-red-500">TYUKOD</span>

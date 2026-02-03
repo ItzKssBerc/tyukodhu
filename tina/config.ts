@@ -402,6 +402,41 @@ export default defineConfig({
           },
         ],
       },
+      {
+        name: "siteConfig",
+        label: "Oldal Beállítások (Konfiguráció)",
+        path: "content",
+        match: { include: "site-config" },
+        format: 'md',
+        ui: {
+          allowedActions: {
+            create: false,
+            delete: false,
+          },
+        },
+        fields: [
+          {
+            type: "image",
+            name: "siteEmblem",
+            label: "Oldal embléma",
+            description: "Az oldal fejlécében és láblécében használt embléma",
+            required: true,
+          },
+          {
+            type: "object",
+            name: "bannerImages",
+            label: "Főoldali Képgaléria képek",
+            list: true,
+            fields: [
+              {
+                type: "image",
+                name: "image",
+                label: "Kép",
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
 });
