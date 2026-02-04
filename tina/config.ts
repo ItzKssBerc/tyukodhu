@@ -1,6 +1,5 @@
 import { defineConfig } from "tinacms";
-
-
+import { TinaCloudCloudinaryMediaStore } from "next-tinacms-cloudinary"; // Corrected import
 
 // Your hosting provider likely exposes this as an environment variable
 const branch =
@@ -24,10 +23,12 @@ export default defineConfig({
     publicFolder: "public",
   },
   media: {
-    tina: {
-      mediaRoot: "",
-      publicFolder: "public",
+    loadCustomStore: async () => {
+      const pack = await import("next-tinacms-cloudinary");
+      return pack.TinaCloudCloudinaryMediaStore;
     },
+    // Optionally, you can specify accepted file types
+    // accept: 'image/*',
   },
   search: {
     tina: {
