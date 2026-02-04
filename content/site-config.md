@@ -1,7 +1,8 @@
 ---
-siteEmblem: /images/cimer.png # Placeholder, replace with Cloudinary URL after Tina upload
+siteEmblem: https://res.cloudinary.com/dqauo3hlh/image/upload/v1770152905/lfs-migration/images/stream/cimer.png
 bannerImages:
-  - image: /images/welcome/1.jpg # Placeholder, replace with Cloudinary URL
-  - image: /images/welcome/2.jpg # Placeholder, replace with Cloudinary URL
-  - image: /images/welcome/3.jpg # Placeholder, replace with Cloudinary URL
+  - image: lfs-migration/images/welcome/1
+  - image: lfs-migration/images/welcome/2
+  - image: lfs-migration/images/welcome/3
 ---
+
