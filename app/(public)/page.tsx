@@ -88,7 +88,7 @@ export default async function Home() {
 
   return (
     <>
-      <Carousel bannerImages={siteConfig.bannerImages || []} /> {/* Pass bannerImages to Carousel */}
+      <Carousel bannerImages={(siteConfig.bannerImages || []).filter(item => item && item.image) as { image: string }[]} /> {/* Pass bannerImages to Carousel */}
 
       <div className="container mx-auto mt-5 py-2 flex flex-wrap justify-center gap-4 px-4">
         <a
