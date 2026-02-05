@@ -138,7 +138,6 @@ export default function MapComponent({ locations }: { locations: Location[] }) {
 
     leafletMap.current = map;
 
-    // RESPONSIVE FIX: Invalidate size on window resize
     const handleResize = () => {
       map.invalidateSize();
     };
@@ -236,13 +235,10 @@ export default function MapComponent({ locations }: { locations: Location[] }) {
 
   return (
     <div className="relative w-full h-[450px] sm:h-[600px] rounded-2xl overflow-hidden shadow-2xl border border-white/20 dark:border-gray-800/50">
-      {/* Map Element */}
       <div ref={mapRef} className="w-full h-full z-0" style={{ cursor: 'grab' }} />
 
-      {/* Floating Controls - FULLY RESPONSIVE */}
       <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 z-[1000] pointer-events-none flex flex-col gap-2">
         <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
-          {/* Category Filter */}
           <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-white/20 dark:border-gray-800/50 p-1 rounded-xl shadow-lg pointer-events-auto flex items-center gap-1 overflow-x-auto no-scrollbar max-w-full">
             <div className="px-2 sm:px-3 flex items-center gap-2 border-r border-gray-200 dark:border-gray-700 mr-1 flex-shrink-0 py-1">
               <Search className="h-3.5 w-3.5 text-gray-400" />
@@ -254,8 +250,8 @@ export default function MapComponent({ locations }: { locations: Location[] }) {
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-2.5 py-1.5 rounded-lg text-[10px] sm:text-xs font-semibold whitespace-nowrap transition-all duration-200 ${selectedCategory === cat
-                    ? 'bg-red-600 text-white shadow-md'
-                    : 'text-gray-600 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-gray-800/50'
+                      ? 'bg-red-600 text-white shadow-md'
+                      : 'text-gray-600 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-gray-800/50'
                     }`}
                 >
                   {cat}
@@ -264,7 +260,6 @@ export default function MapComponent({ locations }: { locations: Location[] }) {
             </div>
           </div>
 
-          {/* Reset Button */}
           <button
             onClick={handleResetView}
             className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border border-white/20 dark:border-gray-700/50 p-2 sm:p-2.5 rounded-xl shadow-lg pointer-events-auto flex items-center justify-center gap-2 hover:bg-white dark:hover:bg-gray-800 transition-all group w-fit sm:w-auto px-4"
@@ -275,7 +270,6 @@ export default function MapComponent({ locations }: { locations: Location[] }) {
         </div>
       </div>
 
-      {/* Loading Overlay */}
       {loading && (
         <div className="absolute inset-0 z-[2000] bg-white/40 dark:bg-black/40 backdrop-blur-sm flex items-center justify-center pointer-events-none">
           <div className="animate-spin rounded-full h-10 w-10 border-4 border-red-600 border-t-transparent"></div>
