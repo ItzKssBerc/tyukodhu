@@ -33,7 +33,7 @@ function getYouTubeEmbedUrl(url: string): string | null {
 // Live Stream Page Component
 export default async function LiveStreamPage() {
   const filePath = path.join(process.cwd(), 'content', 'live-stream-config.md');
-  let liveStream: { isLive?: boolean; embedCode?: string; streamUrl?: string; } | null = null;
+  let liveStream: { isLive?: boolean; embedCode?: string; streamUrl?: string; banner?: string; } | null = null;
 
   try {
     const fileContent = fs.readFileSync(filePath, 'utf8');
@@ -42,7 +42,7 @@ export default async function LiveStreamPage() {
   } catch (error) {
     console.error('Error reading live stream config:', error);
     // Fallback to default offline state if config file cannot be read
-    liveStream = { isLive: false, embedCode: "", streamUrl: "", banner: "" };
+    liveStream = { isLive: false, embedCode: "", streamUrl: "", banner: undefined };
   }
 
   // Ha nincs konfigurálva a liveStream, vagy nincs aktív, alapértelmezett offline állapot
