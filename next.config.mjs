@@ -1,4 +1,5 @@
 import { createRequire } from 'module';
+// Force rebuild
 const require = createRequire(import.meta.url);
 
 /** @type {import('next').NextConfig} */
@@ -44,7 +45,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
         port: '',
-        pathname: '/**/*',
+        pathname: '/**',
       },
     ],
   },

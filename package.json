@@ -4,15 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "tinacms dev -c \"next dev\"",
-    "build": "tinacms build --skip-cloud-checks && next build",
-    "start": "tinacms build --skip-cloud-checks && next start",
+    "build": "cross-env NODE_OPTIONS=--max_old_space_size=8192 tinacms build --skip-cloud-checks && next build",
+    "start": "npx tinacms build --skip-cloud-checks && next build && next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@markdoc/markdoc": "^0.5.4",
     "@tailwindcss/postcss": "^4.1.18",
     "@tinacms/auth": "^1.1.2",
-    "@tinacms/search": "^1.2.0",
+    "@tinacms/search": "^1.2.2",
     "@vercel/analytics": "^1.6.1",
     "@vercel/blob": "^2.0.1",
     "@vercel/kv": "^3.0.0",

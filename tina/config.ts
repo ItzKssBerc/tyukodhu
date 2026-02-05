@@ -1,5 +1,4 @@
 import { defineConfig } from "tinacms";
-import { TinaCloudCloudinaryMediaStore } from "next-tinacms-cloudinary"; // Corrected import
 
 // Your hosting provider likely exposes this as an environment variable
 const branch =
@@ -27,8 +26,6 @@ export default defineConfig({
       const pack = await import("next-tinacms-cloudinary");
       return pack.TinaCloudCloudinaryMediaStore;
     },
-    // Optionally, you can specify accepted file types
-    // accept: 'image/*',
   },
   search: {
     tina: {
@@ -90,6 +87,7 @@ export default defineConfig({
         name: "documents",
         label: "Dokumentumok",
         path: "content/documents",
+        format: 'yaml',
         fields: [
           {
             type: "string",
@@ -137,6 +135,7 @@ export default defineConfig({
         name: "images",
         label: "Képek",
         path: "content/images",
+        format: 'yaml',
         fields: [
           {
             type: "string",
@@ -178,6 +177,7 @@ export default defineConfig({
         name: "locations",
         label: "Helyszínek",
         path: "content/locations",
+        format: 'yaml',
         fields: [
           {
             type: "string",
@@ -275,6 +275,7 @@ export default defineConfig({
         name: "people",
         label: "Személyek",
         path: "content/people",
+        format: 'yaml',
         fields: [
           {
             type: "string",
@@ -327,6 +328,7 @@ export default defineConfig({
         name: "polls",
         label: "Szavazások",
         path: "content/polls",
+        format: 'yaml',
         fields: [
           {
             type: "string",
@@ -368,75 +370,65 @@ export default defineConfig({
           },
         ],
       },
-
       {
-        name: "liveStreamConfig", // New collection for the singleton config
-        label: "Élő Adás Beállítások (Konfiguráció)", // Differentiated label
-        path: "content", // Point to the directory where the config file resides
-        match: { include: "live-stream-config" }, // Match the specific config file
-        format: 'md',
-        ui: {
-          // Prevent creation/deletion via TinaCMS UI for this singleton config
-          allowedActions: {
-            create: false,
-            delete: false,
-          },
-        },
+        name: "liveStream",
+        label: "Élő Adás Beállítások",
+        path: "content/live-stream",
+        format: 'yaml',
         fields: [
-          {
-            type: "boolean",
-            name: "isLive",
-            label: "Élő Adás Aktív",
-          },
-          {
-            type: "string",
-            name: "embedCode",
-            label: "Beágyazási kód (iframe)",
-            ui: {
-              component: "textarea", // Add textarea component for better usability
-            },
-          },
           {
             type: "string",
             name: "streamUrl",
             label: "Stream URL (YouTube/Vimeo beágyazási link)",
           },
+          {
+            type: "string",
+            name: "embedCode",
+            label: "Beágyazási kód (iframe)",
+            // ui: {
+            //   component: "textarea",
+            // },
+          },
+          {
+            type: "boolean",
+            name: "isLive",
+            label: "Élő Adás Aktív",
+          },
         ],
+        match: {
+          include: 'index',
+        },
       },
       {
         name: "siteConfig",
-        label: "Oldal Beállítások (Konfiguráció)",
+        label: "Oldal Beállítások",
         path: "content",
-        match: { include: "site-config" },
         format: 'md',
-        ui: {
-          allowedActions: {
-            create: false,
-            delete: false,
-          },
-        },
         fields: [
           {
             type: "image",
             name: "siteEmblem",
-            label: "Oldal embléma",
-            description: "Az oldal fejlécében és láblécében használt embléma",
+            label: "Oldal emblémája",
             required: true,
           },
           {
             type: "object",
             name: "bannerImages",
-            label: "Főoldali Képgaléria képek",
+            label: "Üdvözlő Banner Képek",
             list: true,
             fields: [
               {
                 type: "image",
                 name: "image",
                 label: "Kép",
+                required: true,
               },
             ],
           },
         ],
+        match: {
+          include: 'site-config',
+        },
       },
     ],
   },
