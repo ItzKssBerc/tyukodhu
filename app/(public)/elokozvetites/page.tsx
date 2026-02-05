@@ -38,17 +38,32 @@ export default async function LiveStreamPage() {
   try {
     const fileContent = fs.readFileSync(filePath, 'utf8');
     const { data } = matter(fileContent);
-    liveStream = data as { isLive?: boolean; embedCode?: string; streamUrl?: string; };
+    liveStream = data as { isLive?: boolean; embedCode?: string; streamUrl?: string; banner?: string; };
   } catch (error) {
     console.error('Error reading live stream config:', error);
     // Fallback to default offline state if config file cannot be read
-    liveStream = { isLive: false, embedCode: "", streamUrl: "" };
+    liveStream = { isLive: false, embedCode: "", streamUrl: "", banner: "" };
   }
 
   // Ha nincs konfigurálva a liveStream, vagy nincs aktív, alapértelmezett offline állapot
   const isLive = liveStream?.isLive || false;
   const embedCode = liveStream?.embedCode || "";
   const streamUrl = liveStream?.streamUrl || "";
+  // Access the dynamic banner field
+  const banner = liveStream?.banner || "/images/stream/streambanner.jpg";
+
+  // Fetch site config for emblem
+  const siteConfigPath = path.join(process.cwd(), 'content', 'site-config.md');
+  let siteEmblem = "/images/cimer.png";
+  try {
+    const siteConfigFile = fs.readFileSync(siteConfigPath, 'utf8');
+    const { data: siteConfigData } = matter(siteConfigFile);
+    if (siteConfigData.siteEmblem) {
+      siteEmblem = siteConfigData.siteEmblem;
+    }
+  } catch (error) {
+    console.error('Error reading site config:', error);
+  }
 
   const finalStreamUrl = getYouTubeEmbedUrl(streamUrl);
 
@@ -85,12 +100,12 @@ export default async function LiveStreamPage() {
         /* Offline banner */
         <div
           className="relative bg-cover bg-center border border-gray-300 dark:border-gray-700 text-white rounded-lg overflow-hidden"
-          style={{ backgroundImage: "url('/images/stream/streambanner.jpg')" }}
+          style={{ backgroundImage: `url('${banner}')` }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/90"></div>
           <div className="relative flex flex-col items-center justify-center text-center py-24 sm:py-32 px-4">
             <img
-              src="/images/cimer.png"
+              src={siteEmblem}
               alt="Címer"
               className="h-28 sm:h-32 mx-auto mb-6"
             />

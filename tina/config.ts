@@ -373,8 +373,8 @@ export default defineConfig({
       {
         name: "liveStream",
         label: "Élő Adás Beállítások",
-        path: "content/live-stream",
-        format: 'yaml',
+        path: "content",
+        format: 'md',
         fields: [
           {
             type: "string",
@@ -394,9 +394,14 @@ export default defineConfig({
             name: "isLive",
             label: "Élő Adás Aktív",
           },
+          {
+            type: "image",
+            name: "banner",
+            label: "Banner Kép (Ha nincs élő adás)",
+          },
         ],
         match: {
-          include: 'index',
+          include: 'live-stream-config',
         },
       },
       {
