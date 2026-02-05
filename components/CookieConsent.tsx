@@ -29,7 +29,7 @@ export default function CookieConsent() {
         setConsentGiven(false);
         setShowBanner(false);
     };
-    
+
     // This function allows the user to re-open the banner
     const openConsentManager = () => {
         setShowBanner(true);
@@ -45,21 +45,21 @@ export default function CookieConsent() {
         return (
             <button
                 onClick={openConsentManager}
-                className="fixed bottom-4 right-4 z-40 h-14 w-14 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg flex items-center justify-center text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                className="fixed bottom-4 right-4 z-[1100] h-14 w-14 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg flex items-center justify-center text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
                 aria-label="Süti beállítások megnyitása"
             >
                 <Cookie className="h-7 w-7" />
             </button>
         );
     }
-    
+
     // If the banner should be shown (either initially or by clicking the trigger button)
     if (showBanner) {
         return (
-            <div className="fixed bottom-0 right-0 left-0 sm:bottom-4 sm:right-4 sm:left-auto z-50">
+            <div className="fixed bottom-0 right-0 left-0 sm:bottom-4 sm:right-4 sm:left-auto z-[9999]">
                 <div className="bg-white dark:bg-gray-800 border-t sm:border border-gray-200 dark:border-gray-700 sm:rounded-lg shadow-2xl max-w-full sm:max-w-md p-6">
                     <div className="flex items-start gap-4">
-                         <div className="flex-shrink-0 p-2 bg-red-100 dark:bg-red-900/50 rounded-full hidden sm:flex">
+                        <div className="flex-shrink-0 p-2 bg-red-100 dark:bg-red-900/50 rounded-full hidden sm:flex">
                             <Cookie className="h-6 w-6 text-red-600 dark:text-red-400" />
                         </div>
                         <div>
@@ -67,7 +67,7 @@ export default function CookieConsent() {
                                 <h3 className="font-bold text-lg text-gray-900 dark:text-white">Süti (cookie) beállítások</h3>
                                 {consentGiven !== null && ( // Show close button only if it's not the very first visit
                                     <button onClick={() => setShowBanner(false)} aria-label="Bezárás">
-                                        <X className="h-5 w-5 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white"/>
+                                        <X className="h-5 w-5 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white" />
                                     </button>
                                 )}
                             </div>

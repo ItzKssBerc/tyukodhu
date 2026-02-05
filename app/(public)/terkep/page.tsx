@@ -11,8 +11,9 @@ interface TinaLocationEntry {
   category: string; // Tina categories are strings, not necessarily fixed enums
   markerIcon: string;
   markerColor: string;
-  description?: string; 
-  images?: { image?: string | null }[]; // Tina images field is an array of objects with an image field
+  description?: string;
+  images?: { image?: string | null }[];
+  details?: { label?: string; value?: string }[];
 }
 
 // Interface for the simplified Location object passed to the client component
@@ -24,6 +25,7 @@ interface LocationProps {
   coordinates?: { lat: number; lng: number } | null;
   markerIcon?: string;
   markerColor?: string;
+  details?: { label?: string; value?: string }[];
 }
 
 export default async function MapPage() {
@@ -35,7 +37,7 @@ export default async function MapPage() {
     const tinaLocations: TinaLocationEntry[] = tinaData.data.locationsConnection.edges?.map(
       (edge) => edge?.node
     ).filter(Boolean) as TinaLocationEntry[];
-    
+
     locations = tinaLocations.map((loc) => ({
       title: loc.title,
       address: loc.address,
@@ -44,6 +46,7 @@ export default async function MapPage() {
       coordinates: loc.coordinates,
       markerIcon: loc.markerIcon,
       markerColor: loc.markerColor,
+      details: loc.details,
     }));
   } catch (err: any) {
     console.error("Failed to fetch locations from TinaCMS in Server Component:", err);

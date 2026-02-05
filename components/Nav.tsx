@@ -56,31 +56,28 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
   };
 
   const getLinkClasses = (active: boolean) => {
-    return `flex items-center px-3 py-3 rounded-lg text-sm font-medium transition duration-150 ${
-      active
-        ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-        : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-red-100 dark:hover:bg-red-900/30 hover:text-red-600 dark:hover:text-red-400"
-    }`;
+    return `flex items-center px-3 py-3 rounded-lg text-sm font-medium transition duration-150 ${active
+      ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+      : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-red-100 dark:hover:bg-red-900/30 hover:text-red-600 dark:hover:text-red-400"
+      }`;
   };
 
   const getMobileLinkClasses = (active: boolean) => {
-    return `flex items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${
-      active
-        ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-        : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
-    }`;
-  };
-  
-  const getMobileSubLinkClasses = (active: boolean) => {
-      return `flex items-center pl-5 pr-3 py-3 rounded-md text-base font-medium transition-colors ${
-        active
-          ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-          : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
+    return `flex items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${active
+      ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+      : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
       }`;
-    };
+  };
+
+  const getMobileSubLinkClasses = (active: boolean) => {
+    return `flex items-center pl-5 pr-3 py-3 rounded-md text-base font-medium transition-colors ${active
+      ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+      : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
+      }`;
+  };
 
   return (
-    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-md py-2 transition-colors duration-300 sticky top-0 z-50">
+    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-md py-2 transition-colors duration-300 sticky top-0 z-[2000]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-24">
           {/* Logo */}
@@ -121,9 +118,8 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
                 >
                   <i className="bi bi-rss-fill mr-2"></i>Média
                   <svg
-                    className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${
-                      mediaOpen ? "rotate-180" : "rotate-0"
-                    }`}
+                    className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${mediaOpen ? "rotate-180" : "rotate-0"
+                      }`}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -141,11 +137,10 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
                     <div className="rounded-xl ring-1 ring-red-300 dark:ring-red-900 ring-opacity-50 border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-2">
                       <Link
                         href="/hirek"
-                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${
-                          isActive("/hirek")
-                            ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                            : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
-                        }`}
+                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${isActive("/hirek")
+                          ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                          }`}
                         onClick={() => setMediaOpen(false)}
                       >
                         <i className="bi bi-newspaper mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
@@ -154,11 +149,10 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
                       <div className="border-t border-gray-100 dark:border-gray-800 my-1"></div>
                       <Link
                         href="/galeria"
-                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${
-                          isActive("/galeria")
-                            ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                            : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
-                        }`}
+                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${isActive("/galeria")
+                          ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                          }`}
                         onClick={() => setMediaOpen(false)}
                       >
                         <i className="bi bi-images mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
@@ -179,9 +173,8 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
                 >
                   <i className="bi bi-building-fill mr-2"></i>Önkormányzat
                   <svg
-                    className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${
-                      onkormanyzatOpen ? "rotate-180" : "rotate-0"
-                    }`}
+                    className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${onkormanyzatOpen ? "rotate-180" : "rotate-0"
+                      }`}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -199,11 +192,10 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
                     <div className="rounded-xl ring-1 ring-red-300 dark:ring-red-900 ring-opacity-50 border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-2">
                       <Link
                         href="/onkormanyzat/kepviselo-testulet"
-                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${
-                          isActive("/onkormanyzat/kepviselo-testulet")
-                            ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                            : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
-                        }`}
+                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${isActive("/onkormanyzat/kepviselo-testulet")
+                          ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                          }`}
                         onClick={() => setOnkormanyzatOpen(false)}
                       >
                         <i className="bi bi-people-fill mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
@@ -212,11 +204,10 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
                       <div className="border-t border-gray-100 dark:border-gray-800 my-1"></div>
                       <Link
                         href="/onkormanyzat/bizottsagok"
-                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${
-                          isActive("/onkormanyzat/bizottsagok")
-                            ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                            : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
-                        }`}
+                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${isActive("/onkormanyzat/bizottsagok")
+                          ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                          }`}
                         onClick={() => setOnkormanyzatOpen(false)}
                       >
                         <i className="bi bi-person-check-fill mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
@@ -225,11 +216,10 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
                       <div className="border-t border-gray-100 dark:border-gray-800 my-1"></div>
                       <Link
                         href="/onkormanyzat/dokumentumok"
-                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${
-                          isActive("/onkormanyzat/dokumentumok")
-                            ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                            : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
-                        }`}
+                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${isActive("/onkormanyzat/dokumentumok")
+                          ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                          }`}
                         onClick={() => setOnkormanyzatOpen(false)}
                       >
                         <i className="bi bi-file-earmark-text-fill mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
@@ -250,9 +240,8 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
                 >
                   <i className="bi bi-cursor-fill mr-2"></i>Interaktív
                   <svg
-                    className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${
-                      interaktivOpen ? "rotate-180" : "rotate-0"
-                    }`}
+                    className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${interaktivOpen ? "rotate-180" : "rotate-0"
+                      }`}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -270,11 +259,10 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
                     <div className="rounded-xl ring-1 ring-red-300 dark:ring-red-900 ring-opacity-50 border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-2">
                       <Link
                         href="/elokozvetites"
-                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${
-                          isActive("/elokozvetites")
-                            ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                            : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
-                        }`}
+                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${isActive("/elokozvetites")
+                          ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                          }`}
                         onClick={() => setInteraktivOpen(false)}
                       >
                         <i className="bi bi-camera-video-fill mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
@@ -283,11 +271,10 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
                       <div className="border-t border-gray-100 dark:border-gray-800 my-1"></div>
                       <Link
                         href="/terkep"
-                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${
-                          isActive("/terkep")
-                            ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                            : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
-                        }`}
+                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${isActive("/terkep")
+                          ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                          }`}
                         onClick={() => setInteraktivOpen(false)}
                       >
                         <i className="bi bi-map-fill mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
@@ -296,11 +283,10 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
                       <div className="border-t border-gray-100 dark:border-gray-800 my-1"></div>
                       <Link
                         href="/szavazasok"
-                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${
-                          isActive("/szavazasok")
-                            ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                            : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
-                        }`}
+                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${isActive("/szavazasok")
+                          ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                          }`}
                         onClick={() => setInteraktivOpen(false)}
                       >
                         <i className="bi bi-bar-chart-fill mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
@@ -321,9 +307,8 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
                 >
                   <i className="bi bi-info-circle-fill mr-2"></i>Információk
                   <svg
-                    className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${
-                      infoOpen ? "rotate-180" : "rotate-0"
-                    }`}
+                    className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${infoOpen ? "rotate-180" : "rotate-0"
+                      }`}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -341,11 +326,10 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
                     <div className="rounded-xl ring-1 ring-red-300 dark:ring-red-900 ring-opacity-50 border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-2">
                       <Link
                         href="/kozsegunkrol"
-                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${
-                          isActive("/kozsegunkrol")
-                            ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                            : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
-                        }`}
+                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${isActive("/kozsegunkrol")
+                          ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                          }`}
                         onClick={() => setInfoOpen(false)}
                       >
                         <i className="bi bi-info-square-fill mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
@@ -442,19 +426,17 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
             <div className="">
               <button
                 onClick={() => setMobileMediaOpen(!mobileMediaOpen)}
-                className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${
-                  isActive("/hirek") || isActive("/galeria")
-                    ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                    : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
-                }`}
+                className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${isActive("/hirek") || isActive("/galeria")
+                  ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                  : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
+                  }`}
               >
                 <span className="flex items-center">
                   <i className="bi bi-rss-fill mr-2"></i>Média
                 </span>
                 <svg
-                  className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${
-                    mobileMediaOpen ? "rotate-180" : "rotate-0"
-                  }`}
+                  className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${mobileMediaOpen ? "rotate-180" : "rotate-0"
+                    }`}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -490,19 +472,17 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
             <div>
               <button
                 onClick={() => setMobileOnkormanyzatOpen(!mobileOnkormanyzatOpen)}
-                className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${
-                  isActive("/onkormanyzat", false)
-                    ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                    : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
-                }`}
+                className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${isActive("/onkormanyzat", false)
+                  ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                  : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
+                  }`}
               >
                 <span className="flex items-center">
                   <i className="bi bi-building-fill mr-2"></i>Önkormányzat
                 </span>
                 <svg
-                  className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${
-                    mobileOnkormanyzatOpen ? "rotate-180" : "rotate-0"
-                  }`}
+                  className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${mobileOnkormanyzatOpen ? "rotate-180" : "rotate-0"
+                    }`}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -545,19 +525,17 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
             <div>
               <button
                 onClick={() => setMobileInteraktivOpen(!mobileInteraktivOpen)}
-                className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${
-                  isActive("/elokozvetites") || isActive("/terkep") || isActive("/szavazasok")
-                    ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                    : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
-                }`}
+                className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${isActive("/elokozvetites") || isActive("/terkep") || isActive("/szavazasok")
+                  ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                  : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
+                  }`}
               >
                 <span className="flex items-center">
                   <i className="bi bi-cursor-fill mr-2"></i>Interaktív
                 </span>
                 <svg
-                  className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${
-                    mobileInteraktivOpen ? "rotate-180" : "rotate-0"
-                  }`}
+                  className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${mobileInteraktivOpen ? "rotate-180" : "rotate-0"
+                    }`}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -600,19 +578,17 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
             <div>
               <button
                 onClick={() => setMobileInfoOpen(!mobileInfoOpen)}
-                className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${
-                  isActive("/kozsegunkrol")
-                    ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                    : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
-                }`}
+                className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${isActive("/kozsegunkrol")
+                  ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                  : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
+                  }`}
               >
                 <span className="flex items-center">
                   <i className="bi bi-info-circle-fill mr-2"></i>Információk
                 </span>
                 <svg
-                  className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${
-                    mobileInfoOpen ? "rotate-180" : "rotate-0"
-                  }`}
+                  className={`ml-1 h-5 w-5 transition duration-150 ease-in-out transform ${mobileInfoOpen ? "rotate-180" : "rotate-0"
+                    }`}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"

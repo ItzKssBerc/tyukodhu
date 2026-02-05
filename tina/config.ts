@@ -177,7 +177,7 @@ export default defineConfig({
         name: "locations",
         label: "Helyszínek",
         path: "content/locations",
-        format: 'yaml',
+        format: 'md',
         fields: [
           {
             type: "string",
@@ -219,6 +219,9 @@ export default defineConfig({
               { value: "Oktatás", label: "Oktatás" },
               { value: "Egészségügy", label: "Egészségügy" },
               { value: "Sport", label: "Sport" },
+              { value: "Szolgáltatás", label: "Szolgáltatás" },
+              { value: "Szabadidő", label: "Szabadidő" },
+              { value: "Vallás", label: "Vallás" },
               { value: "Egyéb", label: "Egyéb" },
             ],
           },
@@ -255,6 +258,29 @@ export default defineConfig({
             ui: {
               component: "textarea",
             },
+          },
+          {
+            type: "object",
+            name: "details",
+            label: "Részletes adatok",
+            list: true,
+            ui: {
+              itemProps: (item) => {
+                return { label: item?.label };
+              },
+            },
+            fields: [
+              {
+                type: "string",
+                name: "label",
+                label: "Cím (pl. Nyitvatartás, Telefon)",
+              },
+              {
+                type: "string",
+                name: "value",
+                label: "Tartalom",
+              },
+            ],
           },
           {
             type: "object",

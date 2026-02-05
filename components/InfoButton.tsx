@@ -26,7 +26,7 @@ export default function InfoButton() {
             {/* The Floating Action Button */}
             <button
                 onClick={openModal}
-                className="fixed bottom-20 right-4 z-40 h-14 w-14 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg flex items-center justify-center text-blue-600 dark:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                className="fixed bottom-20 right-4 z-[1100] h-14 w-14 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg flex items-center justify-center text-blue-600 dark:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all font-bold"
                 aria-label="Információ az oldalról"
             >
                 <Info className="h-7 w-7" />
@@ -35,7 +35,7 @@ export default function InfoButton() {
             {/* The Modal Overlay */}
             {isOpen && (
                 <div
-                    className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm transition-opacity duration-300"
+                    className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm transition-opacity duration-300"
                     onClick={closeModal}
                 >
                     {/* The Modal Content */}
@@ -46,7 +46,7 @@ export default function InfoButton() {
                         {/* Header */}
                         <div className="flex justify-between items-center p-6 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
                             <h3 className="font-bold text-xl text-gray-900 dark:text-white flex items-center gap-3">
-                                <Info className="h-6 w-6 text-blue-600 dark:text-blue-400"/>
+                                <Info className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                                 Információ az oldalról
                             </h3>
                             <button
@@ -64,7 +64,7 @@ export default function InfoButton() {
                                 <h4 className="font-bold text-lg text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-700 pb-2">A weboldal célja</h4>
                                 <p className="leading-relaxed">Ez a weboldal Tyukod Nagyközség hivatalos információs portálja. Célja, hogy tájékoztatást nyújtson a helyi lakosok és az idelátogatók számára a község életéről, híreiről, eseményeiről és az önkormányzat működéséről.</p>
                             </div>
-                            
+
                             <div className="space-y-3">
                                 <h4 className="font-bold text-lg text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-700 pb-2">Technikai háttér</h4>
                                 <p className="leading-relaxed">A weboldal a legmodernebb technológiákkal készült, hogy gyors, biztonságos és könnyen használható legyen.</p>
@@ -75,7 +75,7 @@ export default function InfoButton() {
                                     <li className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg"><span className="w-2 h-2 rounded-full bg-green-500"></span><span className="font-medium text-gray-900 dark:text-white">Térkép:</span> Leaflet.js</li>
                                 </ul>
                             </div>
-                            
+
                             <div className="space-y-3">
                                 <h4 className="font-bold text-lg text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-700 pb-2">Készítő</h4>
                                 <div className="flex items-center gap-4 bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">

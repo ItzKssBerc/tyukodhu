@@ -14,6 +14,7 @@ interface Location {
   address: string;
   description?: string;
   category?: string;
+  details?: { label?: string; value?: string }[];
 }
 
 interface MapPageProps {
@@ -39,7 +40,7 @@ export default function MapPage({ locations }: MapPageProps) {
           </p>
         </div>
 
-        <div className="p-4">
+        <div className="p-4 min-h-[600px]">
           {/* Pass only locations to DynamicMapComponent */}
           {mounted ? (
             <DynamicMapComponent locations={locations || []} />

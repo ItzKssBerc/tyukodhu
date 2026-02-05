@@ -6,7 +6,14 @@ coordinates:
   lng: 22.556445999999994
 category: Önkormányzat
 markerIcon: Building
-markerColor: '#1565C0' # Kék
+markerColor: '#C62828'
+details:
+  - label: Ügyfélfogadás
+    value: H-Cs 8:00-16:00, P 8:00-13:30
+  - label: Telefon
+    value: +36 44 545 020
+  - label: E-mail
+    value: hivatal@tyukod.hu
 description: >-
-  Polgármesteri Hivatal Tyukod. Telefonszám: +36 44 556 062. Nyitvatartás: Hétfő, Kedd, Csütörtök, Péntek: 8:00 – 12:00, Szerda: 8:00 – 16:00.
+  Tyukod Nagyközség Polgármesteri Hivatala.
 ---

@@ -7,6 +7,11 @@ coordinates:
 category: Vallás
 markerIcon: Building
 markerColor: '#C62828'
+details:
+  - label: Ellátó plébánia
+    value: Csenger
+  - label: Típus
+    value: Kápolna
 description: >-
   A katolikus hívek közösségi helyszíne és kápolnája.
 ---

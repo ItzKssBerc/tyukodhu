@@ -20,7 +20,9 @@ export default function Footer({ siteEmblem }: { siteEmblem: string }) {
                     {/* LOGÓ */}
                     <div className="py-6 px-4 border-b border-gray-100 dark:border-gray-700">
                         <a href="/" className="flex items-center justify-center">
+                            <div className="h-16 w-16 bg-gray-100 dark:bg-gray-800 p-2 rounded-full shadow-lg flex items-center justify-center border-2 border-gray-300 dark:border-gray-600">
                                 <img className="max-h-full max-w-full" src={siteEmblem} alt="Tyukod Címere" />
+                            </div>
                             <div className="ml-3 flex flex-col leading-none">
                                 <span className="text-lg font-bold tracking-tight text-red-600 dark:text-red-500">TYUKOD</span>
                                 <span className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">NAGYKÖZSÉG</span>

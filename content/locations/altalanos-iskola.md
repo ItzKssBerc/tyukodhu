@@ -6,7 +6,10 @@ coordinates:
   lng: 22.557007859034904
 category: Oktatás
 markerIcon: School
-markerColor: '#2E7D32' # Zöld
+markerColor: '#2E7D32'
+details:
+  - label: Telefon
+    value: +36 44 356 269
 description: >-
-  Tyukodi Általános Iskola. Telefonszám: +36 44 356 269.
+  Tyukod község általános iskolája.
 ---

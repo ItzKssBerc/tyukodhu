@@ -6,7 +6,12 @@ coordinates:
   lng: 22.55958844481824
 category: Oktatás
 markerIcon: School
-markerColor: '#2E7D32' # Zöld
+markerColor: '#2E7D32'
+details:
+  - label: Telefon
+    value: +36 44 356 252
+  - label: Cím (pontosított)
+    value: Árpád út 8-10.
 description: >-
-  Tyukodi Óvoda. Telefonszám: +36 44 356 252.
+  Tyukodi Csodák Világa Óvoda és Bölcsőde.
 ---
