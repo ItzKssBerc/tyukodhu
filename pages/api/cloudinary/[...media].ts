@@ -1,5 +1,6 @@
 import { createMediaHandler } from "next-tinacms-cloudinary/dist/handlers";
 import { isAuthorized } from "@tinacms/auth";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export const config = {
   api: {
@@ -11,30 +12,69 @@ const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const apiKey = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
 const apiSecret = process.env.CLOUDINARY_API_SECRET;
 
-if (!cloudName) {
-  throw new Error("NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME is not set");
-}
-if (!apiKey) {
-  throw new Error("NEXT_PUBLIC_CLOUDINARY_API_KEY is not set");
-}
-if (!apiSecret) {
-  throw new Error("CLOUDINARY_API_SECRET is not set");
-}
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log("Media handler invoked", {
+    method: req.method,
+    query: req.query,
+    hasCloudName: !!cloudName,
+    hasApiKey: !!apiKey,
+    hasApiSecret: !!apiSecret,
+    nodeEnv: process.env.NODE_ENV
+  });
 
-export default createMediaHandler({
-  cloud_name: cloudName as string,
-  api_key: apiKey as string,
-  api_secret: apiSecret as string,
-  authorized: async (req, _res) => {
-    try {
-      if (process.env.NODE_ENV === "development") {
-        return true;
+  if (!cloudName || !apiKey || !apiSecret) {
+    console.error("Cloudinary configuration missing:", {
+      cloudName: !!cloudName,
+      apiKey: !!apiKey,
+      apiSecret: !!apiSecret,
+    });
+    res.status(500).json({
+      error: "Cloudinary configuration missing on server",
+      details: {
+        cloudName: !!cloudName,
+        apiKey: !!apiKey,
+        apiSecret: !!apiSecret
       }
-      const user = await isAuthorized(req);
-      return !!(user && user.verified); // Explicitly cast to boolean
-    } catch (e) {
-      console.error(e);
-      return false;
-    }
-  },
-});
+    });
+    return;
+  }
+
+  try {
+    const mediaHandler = createMediaHandler({
+      cloud_name: cloudName,
+      api_key: apiKey,
+      api_secret: apiSecret,
+      authorized: async (req, _res) => {
+        try {
+          if (process.env.NODE_ENV === "development") {
+            return true;
+          }
+
+          const user = await isAuthorized(req);
+          const authorized = !!(user && user.verified);
+
+          console.log("Auth check results:", {
+            authorized,
+            isVerified: user?.verified,
+            hasUser: !!user,
+          });
+
+          return authorized;
+        } catch (e) {
+          console.error("Media authorization error callback:", e);
+          return false;
+        }
+      },
+    });
+
+    return await mediaHandler(req, res);
+  } catch (error: any) {
+    console.error("Fatal error in media handler:", error);
+    res.status(500).json({
+      error: "Internal Server Error in Media Handler",
+      message: error.message
+    });
+  }
+};
+
+export default handler;
