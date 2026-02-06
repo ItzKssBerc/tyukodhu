@@ -1,8 +1,7 @@
-import { createMediaHandler } from "next-tinacms-cloudinary/dist/handlers";
 import { isAuthorized } from "@tinacms/auth";
 import { NextApiRequest, NextApiResponse } from "next";
 
-// Force Node.js runtime for this API route
+// Force Node.js runtime
 export const runtime = "nodejs";
 
 export const config = {
@@ -11,43 +10,28 @@ export const config = {
   },
 };
 
-const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-const apiKey = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
-const apiSecret = process.env.CLOUDINARY_API_SECRET;
-
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  // Check for test query
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const apiKey = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
+  const apiSecret = process.env.CLOUDINARY_API_SECRET;
+
+  // Korai JSON válasz teszteléshez
   if (req.query.test === "true") {
     return res.status(200).json({
       status: "ok",
-      message: "Cloudinary handler path reached",
-      query: req.query,
+      message: "Cloudinary handler path reached (simple)",
       env: {
-        hasCloudName: !!cloudName,
-        hasApiKey: !!apiKey,
-        hasApiSecret: !!apiSecret,
+        hasCloud: !!cloudName,
+        hasKey: !!apiKey,
+        hasSecret: !!apiSecret,
       }
     });
   }
 
-  console.log("Media handler invoked", {
-    method: req.method,
-    query: req.query,
-    hasCloudName: !!cloudName,
-    hasApiKey: !!apiKey,
-    hasApiSecret: !!apiSecret,
-    nodeEnv: process.env.NODE_ENV
-  });
-
   if (!cloudName || !apiKey || !apiSecret) {
-    console.error("Cloudinary configuration missing:", {
-      cloudName: !!cloudName,
-      apiKey: !!apiKey,
-      apiSecret: !!apiSecret,
-    });
     return res.status(500).json({
-      error: "Cloudinary configuration missing on server",
-      details: {
+      error: "Cloudinary configuration missing",
+      env: {
         cloudName: !!cloudName,
         apiKey: !!apiKey,
         apiSecret: !!apiSecret
@@ -56,28 +40,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
+    // Dinamikus import a top-level hiba elkerülése végett
+    const { createMediaHandler } = await import("next-tinacms-cloudinary/dist/handlers");
+
     const mediaHandler = createMediaHandler({
       cloud_name: cloudName,
       api_key: apiKey,
       api_secret: apiSecret,
       authorized: async (req, _res) => {
         try {
-          if (process.env.NODE_ENV === "development") {
-            return true;
-          }
-
+          if (process.env.NODE_ENV === "development") return true;
           const user = await isAuthorized(req);
-          const authorized = !!(user && user.verified);
-
-          console.log("Auth check results:", {
-            authorized,
-            isVerified: user?.verified,
-            hasUser: !!user,
-          });
-
-          return authorized;
+          return !!(user && user.verified);
         } catch (e) {
-          console.error("Media authorization error callback:", e);
+          console.error("Auth error:", e);
           return false;
         }
       },
@@ -85,9 +61,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     return await mediaHandler(req, res);
   } catch (error: any) {
-    console.error("Fatal error in media handler:", error);
+    console.error("Fatal error:", error);
     return res.status(500).json({
-      error: "Internal Server Error in Media Handler",
+      error: "Internal Server Error",
       message: error.message
     });
   }
