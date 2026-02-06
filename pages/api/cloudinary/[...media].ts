@@ -2,6 +2,9 @@ import { createMediaHandler } from "next-tinacms-cloudinary/dist/handlers";
 import { isAuthorized } from "@tinacms/auth";
 import { NextApiRequest, NextApiResponse } from "next";
 
+// Force Node.js runtime for this API route
+export const runtime = "nodejs";
+
 export const config = {
   api: {
     bodyParser: false,
@@ -13,6 +16,20 @@ const apiKey = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
 const apiSecret = process.env.CLOUDINARY_API_SECRET;
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  // Check for test query
+  if (req.query.test === "true") {
+    return res.status(200).json({
+      status: "ok",
+      message: "Cloudinary handler path reached",
+      query: req.query,
+      env: {
+        hasCloudName: !!cloudName,
+        hasApiKey: !!apiKey,
+        hasApiSecret: !!apiSecret,
+      }
+    });
+  }
+
   console.log("Media handler invoked", {
     method: req.method,
     query: req.query,
@@ -28,7 +45,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       apiKey: !!apiKey,
       apiSecret: !!apiSecret,
     });
-    res.status(500).json({
+    return res.status(500).json({
       error: "Cloudinary configuration missing on server",
       details: {
         cloudName: !!cloudName,
@@ -36,7 +53,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         apiSecret: !!apiSecret
       }
     });
-    return;
   }
 
   try {
@@ -70,7 +86,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return await mediaHandler(req, res);
   } catch (error: any) {
     console.error("Fatal error in media handler:", error);
-    res.status(500).json({
+    return res.status(500).json({
       error: "Internal Server Error in Media Handler",
       message: error.message
     });
