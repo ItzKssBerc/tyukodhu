@@ -31,10 +31,12 @@ export default defineConfig({
       return pack.TinaCloudCloudinaryMediaStore;
     },
   },
-  search: process.env.TINA_SEARCH_TOKEN
+  search: (process.env.TINA_SEARCH_TOKEN &&
+    process.env.TINA_SEARCH_TOKEN !== "undefined" &&
+    process.env.TINA_SEARCH_TOKEN !== "null")
     ? {
       tina: {
-        indexerToken: String(process.env.TINA_SEARCH_TOKEN),
+        indexerToken: String(process.env.TINA_SEARCH_TOKEN).trim(),
       },
     }
     : undefined,
