@@ -4,7 +4,7 @@ const require = createRequire(import.meta.url);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["next-tinacms-cloudinary", "@tinacms/auth", "@tinacms/search"],
+  transpilePackages: ["next-tinacms-cloudinary", "@tinacms/auth"],
   outputFileTracingIncludes: {
     '/': ['content/**'],
   },
