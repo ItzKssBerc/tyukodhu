@@ -6,17 +6,19 @@ export default async function DocumentsPage() {
   const documents = tinaData.data.documentsConnection.edges?.map((edge) => edge?.node)
   .filter(Boolean)
   .filter(item => item?._sys.filename !== undefined && item._sys.filename !== null) // Ensure filename is defined
-  .map(item => {
-    const publishedDateTime = item?.publishedDate ? new Date(item.publishedDate) : null;
-    return {
-      slug: item!._sys.filename, // Now filename is guaranteed to be string
-      entry: {
-        title: item?.title || '',
-        category: item?.category || '',
-        description: item?.description || '',
-        file: item?.file || '',
-        publishedDate: publishedDateTime ? publishedDateTime.toISOString().split('T')[0] : null,
-        publishedTime: publishedDateTime ? publishedDateTime.toTimeString().split(' ')[0].substring(0, 5) : null,
+      .map(item => {
+        const rawPublishedDate = item?.publishedDate;
+        const publishedDateTime = rawPublishedDate ? new Date(rawPublishedDate) : null;
+        const isValidDate = publishedDateTime instanceof Date && !isNaN(publishedDateTime.getTime());
+        return {
+          slug: item!._sys.filename, // Now filename is guaranteed to be string
+          entry: {
+            title: item?.title || '',
+            category: item?.category || '',
+            description: item?.description || '',
+            file: item?.file || '',
+            publishedDate: isValidDate ? publishedDateTime.toISOString().split('T')[0] : null,
+            publishedTime: isValidDate ? publishedDateTime.toTimeString().split(' ')[0].substring(0, 5) : null,
       }
     };
   }) || [];
