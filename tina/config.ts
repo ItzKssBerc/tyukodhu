@@ -24,7 +24,7 @@ export default defineConfig({
       return pack.TinaCloudCloudinaryMediaStore;
     },
   },
-  search: (process.env.TINA_SEARCH_TOKEN && process.env.TINA_SEARCH_TOKEN.includes('.'))
+  search: process.env.TINA_SEARCH_TOKEN
     ? {
       tina: {
         indexerToken: String(process.env.TINA_SEARCH_TOKEN),
