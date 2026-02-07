@@ -9,10 +9,23 @@ console.log("Client ID present:", !!process.env.NEXT_PUBLIC_TINA_CLIENT_ID);
 console.log("Token present:", !!process.env.TINA_TOKEN);
 console.log("Search Token type:", typeof process.env.TINA_SEARCH_TOKEN);
 console.log("Search Token length:", process.env.TINA_SEARCH_TOKEN?.length);
-if (process.env.TINA_SEARCH_TOKEN) {
-  console.log("Search Token format check (contains dot):", process.env.TINA_SEARCH_TOKEN.includes('.'));
-}
 console.log("------------------------");
+
+// Special diagnostic patch to catch "str.split is not a function"
+if (!(Object.prototype as any).split) {
+  Object.defineProperty(Object.prototype, "split", {
+    get() {
+      return function (this: any) {
+        console.error("--- ALERT: .split() called on non-string object! ---");
+        console.error("Value:", this);
+        console.error("Type:", typeof this);
+        console.trace();
+        throw new TypeError("str.split is not a function (Caught by Diagnostic Patch)");
+      };
+    },
+    configurable: true,
+  });
+}
 
 export default defineConfig({
   branch,
