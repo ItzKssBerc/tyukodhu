@@ -12,44 +12,18 @@ export default defineConfig({
 
   // Get this from tina.io
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
-  // Get this from tina.io
-        token: process.env.TINA_TOKEN,
-      
-                  build: {
-      
-                    outputFolder: "admin",
-      
-                    publicFolder: "public",
-      
-                  },
-      
-                  media: {
-      
-                    loadCustomStore: async () => {
-      
-                      const pack = await import("next-tinacms-cloudinary");
-      
-                      return pack.TinaCloudCloudinaryMediaStore;
-      
-                    },
-      
-                  },
-      
-                  // search: {
-      
-                  //   tina: {
-      
-                  //     indexerToken: process.env.TINA_SEARCH_TOKEN,
-      
-                  //     stopwordLanguages: ['eng', 'hun'],
-      
-                  //   },
-      
-                  //   indexBatchSize: 100,
-      
-                  //   maxSearchIndexFieldLength: 100,
-      
-                  // },
+  token: process.env.TINA_TOKEN,
+
+  build: {
+    outputFolder: "admin",
+    publicFolder: "public",
+  },
+  media: {
+    loadCustomStore: async () => {
+      const pack = await import("next-tinacms-cloudinary");
+      return pack.TinaCloudCloudinaryMediaStore;
+    },
+  },
   // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/
   schema: {
     collections: [
