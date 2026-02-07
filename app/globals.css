@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@import "C:/Users/kissb/Documents/tyukod.hu/node_modules/tailwindcss/base.css";
+@import "C:/Users/kissb/Documents/tyukod.hu/node_modules/tailwindcss/components.css";
+@import "C:/Users/kissb/Documents/tyukod.hu/node_modules/tailwindcss/utilities.css";
 @import "leaflet/dist/leaflet.css";
 
 /* Forced Map Interactions */
