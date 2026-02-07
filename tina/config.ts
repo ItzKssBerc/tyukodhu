@@ -20,11 +20,13 @@ export default defineConfig({
       return pack.TinaCloudCloudinaryMediaStore;
     },
   },
-  search: {
-    tina: {
-      indexerToken: String(process.env.TINA_SEARCH_TOKEN || ""),
-    },
-  },
+  search: (process.env.TINA_SEARCH_TOKEN && process.env.TINA_SEARCH_TOKEN.includes('.'))
+    ? {
+      tina: {
+        indexerToken: String(process.env.TINA_SEARCH_TOKEN),
+      },
+    }
+    : undefined,
   // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/
   schema: {
     collections: [
