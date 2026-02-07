@@ -1,18 +1,14 @@
 import { defineConfig } from "tinacms";
 
 // Your hosting provider likely exposes this as an environment variable
-const branch =
-  process.env.GITHUB_BRANCH ||
-  process.env.VERCEL_GIT_COMMIT_REF ||
-  process.env.HEAD ||
-  "main";
+const branch = "main";
 
 export default defineConfig({
   branch,
 
   // Get this from tina.io
-  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
-  token: process.env.TINA_TOKEN,
+  clientId: String(process.env.NEXT_PUBLIC_TINA_CLIENT_ID || ""),
+  token: String(process.env.TINA_TOKEN || ""),
 
   build: {
     outputFolder: "admin",
@@ -24,16 +20,11 @@ export default defineConfig({
       return pack.TinaCloudCloudinaryMediaStore;
     },
   },
-  search: process.env.TINA_SEARCH_TOKEN
-    ? {
-      tina: {
-        indexerToken: String(process.env.TINA_SEARCH_TOKEN),
-        stopwordLanguages: ["eng"],
-      },
-      indexBatchSize: 100,
-      maxSearchIndexFieldLength: 100,
-    }
-    : undefined,
+  search: {
+    tina: {
+      indexerToken: String(process.env.TINA_SEARCH_TOKEN || ""),
+    },
+  },
   // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/
   schema: {
     collections: [
