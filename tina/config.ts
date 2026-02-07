@@ -3,6 +3,17 @@ import { defineConfig } from "tinacms";
 // Your hosting provider likely exposes this as an environment variable
 const branch = "main";
 
+console.log("--- TINA BUILD DEBUG ---");
+console.log("Branch:", branch);
+console.log("Client ID present:", !!process.env.NEXT_PUBLIC_TINA_CLIENT_ID);
+console.log("Token present:", !!process.env.TINA_TOKEN);
+console.log("Search Token type:", typeof process.env.TINA_SEARCH_TOKEN);
+console.log("Search Token length:", process.env.TINA_SEARCH_TOKEN?.length);
+if (process.env.TINA_SEARCH_TOKEN) {
+  console.log("Search Token format check (contains dot):", process.env.TINA_SEARCH_TOKEN.includes('.'));
+}
+console.log("------------------------");
+
 export default defineConfig({
   branch,
 
