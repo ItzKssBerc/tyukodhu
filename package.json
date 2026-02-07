@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "tinacms dev -c \"next dev\"",
-    "build": "next build",
-    "build:full": "cross-env NODE_OPTIONS=--max_old_space_size=8192 tinacms build --skip-cloud-checks && next build",
+    "build": "tinacms build --skip-cloud-checks && next build",
     "start": "npx tinacms build --skip-cloud-checks && next build && next start",
     "lint": "next lint"
   },
