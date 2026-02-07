@@ -19,7 +19,10 @@ const OfficeHours = ({ hours }: { hours: Record<string, { start: string; end: st
 
   const getStatus = (dayIndex: number) => {
     const hoursData = hours[dayIndex.toString()];
-    if (!hoursData || currentDate.getDay() !== dayIndex) return { text: '', color: '' };
+    // Ensure hoursData, hoursData.start, and hoursData.end are defined strings
+    if (!hoursData || !hoursData.start || !hoursData.end || currentDate.getDay() !== dayIndex) {
+      return { text: '', color: '' };
+    }
 
     const [startHour, startMinute] = hoursData.start.split(':').map(Number);
     const [endHour, endMinute] = hoursData.end.split(':').map(Number);

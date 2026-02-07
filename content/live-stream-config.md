@@ -1,4 +1,5 @@
 ---
+title: "Élő Adás Beállítások"
 streamUrl: 'https://www.youtube.com/watch?v=YOUR_YOUTUBE_VIDEO_ID'
 embedCode: ''
 isLive: false
