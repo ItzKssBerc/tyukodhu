@@ -21,15 +21,15 @@ export default defineConfig({
       return pack.TinaCloudCloudinaryMediaStore;
     },
   },
-  search: (process.env.TINA_SEARCH_TOKEN &&
-    process.env.TINA_SEARCH_TOKEN !== "undefined" &&
-    process.env.TINA_SEARCH_TOKEN !== "null")
-    ? {
-      tina: {
-        indexerToken: String(process.env.TINA_SEARCH_TOKEN).trim(),
-      },
-    }
-    : undefined,
+  // search: (process.env.TINA_SEARCH_TOKEN &&
+  //   process.env.TINA_SEARCH_TOKEN !== "undefined" &&
+  //   process.env.TINA_SEARCH_TOKEN !== "null")
+  //   ? {
+  //     tina: {
+  //       indexerToken: String(process.env.TINA_SEARCH_TOKEN).trim(),
+  //     },
+  //   }
+  //   : undefined,
   // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/
   schema: {
     collections: [
