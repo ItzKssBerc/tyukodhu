@@ -25,7 +25,7 @@ export default async function GalleryPage() {
       <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">
         Galéria
       </h1>
-      <GalleryClient initialGalleryItems={galleryItems} />
+      <GalleryClient images={galleryItems} />
     </div>
   );
 }

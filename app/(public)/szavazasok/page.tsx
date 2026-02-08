@@ -16,7 +16,18 @@ export default async function PollsPage() {
   const sanityPolls = await client.fetch(SZAVAZAS_QUERY);
 
   // Map Sanity data to Poll structure
-  const polls = sanityPolls.map((item: any) => ({
+  type Poll = {
+    slug: string;
+    entry: {
+      question: string;
+      options: { option: string }[];
+      isActive: boolean;
+      allowChange: boolean;
+      publishedDate: string;
+    }
+  };
+
+  const polls: Poll[] = sanityPolls.map((item: any) => ({
     slug: item._id,
     entry: {
       question: item.szavazascim || '',
@@ -28,7 +39,7 @@ export default async function PollsPage() {
   }));
 
   // Filter active polls
-  const activePolls = polls.filter(poll => poll.entry.isActive);
+  const activePolls = polls.filter((poll) => poll.entry.isActive);
 
   // Sort by date (newest first)
   activePolls.sort((a, b) => {

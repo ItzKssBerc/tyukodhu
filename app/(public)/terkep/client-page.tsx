@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 // Dynamically import MapComponent to ensure client-side rendering
-const DynamicMapComponent = dynamic(() => import('@/components/MapComponent'), {
+const DynamicMapComponent = dynamic<{ markers: any[] }>(() => import('@/components/MapComponent'), {
   ssr: false,
   loading: () => <p>Térkép betöltése...</p>,
 });
@@ -43,7 +43,7 @@ export default function MapPage({ locations }: MapPageProps) {
         <div className="p-4 min-h-[600px]">
           {/* Pass only locations to DynamicMapComponent */}
           {mounted ? (
-            <DynamicMapComponent locations={locations || []} />
+            <DynamicMapComponent markers={locations || []} />
           ) : (
             <div className="text-center py-20 text-gray-500 dark:text-gray-400">
               Térkép betöltése...

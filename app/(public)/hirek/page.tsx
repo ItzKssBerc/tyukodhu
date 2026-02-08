@@ -46,7 +46,7 @@ export default async function NewsPage(props: PageProps) {
         Hírek
       </h1>
 
-      <NewsClient initialPosts={sortedPosts.map(post => {
+      <NewsClient initialPosts={sortedPosts.map((post: any) => {
         const { content, ...restEntry } = post.entry;
         return {
           ...post,
