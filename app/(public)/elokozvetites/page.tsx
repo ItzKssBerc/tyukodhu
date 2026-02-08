@@ -2,6 +2,8 @@ import { client } from "@/sanity/lib/client";
 import { LIVE_STREAM_QUERY, OLDALBEALLITASOK_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 
+export const revalidate = 10; // Revalidate every 10 seconds
+
 // Helper function to convert YouTube URL to embed URL
 function getYouTubeEmbedUrl(url: string): string | null {
   if (!url) return null;
