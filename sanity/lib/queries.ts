@@ -30,7 +30,7 @@ export const HIR_SLUG_QUERY = groq`*[_type == "hir" && slug.current == $slug][0]
   hirkategoria,
   datum,
   hircimke,
-  tartalom
+  hirtartalom
 }`
 
 export const KEP_QUERY = groq`*[_type == "kep"] | order(_createdAt desc) {

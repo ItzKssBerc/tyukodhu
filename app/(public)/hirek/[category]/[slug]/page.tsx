@@ -17,9 +17,10 @@ type PageProps = {
 }
 
 const categoryLabels: Record<string, string> = {
-    hirek: 'Hírek',
-    kozlemenyek: 'Közlemények',
-    rendezvenyek: 'Rendezvények',
+    kozerdeku: 'Közérdekű',
+    onkormanyzati: 'Önkormányzati',
+    kulturalis: 'Kulturális',
+    sport: 'Sport',
     egyeb: 'Egyéb',
 };
 
@@ -57,7 +58,7 @@ export default async function PostPage({ params }: PageProps) {
         category: sanityPost.hirkategoria,
         publishedDate: sanityPost.datum,
         featuredImage: sanityPost.hirindexkep ? urlFor(sanityPost.hirindexkep).url() : null,
-        content: sanityPost.tartalom,
+        content: sanityPost.hirtartalom,
     };
 
     const categoryLabel = categoryLabels[post.category] || post.category;

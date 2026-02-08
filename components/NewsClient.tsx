@@ -9,6 +9,7 @@ type Post = {
     entry: {
         title: string;
         category: string;
+        categorySlug: string;
         publishedDate: string;
         featuredImage: string | null;
         [key: string]: any;
@@ -32,7 +33,7 @@ export default function NewsClient({ initialPosts, categoryOptions }: NewsClient
 
     const filteredPosts = initialPosts.filter((post) => {
         const matchesSearch = post.entry.title.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = selectedCategory ? post.entry.category === selectedCategory : true;
+        const matchesCategory = selectedCategory ? post.entry.categorySlug === selectedCategory : true;
         return matchesSearch && matchesCategory;
     });
 
@@ -46,10 +47,10 @@ export default function NewsClient({ initialPosts, categoryOptions }: NewsClient
                 categories={categoryOptions}
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredPosts.map((post) => (
-                    <div key={post.slug} className="group bg-white dark:bg-stone-900 rounded-[2rem] shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden border border-stone-200 dark:border-stone-800 flex flex-col h-full">
-                        <div className="relative h-56 overflow-hidden">
+                    <div key={post.slug} className="group bg-white dark:bg-stone-900 rounded-[2rem] shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden border border-stone-200 dark:border-stone-800 flex flex-col h-full transform hover:-translate-y-1">
+                        <div className="relative h-48 overflow-hidden">
                             {post.entry.featuredImage ? (
                                 <img
                                     src={post.entry.featuredImage}
@@ -61,23 +62,23 @@ export default function NewsClient({ initialPosts, categoryOptions }: NewsClient
                                     <span className="text-stone-300 dark:text-stone-700 text-5xl"><i className="bi bi-image"></i></span>
                                 </div>
                             )}
-                            <div className="absolute top-6 right-6 bg-blue-600/90 backdrop-blur-md text-white text-[10px] font-black px-4 py-1.5 rounded-full shadow-lg uppercase tracking-widest">
+                            <div className="absolute top-4 right-4 bg-blue-600/90 backdrop-blur-md text-white text-[10px] font-black px-4 py-1.5 rounded-full shadow-lg uppercase tracking-widest">
                                 {post.entry.category}
                             </div>
                         </div>
 
-                        <div className="p-8 flex flex-col flex-grow">
-                            <div className="flex items-center text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-500 mb-4">
-                                <i className="bi bi-calendar3 mr-2 text-blue-600"></i>
+                        <div className="p-6 flex flex-col flex-grow">
+                            <div className="flex items-center text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-500 mb-3">
+                                <i className="bi bi-calendar3 mr-2 text-blue-600 text-[10px]"></i>
                                 {new Date(post.entry.publishedDate).toLocaleDateString('hu-HU', { year: 'numeric', month: 'long', day: 'numeric' })}
                             </div>
 
-                            <h3 className="text-xl font-bold text-stone-900 dark:text-white mb-4 line-clamp-2 leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            <h3 className="text-lg font-bold text-stone-900 dark:text-white mb-4 line-clamp-2 leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                                 {post.entry.title}
                             </h3>
 
-                            <div className="mt-auto pt-6 border-t border-stone-100 dark:border-stone-800">
-                                <a href={`/hirek/${post.entry.category}/${post.slug}`} className="inline-flex items-center text-stone-900 dark:text-white font-bold hover:text-blue-600 dark:hover:text-blue-400 transition-colors group/link">
+                            <div className="mt-auto pt-4 border-t border-stone-100 dark:border-stone-800">
+                                <a href={`/hirek/${post.entry.categorySlug}/${post.slug}`} className="inline-flex items-center text-stone-900 dark:text-white font-bold hover:text-blue-600 dark:hover:text-blue-400 transition-colors group/link text-sm">
                                     Tovább olvasom
                                     <i className="bi bi-arrow-right ml-2 transform group-hover/link:translate-x-1 transition-transform"></i>
                                 </a>

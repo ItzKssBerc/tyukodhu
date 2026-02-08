@@ -6,11 +6,12 @@ import EmptyState from "@/components/EmptyState";
 
 // Hardcoded category options from keystatic.config.ts for runtime lookup
 const categoryOptions = [
-  { label: 'Hírek', value: 'hirek' },
-  { label: 'Közlemények', value: 'kozlemenyek' },
-  { label: 'Rendezvények', value: 'rendezvenyek' },
-  { label: 'Egyéb', value: 'egyeb' },
-];
+  { title: 'Közérdekű', value: 'kozerdeku' },
+  { title: 'Önkormányzati', value: 'onkormanyzati' },
+  { title: 'Kulturális', value: 'kulturalis' },
+  { title: 'Sport', value: 'sport' },
+  { title: 'Egyéb', value: 'egyeb' },
+].map(opt => ({ label: opt.title, value: opt.value }));
 
 type PageProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -42,7 +43,7 @@ export default async function NewsPage(props: PageProps) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 max-w-6xl">
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
         Hírek
       </h1>
