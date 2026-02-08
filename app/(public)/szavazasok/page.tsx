@@ -1,4 +1,5 @@
-import { client } from '@/tina/__generated__/client';
+import { client } from "@/sanity/lib/client";
+import { SZAVAZAS_QUERY } from "@/sanity/lib/queries";
 import PollCard from '@/components/PollCard';
 import { getPollResults } from '@/app/actions';
 import { cookies } from 'next/headers';
@@ -9,25 +10,26 @@ export const metadata = {
 };
 
 export default async function PollsPage() {
-  let polls: any[] = [];
 
-  const tinaData = await client.queries.pollsConnection();
-  polls = tinaData.data.pollsConnection.edges?.map((edge) => edge?.node).filter(Boolean)
-  .filter(item => item?._sys.filename !== undefined && item._sys.filename !== null) // Ensure filename is defined
-  .map(item => ({
-    slug: item!._sys.filename, // Now filename is guaranteed to be string
+
+  // Fetch polls from Sanity
+  const sanityPolls = await client.fetch(SZAVAZAS_QUERY);
+
+  // Map Sanity data to Poll structure
+  const polls = sanityPolls.map((item: any) => ({
+    slug: item._id,
     entry: {
-      question: item?.question || '',
-      options: item?.options || [], // Keep as is for now, transformation happens before PollCard
-      isActive: item?.isActive || false,
-      allowChange: item?.allowChange || false,
-      publishedDate: item?.publishedDate ?? null, // Handle undefined
+      question: item.szavazascim || '',
+      options: item.valaszok ? item.valaszok.map((opt: string) => ({ option: opt })) : [],
+      isActive: item.aktiv !== false, // Default to true if undefined
+      allowChange: item.ismetles || false,
+      publishedDate: item._createdAt,
     }
-  })) || [];
-  
+  }));
+
   // Filter active polls
   const activePolls = polls.filter(poll => poll.entry.isActive);
-  
+
   // Sort by date (newest first)
   activePolls.sort((a, b) => {
     const dateA = new Date(a.entry.publishedDate || 0).getTime();
@@ -47,36 +49,36 @@ export default async function PollsPage() {
         <div className="space-y-8">
           {await Promise.all(activePolls.map(async (poll) => {
             const results = await getPollResults(poll.slug);
-            
+
             // Get user's vote from cookie
             const cookieName = `poll_${poll.slug}`;
             const voteCookie = cookieStore.get(cookieName);
             let userVote: number | null = null;
-            
+
             if (voteCookie) {
-                if (voteCookie.value === 'true') {
-                    // Legacy cookie support
-                    userVote = -1; 
-                } else {
-                    const parsed = parseInt(voteCookie.value, 10);
-                    if (!isNaN(parsed)) {
-                        userVote = parsed;
-                    }
+              if (voteCookie.value === 'true') {
+                // Legacy cookie support
+                userVote = -1;
+              } else {
+                const parsed = parseInt(voteCookie.value, 10);
+                if (!isNaN(parsed)) {
+                  userVote = parsed;
                 }
+              }
             }
 
-interface PollOption {
-  option?: string | null;
-}
+            interface PollOption {
+              option?: string | null;
+            }
 
-// ... existing code ...
+            // ... existing code ...
 
             // Transform options to string array
             const transformedOptions = poll.entry.options
               .filter(Boolean)
               .map((opt: PollOption) => opt?.option)
               .filter((opt: string | null | undefined): opt is string => opt !== undefined && opt !== null);
-            
+
             return (
               <PollCard
                 key={poll.slug}

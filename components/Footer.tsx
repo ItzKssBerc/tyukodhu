@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-export default function Footer({ siteEmblem }: { siteEmblem: string }) {
+export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
     const [currentDay, setCurrentDay] = useState<number | null>(null); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
 
     useEffect(() => {
@@ -21,7 +21,11 @@ export default function Footer({ siteEmblem }: { siteEmblem: string }) {
                     <div className="py-6 px-4 border-b border-gray-100 dark:border-gray-700">
                         <a href="/" className="flex items-center justify-center">
                             <div className="h-16 w-16 bg-gray-100 dark:bg-gray-800 p-2 rounded-full shadow-lg flex items-center justify-center border-2 border-gray-300 dark:border-gray-600">
-                                <img className="max-h-full max-w-full" src={siteEmblem} alt="Tyukod Címere" />
+                                {siteEmblem ? (
+                                    <img className="max-h-full max-w-full" src={siteEmblem} alt="Tyukod Címere" />
+                                ) : (
+                                    <i className="bi bi-shield-fill text-3xl text-gray-400 dark:text-gray-600"></i>
+                                )}
                             </div>
                             <div className="ml-3 flex flex-col leading-none">
                                 <span className="text-lg font-bold tracking-tight text-red-600 dark:text-red-500">TYUKOD</span>
@@ -122,7 +126,11 @@ export default function Footer({ siteEmblem }: { siteEmblem: string }) {
                         <div className="flex flex-col">
                             <a href="/" className="flex items-center mb-6">
                                 <div className="h-16 w-16 bg-gray-100 dark:bg-gray-800 p-2 rounded-full shadow-lg flex items-center justify-center border-2 border-gray-300 dark:border-gray-600">
-                                    <img className="max-h-full max-w-full" src={siteEmblem} alt="Tyukod Címere" />
+                                    {siteEmblem ? (
+                                        <img className="max-h-full max-w-full" src={siteEmblem} alt="Tyukod Címere" />
+                                    ) : (
+                                        <i className="bi bi-shield-fill text-3xl text-gray-400 dark:text-gray-600"></i>
+                                    )}
                                 </div>
                                 <div className="ml-4 flex flex-col leading-none">
                                     <span className="text-xl font-bold tracking-tight text-red-600 dark:text-red-500">TYUKOD</span>

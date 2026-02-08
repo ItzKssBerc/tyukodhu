@@ -1,7 +1,9 @@
-import { client } from '@/tina/__generated__/client';
+import { client } from "@/sanity/lib/client";
+import { HIR_SLUG_QUERY, HIREK_QUERY } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
+import { PortableText } from '@portabletext/react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { TinaMarkdown } from 'tinacms/dist/rich-text'; // Assuming TinaMarkdown is available
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Tag } from 'lucide-react';
@@ -29,70 +31,43 @@ const categoryColors: Record<string, string> = {
 };
 
 export async function generateStaticParams() {
-    const postsResponse = await client.queries.postsConnection();
-    const posts = postsResponse.data.postsConnection.edges?.map((edge) => edge?.node).filter(Boolean);
+    const posts = await client.fetch(HIREK_QUERY);
 
     if (!posts) {
         return [];
     }
 
-    return posts.map((post) => {
-        // Extract filename without extension and use as slug
-        const filename = post!._sys.filename;
-        const slug = filename.replace(/\.(md|mdoc)$/, '');
-        return {
-            slug: slug,
-            category: post!.category,
-        };
-    });
+    return posts.map((post: any) => ({
+        slug: post.slug.current,
+        category: post.hirkategoria,
+    }));
 }
 
 export default async function PostPage({ params }: PageProps) {
     const { slug, category } = await params;
-    console.log("Individual Post Page - Slug:", slug, "Category:", category);
-    
-    // Try to fetch with .md extension first, then .mdoc
-    let tinaData;
-    let post;
-    
-    try {
-        tinaData = await client.queries.posts({ 
-            relativePath: `${slug}.md`,
-        }); 
-        post = tinaData.data.posts;
-    } catch (error) {
-        try {
-            tinaData = await client.queries.posts({ 
-                relativePath: `${slug}.mdoc`,
-            }); 
-            post = tinaData.data.posts;
-        } catch (error2) {
-            post = null;
-        }
-    }
-    
-    console.log("Individual Post Page - Post from Tina:", post);
 
-    // If the post doesn't exist or the category from the URL doesn't match the post's category, return 404.
-    // This prevents the same content from appearing under multiple URLs.
-    if (!post || post.category !== category) {
-        console.error("PostPage: Post not found or category mismatch. Post data:", JSON.stringify(post), "URL Category:", category);
-        if (!post) {
-            console.error("PostPage: Reason: Post object is null/undefined.");
-        } else if (post.category !== category) {
-            console.error("PostPage: Reason: Category mismatch. Expected:", category, "Got:", post.category);
-        }
+    const sanityPost = await client.fetch(HIR_SLUG_QUERY, { slug });
+
+    if (!sanityPost || sanityPost.hirkategoria !== category) {
         notFound();
     }
 
+    const post = {
+        title: sanityPost.cim,
+        category: sanityPost.hirkategoria,
+        publishedDate: sanityPost.datum,
+        featuredImage: sanityPost.hirindexkep ? urlFor(sanityPost.hirindexkep).url() : null,
+        content: sanityPost.tartalom,
+    };
+
     const categoryLabel = categoryLabels[post.category] || post.category;
     const categoryColor = categoryColors[post.category] || categoryColors.egyeb;
-    
+
     return (
         <div className="min-h-screen py-12">
             <div className="container mx-auto px-4 max-w-6xl">
-                <Link 
-                    href="/hirek" 
+                <Link
+                    href="/hirek"
                     className="inline-flex items-center text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 mb-8 transition-colors duration-200 font-medium"
                 >
                     <ArrowLeft className="w-5 h-5 mr-2" />
@@ -144,7 +119,7 @@ export default async function PostPage({ params }: PageProps) {
                             prose-strong:text-gray-900 dark:prose-strong:text-white
                             prose-ul:list-disc prose-ul:pl-6
                             prose-ol:list-decimal prose-ol:pl-6">
-                            {post.content && <TinaMarkdown content={post.content} />}
+                            {post.content && <PortableText value={post.content} />}
                         </div>                    </div>
                 </article>
             </div>

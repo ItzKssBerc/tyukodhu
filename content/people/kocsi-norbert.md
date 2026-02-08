@@ -1,8 +1,0 @@
----
-name: Kócsi Norbert
-body: kepviselo-testulet
-position: Képviselő
-committees:
-  - name: Pénzügyi bizottság
-    position: tag
----

@@ -1,94 +1,96 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
+import Image from 'next/image';
 
-// Update props to accept bannerImages
-export default function Carousel({ bannerImages }: { bannerImages: { image: string }[] }) {
-  // Map bannerImages to a format similar to old slides, adding an 'id'
-  const slides = bannerImages.map((img, index) => ({ id: index + 1, src: img.image }));
+interface CarouselProps {
+    images: string[];
+}
 
-  const [activeSlide, setActiveSlide] = useState(1);
+export default function Carousel({ images }: CarouselProps) {
+    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30 }, [Autoplay({ delay: 5000, stopOnInteraction: false })]);
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
-  useEffect(() => {
-    // Only set up interval if there are slides
-    if (slides.length > 0) {
-      const interval = setInterval(() => {
-        setActiveSlide((current) => (current === slides.length ? 1 : current + 1));
-      }, 5000);
+    const onSelect = useCallback(() => {
+        if (!emblaApi) return;
+        setSelectedIndex(emblaApi.selectedScrollSnap());
+    }, [emblaApi]);
 
-      return () => clearInterval(interval);
+    useEffect(() => {
+        if (!emblaApi) return;
+        onSelect();
+        emblaApi.on('select', onSelect);
+        return () => {
+            emblaApi.off('select', onSelect);
+        };
+    }, [emblaApi, onSelect]);
+
+    const scrollTo = useCallback(
+        (index: number) => emblaApi && emblaApi.scrollTo(index),
+        [emblaApi]
+    );
+
+    if (!images || images.length === 0) {
+        return null;
     }
-  }, [slides.length]); // Dependency on slides.length to re-run effect if images change
 
-  const setSlide = (id: number) => {
-    setActiveSlide(id);
-  };
+    return (
+        <div className="relative w-full max-w-7xl mx-auto overflow-hidden rounded-xl shadow-2xl mt-8">
+            <div className="overflow-hidden" ref={emblaRef}>
+                <div className="flex">
+                    {images.map((src, index) => (
+                        <div className="relative flex-[0_0_100%] min-w-0" key={index}>
+                            <div className="aspect-[16/9] md:aspect-[21/9] relative w-full">
+                                <Image
+                                    src={src}
+                                    alt={`Carousel Image ${index + 1}`}
+                                    fill
+                                    className="object-cover"
+                                    priority={index === 0}
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent flex items-end p-8">
+                                    {/* Optional: Add captions here if you want */}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
 
-  const nextSlide = () => {
-    setActiveSlide((current) => (current === slides.length ? 1 : current + 1));
-  };
-
-  const prevSlide = () => {
-    setActiveSlide((current) => (current === 1 ? slides.length : current - 1));
-  };
-
-  // Render nothing if no slides
-  if (slides.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className="relative w-full">
-      {/* Slides */}
-      <div className="relative overflow-hidden" style={{ height: "70vh" }}>
-        {slides.map((slide) => (
-          <div
-            key={slide.id}
-            className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
-              activeSlide === slide.id ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <img
-              src={slide.src}
-              className="w-full h-full object-cover"
-              alt="Welcome image"
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Controls */}
-      {slides.length > 1 && ( // Only show controls if more than one slide
-        <div className="absolute inset-0 flex items-center justify-between px-4">
-          <button
-            onClick={prevSlide}
-            className="bg-black bg-opacity-25 text-white p-2 rounded-full hover:bg-opacity-50 focus:outline-none cursor-pointer"
-          >
-            <i className="bi bi-chevron-left text-xl"></i>
-          </button>
-          <button
-            onClick={nextSlide}
-            className="bg-black bg-opacity-25 text-white p-2 rounded-full hover:bg-opacity-50 focus:outline-none cursor-pointer"
-          >
-            <i className="bi bi-chevron-right text-xl"></i>
-          </button>
-        </div>
-      )}
-
-      {/* Indicators */}
-      {slides.length > 1 && ( // Only show indicators if more than one slide
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex space-x-2">
-          {slides.map((slide) => (
+            {/* Navigation Buttons */}
             <button
-              key={slide.id}
-              onClick={() => setSlide(slide.id)}
-              className={`w-3 h-3 rounded-full hover:bg-white focus:outline-none transition-colors duration-300 ${
-                activeSlide === slide.id ? "bg-white" : "bg-white/50"
-              }`}
-            ></button>
-          ))}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full p-2 text-white transition-all duration-300 opacity-0 group-hover:opacity-100 focus:opacity-100"
+                onClick={() => emblaApi && emblaApi.scrollPrev()}
+                aria-label="Previous Slide"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+            </button>
+            <button
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full p-2 text-white transition-all duration-300 opacity-0 group-hover:opacity-100 focus:opacity-100"
+                onClick={() => emblaApi && emblaApi.scrollNext()}
+                aria-label="Next Slide"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
+
+            {/* Dots */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                {images.map((_, index) => (
+                    <button
+                        key={index}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 shadow-sm ${index === selectedIndex ? 'bg-white w-6' : 'bg-white/50 hover:bg-white/80'
+                            }`}
+                        onClick={() => scrollTo(index)}
+                        aria-label={`Go to slide ${index + 1}`}
+                    />
+                ))}
+            </div>
         </div>
-      )}
-    </div>
-  );
+    );
 }

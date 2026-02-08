@@ -1,28 +1,26 @@
-import { client } from '@/tina/__generated__/client';
+import { client } from "@/sanity/lib/client";
+import { DOKUMENTUM_QUERY } from "@/sanity/lib/queries";
 import DocumentsClient from "@/components/DocumentsClient";
 
 export default async function DocumentsPage() {
-  const tinaData = await client.queries.documentsConnection();
-  const documents = tinaData.data.documentsConnection.edges?.map((edge) => edge?.node)
-  .filter(Boolean)
-  .filter(item => item?._sys.filename !== undefined && item._sys.filename !== null) // Ensure filename is defined
-      .map(item => {
-        const rawPublishedDate = item?.publishedDate;
-        const publishedDateTime = rawPublishedDate ? new Date(rawPublishedDate) : null;
-        const isValidDate = publishedDateTime instanceof Date && !isNaN(publishedDateTime.getTime());
-        return {
-          slug: item!._sys.filename, // Now filename is guaranteed to be string
-          entry: {
-            title: item?.title || '',
-            category: item?.category || '',
-            description: item?.description || '',
-            file: item?.file || '',
-            publishedDate: isValidDate ? publishedDateTime.toISOString().split('T')[0] : null,
-            publishedTime: isValidDate ? publishedDateTime.toTimeString().split(' ')[0].substring(0, 5) : null,
+  // Fetch documents from Sanity
+  const sanityDocs = await client.fetch(DOKUMENTUM_QUERY);
+
+  // Map Sanity data to DocumentsClient structure
+  const documents = sanityDocs.map((item: any) => {
+    const publishedDateTime = new Date(item._createdAt);
+    return {
+      slug: item._id,
+      entry: {
+        title: item.dokumentumcim || '',
+        category: item.kategoria || '',
+        description: '', // Desc not in schema yet
+        file: item.fajlUrl || '',
+        publishedDate: publishedDateTime.toISOString().split('T')[0],
+        publishedTime: publishedDateTime.toTimeString().split(' ')[0].substring(0, 5),
       }
     };
-  }) || [];
-  console.log("Documents found by Tina:", documents);
+  });
 
   return (
     <div className="container mx-auto px-4 py-8">

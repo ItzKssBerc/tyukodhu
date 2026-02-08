@@ -1,8 +1,0 @@
----
-name: Kerezsi Józsefné
-body: kepviselo-testulet
-position: Képviselő
-committees:
-  - name: Egészségügyi és Szociális bizottság
-    position: tag
----

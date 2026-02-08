@@ -1,5 +1,0 @@
----
-name: Bíró Sándor
-body: kepviselo-testulet
-position: Alpolgármester
----

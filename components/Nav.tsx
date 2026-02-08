@@ -3,9 +3,9 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ThemeToggle from "./ThemeToggle";
 
-export default function Nav({ siteEmblem }: { siteEmblem: string }) {
+
+export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -84,11 +84,15 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
               <div className="h-20 w-20 bg-gray-100 dark:bg-gray-800 p-3 rounded-full shadow-lg transform hover:scale-105 transition-transform duration-200 flex items-center justify-center border-2 border-gray-400 dark:border-gray-700">
-                <img
-                  className="max-h-full max-w-full"
-                  src={siteEmblem}
-                  alt="Tyukod Címere"
-                />
+                {siteEmblem ? (
+                  <img
+                    className="max-h-full max-w-full"
+                    src={siteEmblem}
+                    alt="Tyukod Címere"
+                  />
+                ) : (
+                  <i className="bi bi-shield-fill text-4xl text-gray-400 dark:text-gray-600"></i>
+                )}
               </div>
               <div className="ml-3 flex flex-col items-start leading-none">
                 <span className="text-2xl font-bold tracking-tight text-yellow-500 hover:text-yellow-600 transition-colors">
@@ -352,62 +356,55 @@ export default function Nav({ siteEmblem }: { siteEmblem: string }) {
           {/* Right Side: Dark Mode & Mobile Toggle */}
           <div className="flex items-center">
             {/* Desktop Dark Mode Toggle */}
-            <div className="hidden lg:flex items-center ml-4">
-              <ThemeToggle />
-            </div>
 
-            <div className="-mr-2 flex lg:hidden items-center gap-2">
-              {/* Mobile Dark Mode Toggle */}
-              <ThemeToggle />
 
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                type="button"
-                className="bg-white dark:bg-gray-900 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-900"
-                aria-controls="mobile-menu"
-                aria-expanded={mobileMenuOpen}
-              >
-                <span className="sr-only">Open main menu</span>
-                {!mobileMenuOpen ? (
-                  <svg
-                    className="block h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    className="h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                )}
-              </button>
-            </div>
+
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              type="button"
+              className="bg-white dark:bg-gray-900 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-900"
+              aria-controls="mobile-menu"
+              aria-expanded={mobileMenuOpen}
+            >
+              <span className="sr-only">Open main menu</span>
+              {!mobileMenuOpen ? (
+                <svg
+                  className="block h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  className="h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
       </div>
-
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div
           className="lg:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800"

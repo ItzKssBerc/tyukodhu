@@ -1,24 +1,24 @@
-import { client } from '@/tina/__generated__/client';
+import { client } from "@/sanity/lib/client";
+import { KEP_QUERY } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
 import GalleryClient from "@/components/GalleryClient";
 
 export default async function GalleryPage() {
-  const tinaData = await client.queries.imagesConnection();
-  const galleryItems = tinaData.data.imagesConnection.edges?.map(
-    (edge) => edge?.node
-  ).filter(Boolean)
-  .filter(item => item?.id !== undefined && item.id !== null) // Ensure id is defined before using
-  .map(item => ({
-    slug: item!.id, // Now item.id is guaranteed to be string
+  // Fetch images from Sanity
+  const sanityImages = await client.fetch(KEP_QUERY);
+
+  // Map Sanity data to GalleryClient structure
+  const galleryItems = sanityImages.map((item: any) => ({
+    slug: item._id,
     entry: {
-      title: item?.title || '',
-      description: item?.description || '',
-      album: item?.album || '',
-      image: item?.image || '',
-      publishedDate: item?.publishedDate ?? null,
+      title: item.kepcim || '',
+      description: '', // Sanity schema doesn't have description yet, or assume empty
+      album: item.album || 'Egyéb',
+      image: item.kep ? urlFor(item.kep).url() : '',
+      publishedDate: item._createdAt,
       publishedTime: null,
     }
-  })) || [];
-  console.log("Gallery items found by Tina:", galleryItems);
+  }));
 
   return (
     <div className="container mx-auto py-8 px-4">

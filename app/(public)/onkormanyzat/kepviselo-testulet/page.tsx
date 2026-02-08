@@ -1,4 +1,6 @@
-import { client } from '@/tina/__generated__/client';
+import { client } from "@/sanity/lib/client";
+import { SZEMELY_QUERY } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
 import Image from 'next/image';
 
 interface Person {
@@ -13,21 +15,24 @@ interface Person {
 }
 
 export default async function KepviseloTestuletPage() {
-  let people: Person[] = [];
 
-  const tinaData = await client.queries.peopleConnection();
-  people = tinaData.data.peopleConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
-    slug: item?._sys.filename || '',
+
+  // Fetch people from Sanity
+  const sanityPeople = await client.fetch(SZEMELY_QUERY);
+
+  // Map Sanity data to Person structure
+  const people: Person[] = sanityPeople.map((item: any) => ({
+    slug: item._id,
     entry: {
-      name: item?.name || '',
-      body: item?.body || '',
-      position: item?.position,
-      committees: item?.committees?.filter(Boolean) as ({ name?: string | null; position?: string | null } | null)[],
-      image: item?.image,
+      name: item.nev || '',
+      body: item.kategoria?.includes('kepviselo-testulet') ? 'kepviselo-testulet' : '', // Mock body check to match existing logic
+      position: item.titulus,
+      committees: item.bizottsagok?.map((biz: any) => ({ name: biz.nev, position: biz.pozicio })) || [],
+      image: item.kep ? urlFor(item.kep).url() : null, // Store full URL here
     }
-  })) || [];
+  }));
 
-  const roleMetadata: { [key:string]: { icon: string; borderColor: string } } = {
+  const roleMetadata: { [key: string]: { icon: string; borderColor: string } } = {
     "polgármester": {
       icon: "bi bi-star-fill",
       borderColor: "border-yellow-500",
@@ -92,7 +97,7 @@ export default async function KepviseloTestuletPage() {
                 <div className="relative w-32 h-32 mx-auto mb-4">
                   {member.image ? (
                     <Image
-                      src={`/images/people/${member.image}`}
+                      src={member.image} // It is already a full URL from Sanity
                       alt={`Profilkép - ${member.name}`}
                       layout="fill"
                       objectFit="cover"
@@ -100,7 +105,7 @@ export default async function KepviseloTestuletPage() {
                     />
                   ) : (
                     <div className="w-full h-full rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                       <i className={`${defaultMetadata.icon} text-5xl text-gray-400 dark:text-gray-500`}></i>
+                      <i className={`${defaultMetadata.icon} text-5xl text-gray-400 dark:text-gray-500`}></i>
                     </div>
                   )}
                 </div>

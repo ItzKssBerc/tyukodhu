@@ -4,6 +4,9 @@ const require = createRequire(import.meta.url);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  compiler: {
+    styledComponents: true,
+  },
   transpilePackages: ["next-tinacms-cloudinary", "@tinacms/auth"],
   outputFileTracingIncludes: {
     '/': ['content/**'],
@@ -47,6 +50,10 @@ const nextConfig = {
         hostname: 'res.cloudinary.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
       },
     ],
   },

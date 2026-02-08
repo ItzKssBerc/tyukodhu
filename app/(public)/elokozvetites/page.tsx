@@ -1,6 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import { client } from "@/sanity/lib/client";
+import { LIVE_STREAM_QUERY, OLDALBEALLITASOK_QUERY } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
 
 // Helper function to convert YouTube URL to embed URL
 function getYouTubeEmbedUrl(url: string): string | null {
@@ -32,38 +32,24 @@ function getYouTubeEmbedUrl(url: string): string | null {
 
 // Live Stream Page Component
 export default async function LiveStreamPage() {
-  const filePath = path.join(process.cwd(), 'content', 'live-stream-config.md');
-  let liveStream: { isLive?: boolean; embedCode?: string; streamUrl?: string; banner?: string; } | null = null;
-
-  try {
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    const { data } = matter(fileContent);
-    liveStream = data as { isLive?: boolean; embedCode?: string; streamUrl?: string; banner?: string; };
-  } catch (error) {
-    console.error('Error reading live stream config:', error);
-    // Fallback to default offline state if config file cannot be read
-    liveStream = { isLive: false, embedCode: "", streamUrl: "", banner: undefined };
-  }
+  const [liveStream, siteConfig] = await Promise.all([
+    client.fetch(LIVE_STREAM_QUERY),
+    client.fetch(OLDALBEALLITASOK_QUERY),
+  ]);
 
   // Ha nincs konfigurálva a liveStream, vagy nincs aktív, alapértelmezett offline állapot
-  const isLive = liveStream?.isLive || false;
-  const embedCode = liveStream?.embedCode || "";
-  const streamUrl = liveStream?.streamUrl || "";
+  const isLive = liveStream?.adasban || false;
+  const embedCode = liveStream?.iframe || "";
+  const streamUrl = liveStream?.streamurl || "";
   // Access the dynamic banner field
-  const banner = liveStream?.banner || "/images/stream/streambanner.jpg";
+  const banner = liveStream?.offlinebanner
+    ? urlFor(liveStream.offlinebanner).url()
+    : "/images/stream/streambanner.jpg";
 
   // Fetch site config for emblem
-  const siteConfigPath = path.join(process.cwd(), 'content', 'site-config.md');
-  let siteEmblem = "/images/cimer.png";
-  try {
-    const siteConfigFile = fs.readFileSync(siteConfigPath, 'utf8');
-    const { data: siteConfigData } = matter(siteConfigFile);
-    if (siteConfigData.siteEmblem) {
-      siteEmblem = siteConfigData.siteEmblem;
-    }
-  } catch (error) {
-    console.error('Error reading site config:', error);
-  }
+  const siteEmblem = siteConfig?.oldalemblema
+    ? urlFor(siteConfig.oldalemblema).url()
+    : null;
 
   const finalStreamUrl = getYouTubeEmbedUrl(streamUrl);
 
@@ -104,11 +90,15 @@ export default async function LiveStreamPage() {
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/90"></div>
           <div className="relative flex flex-col items-center justify-center text-center py-24 sm:py-32 px-4">
-            <img
-              src={siteEmblem}
-              alt="Címer"
-              className="h-28 sm:h-32 mx-auto mb-6"
-            />
+            {siteEmblem ? (
+              <img
+                src={siteEmblem}
+                alt="Címer"
+                className="h-28 sm:h-32 mx-auto mb-6"
+              />
+            ) : (
+              <i className="bi bi-shield-fill text-6xl text-gray-400 mb-6 block"></i>
+            )}
             <h2 className="text-4xl sm:text-5xl font-extrabold mb-4">
               A közvetítés jelenleg nem elérhető.
             </h2>

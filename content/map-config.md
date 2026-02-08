@@ -1,5 +1,0 @@
----
-centerLatitude: 47.8530348
-centerLongitude: 22.5568265
-defaultZoom: 13
----

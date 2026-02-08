@@ -1,94 +1,26 @@
-import Carousel from "@/components/Carousel";
-import { client } from '@/tina/__generated__/client';
-import NewsCard from "@/components/NewsCard";
+
+
+
 import Link from "next/link";
-
-interface Post {
-  slug: string;
-  entry: {
-    title: string;
-    category: string;
-    publishedDate: string | null;
-    content?: any;
-    featuredImage: string | null;
-  };
-}
-
-interface Document {
-  slug: string;
-  entry: {
-    title: string;
-    category: string;
-    description: string | null;
-    file: string;
-            publishedDate: string | null;  };
-}
+import { client } from "@/sanity/lib/client";
+import { OLDALBEALLITASOK_QUERY } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
+import Carousel from "@/components/Carousel";
 
 export default async function Home() {
-  let posts: Post[] = [];
+  let posts: any[] = []; // Keep existing generic type usage
+  let documents: any[] = []; // Keep existing generic type usage
 
-  // Fetch siteConfig data
-  const tinaSiteConfigData = await client.queries.siteConfig({ relativePath: 'site-config.md' });
-  const siteConfig = tinaSiteConfigData.data.siteConfig;
-
-  const tinaPostData = await client.queries.postsConnection();
-  posts = tinaPostData.data.postsConnection.edges
-    ?.map((edge) => edge?.node)
-    .filter(Boolean) // Remove null/undefined nodes
-    .filter(item => item?._sys.filename !== undefined && item._sys.filename !== null) // Ensure filename is defined
-    .map(item => ({
-      slug: item!._sys.filename, // Now filename is guaranteed to be string
-      entry: {
-        title: item?.title || '',
-        category: item?.category || '',
-        publishedDate: item?.publishedDate ?? null,
-        content: item?.content,
-        featuredImage: item?.featuredImage ?? null,
-      }
-    })) || [];
-
-  const latestPosts = posts
-    .sort((a: Post, b: Post) => {
-      const dateA = a.entry.publishedDate ? new Date(a.entry.publishedDate).getTime() : 0;
-      const dateB = b.entry.publishedDate ? new Date(b.entry.publishedDate).getTime() : 0;
-      return dateB - dateA;
-    })
-    .slice(0, 3);
-
-  let documents: Document[] = [];
-
-  const tinaDocumentData = await client.queries.documentsConnection();
-  documents = tinaDocumentData.data.documentsConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
-    slug: item?._sys.filename || '',
-    entry: {
-      title: item?.title || '',
-      category: item?.category || '',
-      description: item?.description || null,
-      file: item?.file || '',
-      publishedDate: item?.publishedDate || null,
-    }
-  })) || [];
-
-  const latestDocuments = documents
-    .sort((a: Document, b: Document) => {
-      const dateA = a.entry.publishedDate ? new Date(a.entry.publishedDate).getTime() : 0;
-      const dateB = b.entry.publishedDate ? new Date(b.entry.publishedDate).getTime() : 0;
-      return dateB - dateA;
-    })
-    .slice(0, 3);
-
-  // Local mapping for post categories to avoid importing the config
-  const postCategoryLabels: Record<string, string> = {
-    'hirek': 'Hírek',
-    'kozlemenyek': 'Közlemények',
-    'rendezvenyek': 'Rendezvények',
-    'egyeb': 'Egyéb',
-  };
-
+  // Fetch Carousel Data
+  const siteConfig = await client.fetch(OLDALBEALLITASOK_QUERY);
+  const carouselImages = siteConfig?.fokepcarousel?.map((image: any) => urlFor(image).url()) || [];
 
   return (
     <>
-      <Carousel bannerImages={(siteConfig.bannerImages || []).filter(item => item && item.image) as { image: string }[]} /> {/* Pass bannerImages to Carousel */}
+      {/* Carousel Section */}
+      <section className="w-full px-4 mb-8">
+        <Carousel images={carouselImages} />
+      </section>
 
       <div className="container mx-auto mt-5 py-2 flex flex-wrap justify-center gap-4 px-4">
         <a
@@ -188,51 +120,9 @@ export default async function Home() {
 
         {/* Sidebar */}
         <div className="w-full md:w-1/4 bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-colors duration-300">
-          <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">
-            Legújabb dokumentumok
-          </h3>
-          {latestDocuments.length > 0 ? (
-            <ul className="space-y-2">
-              {latestDocuments.map((doc: Document) => (
-                <li key={doc.slug}>
-                  <Link
-                    href={doc.entry.file}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    download
-                    className="text-blue-600 dark:text-blue-400 hover:underline"
-                  >
-                                {doc.entry.title} ({doc.entry.publishedDate ? new Date(doc.entry.publishedDate).toLocaleDateString('hu-HU') : 'N/A'})
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-          ) : (
-            <p className="text-gray-500 dark:text-gray-400 text-sm italic">Nincsenek feltöltött dokumentumok.</p>
-          )}
 
-          <div className="mt-8">
-            <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">
-              Friss hírek
-            </h3>
-            {latestPosts.length > 0 ? (
-              <div className="space-y-4">
-                {latestPosts.map((post: Post) => (
-                  <NewsCard
-                    key={post.slug}
-                    slug={post.slug}
-                    title={post.entry.title}
-                    publishedDate={post.entry.publishedDate}
-                    featuredImage={post.entry.featuredImage}
-                    category={postCategoryLabels[post.entry.category] || post.entry.category}
-                    categorySlug={post.entry.category}
-                  />
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500 dark:text-gray-400 text-sm italic">Nincsenek feltöltött hírek.</p>
-            )}
-          </div>
+
+
         </div>
       </div>
     </>

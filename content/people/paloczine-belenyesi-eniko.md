@@ -1,8 +1,0 @@
----
-name: Pálócziné Belényesi Enikő
-body: kepviselo-testulet
-position: Képviselő
-committees:
-  - name: Egészségügyi és Szociális bizottság
-    position: elnök
----

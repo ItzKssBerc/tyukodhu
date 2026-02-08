@@ -1,6 +1,7 @@
-// app/(public)/terkep/page.tsx (Server Component)
-import { client } from '@/tina/__generated__/client'; // Import Tina client
-import MapClientPage from './client-page'; // Import the client component
+import { client } from "@/sanity/lib/client";
+import { HELYSZIN_QUERY } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
+import MapClientPage from './client-page';
 
 // Interface for the Tina entry structure
 interface TinaLocationEntry {
@@ -33,23 +34,24 @@ export default async function MapPage() {
   let error: string | null = null;
 
   try {
-    const tinaData = await client.queries.locationsConnection();
-    const tinaLocations: TinaLocationEntry[] = tinaData.data.locationsConnection.edges?.map(
-      (edge) => edge?.node
-    ).filter(Boolean) as TinaLocationEntry[];
 
-    locations = tinaLocations.map((loc) => ({
-      title: loc.title,
-      address: loc.address,
-      description: loc.description,
-      category: loc.category,
-      coordinates: loc.coordinates,
-      markerIcon: loc.markerIcon,
-      markerColor: loc.markerColor,
-      details: loc.details,
+    const sanityLocations = await client.fetch(HELYSZIN_QUERY);
+
+    locations = sanityLocations.map((loc: any) => ({
+      title: loc.helyszinnev,
+      address: '', // Sanity schema doesn't have address yet? or assume coordinata is enough
+      // If leiras is an array of objects {label, value}, map it.
+      details: loc.leiras?.map((item: any) => ({
+        label: item.cim || item.label, // Adjust based on actual schema
+        value: item.tartalom || item.value
+      })) || [],
+      coordinates: loc.koordinata,
+      markerIcon: loc.helyszinikon ? urlFor(loc.helyszinikon).url() : undefined,
+      description: '', // Computed from details?
+      category: 'egyeb', // Default category
     }));
   } catch (err: any) {
-    console.error("Failed to fetch locations from TinaCMS in Server Component:", err);
+    console.error("Failed to fetch locations from Sanity in Server Component:", err);
     error = "Hiba történt a helyszínek betöltésekor.";
   }
 

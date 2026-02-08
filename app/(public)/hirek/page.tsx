@@ -1,4 +1,6 @@
-import { client } from '@/tina/__generated__/client';
+import { client } from "@/sanity/lib/client";
+import { HIREK_QUERY } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
 import NewsClient from "@/components/NewsClient";
 
 // Hardcoded category options from keystatic.config.ts for runtime lookup
@@ -13,52 +15,45 @@ type PageProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export default async function NewsPage({ searchParams }: PageProps) {
-  let posts: any[] = []; // Initialize posts as an empty array
+// Fetch news from Sanity
+const sanityPosts = await client.fetch(HIREK_QUERY);
 
-  const tinaData = await client.queries.postsConnection();
-  posts = tinaData.data.postsConnection.edges?.map((edge) => edge?.node)
-    .filter(Boolean)
-    .filter(item => item?.id !== undefined && item.id !== null) // Ensure id is defined
-    .map(item => ({
-      slug: item!._sys?.filename?.replace(/\.(md|mdoc)$/, '') || item!.id,
-      entry: {
-        title: item?.title || '',
-        category: item?.category || '',
-        publishedDate: item?.publishedDate ?? null,
-        content: item?.content,
-        featuredImage: item?.featuredImage ?? null,
-      }
-    })) || [];
-  console.log("Posts found by Tina:", posts);
-  
-  // Sort posts by date (newest first)
-  const sortedPosts = posts.sort((a, b) => {
-    const dateA = new Date(a.entry.publishedDate || 0).getTime();
-    const dateB = new Date(b.entry.publishedDate || 0).getTime();
-    return dateB - dateA;
-  });
+// Map Sanity data to the structure expected by NewsClient
+// structure: { slug, entry: { title, category, publishedDate, featuredImage } }
+const posts = sanityPosts.map((post: any) => ({
+  slug: post.slug.current,
+  entry: {
+    title: post.cim,
+    category: post.hirkategoria,
+    publishedDate: post.datum,
+    featuredImage: post.hirindexkep ? urlFor(post.hirindexkep).url() : null,
+    // content is not strictly needed for the list view if NewsClient doesn't use it for rendering the card
+  }
+}));
 
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
-        Hírek
-      </h1>
+// Sort is handled by GROQ (order(datum desc)), but we can double check or just use the array
+const sortedPosts = posts;
 
-      <NewsClient initialPosts={sortedPosts.map(post => {
-        const { content, ...restEntry } = post.entry;
-        return {
-          ...post,
-          entry: {
-            ...restEntry,
-            category: getCategoryLabel(restEntry.category),
-            categorySlug: restEntry.category,
-          }
-        };
-      })} categoryOptions={categoryOptions} />
+return (
+  <div className="container mx-auto px-4 py-8">
+    <h1 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
+      Hírek
+    </h1>
 
-    </div>
-  );
+    <NewsClient initialPosts={sortedPosts.map(post => {
+      const { content, ...restEntry } = post.entry;
+      return {
+        ...post,
+        entry: {
+          ...restEntry,
+          category: getCategoryLabel(restEntry.category),
+          categorySlug: restEntry.category,
+        }
+      };
+    })} categoryOptions={categoryOptions} />
+
+  </div>
+);
 }
 
 function getCategoryLabel(value: string): string {
