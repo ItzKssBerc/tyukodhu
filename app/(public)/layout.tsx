@@ -7,10 +7,11 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { client } from "@/sanity/lib/client";
 import { OLDALBEALLITASOK_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
+
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
-
+export const revalidate = 60; // Revalidate every 60 seconds
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
