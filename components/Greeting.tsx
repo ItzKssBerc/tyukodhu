@@ -7,9 +7,10 @@ import { urlFor } from "@/sanity/lib/image";
 
 interface GreetingProps {
     images?: any[];
+    mayorName?: string;
 }
 
-export default function Greeting({ images = [] }: GreetingProps) {
+export default function Greeting({ images = [], mayorName }: GreetingProps) {
     const [randomImage, setRandomImage] = React.useState<any>(null);
 
     React.useEffect(() => {
@@ -107,7 +108,7 @@ export default function Greeting({ images = [] }: GreetingProps) {
 
                         {/* Signature */}
                         <div className="pt-8 border-t border-stone-100 dark:border-stone-800">
-                            <p className="text-xl font-bold text-stone-900 dark:text-white">Név Placeholder</p>
+                            <p className="text-xl font-bold text-stone-900 dark:text-white">{mayorName || "Név Placeholder"}</p>
                             <p className="text-sm uppercase tracking-widest text-stone-500 font-medium">Polgármester</p>
                         </div>
                     </div>

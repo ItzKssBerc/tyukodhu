@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
-import { OLDALBEALLITASOK_QUERY, HIREK_QUERY, DOKUMENTUM_QUERY, KEP_QUERY } from "@/sanity/lib/queries";
+import { OLDALBEALLITASOK_QUERY, HIREK_QUERY, DOKUMENTUM_QUERY, KEP_QUERY, SZEMELY_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import Carousel from "@/components/Carousel";
 import NewsTicker from "@/components/NewsTicker";
@@ -12,12 +12,19 @@ import Greeting from "@/components/Greeting";
 
 export default async function Home() {
   // Fetch Data
-  const [siteConfig, news, docs, gallery] = await Promise.all([
+  const [siteConfig, news, docs, gallery, people] = await Promise.all([
     client.fetch(OLDALBEALLITASOK_QUERY),
     client.fetch(HIREK_QUERY),
     client.fetch(DOKUMENTUM_QUERY),
-    client.fetch(KEP_QUERY)
+    client.fetch(KEP_QUERY),
+    client.fetch(SZEMELY_QUERY)
   ]);
+
+  // Find Mayor
+  const mayor = people?.find((p: any) =>
+    p.titulus?.toLowerCase().includes("polgármester")
+  );
+  const mayorName = mayor?.nev;
 
   const carouselImages = siteConfig?.fokepcarousel?.map((image: any) => urlFor(image).url()) || [];
 
@@ -49,7 +56,7 @@ export default async function Home() {
         </Carousel>
       </section>
 
-      <Greeting images={gallery || []} />
+      <Greeting images={gallery || []} mayorName={mayorName} />
     </>
   );
 }
