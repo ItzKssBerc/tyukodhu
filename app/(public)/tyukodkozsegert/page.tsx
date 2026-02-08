@@ -46,193 +46,173 @@ export default function TyukodKozsegertPage() {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mt-15 mb-12 text-center bg-gray-50 dark:bg-gray-800 p-8 rounded-xl shadow-lg border-t-4 border-yellow-600 dark:border-yellow-500">
-        <h1 className="text-4xl font-extrabold text-gray-800 dark:text-white mb-2 tracking-wide">
-          "Tyukod Községért" Közalapítvány
-        </h1>
-        <hr className="w-24 mx-auto border-t-2 border-yellow-600 dark:border-yellow-500 my-4" />
-        <blockquote className="italic text-lg text-gray-600 dark:text-gray-300">
-          "Mindenkinek kellene, hogy legyen valami, amit önzetlenül tesz,
-          pusztán azért, hogy másoknak szerzett örömmel magát boldogítsa"
-          <footer className="mt-2 font-semibold text-gray-700 dark:text-gray-200">
-            /Becca Prior/
-          </footer>
-        </blockquote>
-      </div>
+    <div className="min-h-screen bg-stone-50 dark:bg-stone-950 transition-colors duration-500">
 
-      <div className="mb-12 bg-white dark:bg-gray-800 rounded-xl shadow-xl p-8">
-        <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-4 border-b pb-2 border-gray-200 dark:border-gray-700">
-          Üdvözlő gondolatok
-        </h2>
-        <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-          Tisztelt Tyukodiak! Kedves Tyukodról Elszármazottak! Kedves
-          Érdeklődők!
-        </p>
-        <div className="bg-gray-100 dark:bg-gray-700/50 p-5 rounded-lg border-l-4 border-gray-400 dark:border-gray-500">
-          <p className="text-gray-800 dark:text-gray-200 leading-relaxed">
-            A <b>Tyukod Községért Közalapítványt</b> 1997-ben alapította Tyukod
-            Nagyközség Önkormányzata <b>Bereczky István Polgármester Úr</b>{" "}
-            kezdeményezésére. Azóta minden polgármester (<b>Nagy Miklós</b>,{" "}
-            <b>Czibere József</b>) és a mindenkori Képviselő Testület támogatta
-            és segítette a Kuratórium munkáját.
-          </p>
+      {/* Hero Section */}
+      <section className="relative py-24 bg-white dark:bg-stone-900/40 border-b border-stone-200 dark:border-stone-800/50 overflow-hidden text-center">
+        <div className="container mx-auto px-6 relative z-10">
+          <h1 className="text-4xl md:text-6xl font-black text-stone-900 dark:text-white tracking-tight mb-6">
+            "Tyukod Községért" <span className="text-blue-600 font-light italic">Közalapítvány</span>
+          </h1>
+          <div className="max-w-3xl mx-auto border-y border-stone-100 dark:border-stone-800 py-8 relative">
+            <i className="bi bi-quote absolute top-2 left-2 text-4xl text-blue-600/10"></i>
+            <blockquote className="text-xl md:text-2xl italic text-stone-600 dark:text-stone-400 font-light leading-relaxed">
+              "Mindenkinek kellene, hogy legyen valami, amit önzetlenül tesz, pusztán azért, hogy másoknak szerzett örömmel magát boldogítsa"
+            </blockquote>
+            <p className="mt-4 font-bold text-stone-900 dark:text-stone-200 uppercase tracking-widest text-sm">— Becca Prior</p>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="mb-12 bg-white dark:bg-gray-800 rounded-xl shadow-xl p-8 border-t-4 border-gray-800 dark:border-gray-600">
-        <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-5 pb-3 border-b-2 border-yellow-600/50 dark:border-yellow-500/50 flex items-center">
-          <svg
-            className="w-6 h-6 text-yellow-600 dark:text-yellow-500 mr-3"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-            ></path>
-          </svg>
-          Fő célkitűzéseink
-        </h2>
-        <ul className="space-y-4 text-gray-700 dark:text-gray-300">
-          {mainGoals.map((goal, index) => (
-            <li key={index} className="flex items-start">
-              <span className="text-yellow-600 dark:text-yellow-500 font-extrabold text-2xl mr-3 leading-none">
-                •
+      <div className="container mx-auto px-6 py-20 space-y-32">
+
+        {/* Intro Card */}
+        <section className="max-w-4xl mx-auto">
+          <div className="bg-white dark:bg-stone-900 p-8 md:p-12 rounded-[2.5rem] border border-stone-200 dark:border-stone-800 shadow-sm relative overflow-hidden">
+            <h2 className="text-2xl font-bold text-stone-900 dark:text-white mb-6">Üdvözlő gondolatok</h2>
+            <div className="space-y-6 text-stone-600 dark:text-stone-400 font-light leading-relaxed">
+              <p>Tisztelt Tyukodiak! Kedves Tyukodról Elszármazottak! Kedves Érdeklődők!</p>
+              <p className="p-6 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border-l-4 border-blue-600 text-stone-800 dark:text-stone-200">
+                A <strong className="font-semibold">Tyukod Községért Közalapítványt</strong> 1997-ben alapította Tyukod Nagyközség Önkormányzata <strong>Bereczky István Polgármester Úr</strong> kezdeményezésére. Azóta minden polgármester és a mindenkori Képviselő-testület támogatta munkánkat.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Goals & Achievements */}
+        <section className="grid lg:grid-cols-2 gap-16 items-start">
+          <div className="space-y-10">
+            <h2 className="text-3xl font-black text-stone-900 dark:text-white tracking-tight flex items-center">
+              <span className="w-12 h-12 bg-blue-600 text-white rounded-2xl flex items-center justify-center mr-4 shadow-lg shadow-blue-500/20">
+                <i className="bi bi-flag"></i>
               </span>
-              <span dangerouslySetInnerHTML={{ __html: goal }}></span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="mb-12 bg-gray-800 text-white rounded-xl shadow-2xl p-8">
-        <h2 className="text-3xl font-bold text-yellow-500 mb-5 pb-3 border-b-2 border-yellow-500/50">
-          Munkánk eredményei és finanszírozás
-        </h2>
-        <p className="mb-6 leading-relaxed text-gray-300">
-          Ezeket a célokat figyelembe véve az eltelt időszak alatt közel{" "}
-          <b>száz egyetemi, főiskolai és középiskolai tanuló</b> tanulmányait
-          támogattuk. Több alkalommal segítettük a súlyos betegségben szenvedő
-          gyermekek gyógyíttatását. Jelentős összeggel járultunk hozzá az
-          Általános Iskola és Óvoda programjaihoz, és folyamatosan törekszünk
-          a helyi értékek megóvására, felújítására.
-        </p>
-        <div className="bg-gray-700 p-5 rounded-lg shadow-inner">
-          <p className="font-bold text-lg text-yellow-500 mb-2">
-            Pénzügyi adatok:
-          </p>
-          <ul className="list-disc pl-5 space-y-1 text-gray-300">
-            <li>
-              Az alapítvány induló vagyona: <b>1.000.000 Ft</b> (egymillió
-              forint), értékpapírban elhelyezve.
-            </li>
-            <li>
-              Finanszírozás forrásai: <b>Adó 1%-ából</b> kapott támogatások és{" "}
-              <b>adományok</b>.
-            </li>
-          </ul>
-          <p className="mt-4 text-sm italic text-yellow-200">
-            Ezért hálás köszönet jár minden adományozónak és Tyukod Nagyközség
-            Önkormányzatának!
-          </p>
-        </div>
-      </div>
-
-      <div className="mb-12 bg-white dark:bg-gray-800 rounded-xl shadow-xl p-8 border-t-4 border-red-600 dark:border-red-500">
-        <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-5 pb-3 border-b-2 border-red-600/50 dark:border-red-500/50">
-          Vezető testületek
-        </h2>
-        <p className="text-gray-700 dark:text-gray-300 mb-6">
-          A Kuratórium 7, az Ellenőrző Bizottság 3 főből áll. Tagjaink
-          feladataikat <b>önkéntesen, díjazás nélkül</b> látják el. Munkánkat a
-          falunk iránti elköteleződésünk és kötődésünk vezérli.
-        </p>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div>
-            <h3 className="text-xl font-bold text-red-700 dark:text-red-400 mb-3 border-b-2 border-red-100 dark:border-red-800 pb-1">
-              Jelenlegi tagjaink
-            </h3>
-            <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg mb-4">
-              <p className="font-bold text-red-800 dark:text-red-300 mb-1">
-                Kuratórium tagjai:
-              </p>
-              <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300 space-y-1">
-                {currentKuratorium.map((member, i) => (
-                  <li key={i} dangerouslySetInnerHTML={{ __html: member }} />
-                ))}
-              </ul>
-            </div>
-            <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg">
-              <p className="font-bold text-red-800 dark:text-red-300 mb-1">
-                Ellenőrző Bizottság tagjai:
-              </p>
-              <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300 space-y-1">
-                {currentEllenorzo.map((member, i) => (
-                  <li key={i} dangerouslySetInnerHTML={{ __html: member }} />
-                ))}
-              </ul>
+              Fő célkitűzéseink
+            </h2>
+            <div className="space-y-4">
+              {mainGoals.map((goal, index) => (
+                <div key={index} className="flex items-start p-5 bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm group hover:border-blue-500/50 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold">
+                    {index + 1}
+                  </div>
+                  <p className="text-stone-600 dark:text-stone-400 font-light text-sm leading-relaxed">{goal}</p>
+                </div>
+              ))}
             </div>
           </div>
-          <div>
-            <h3 className="text-xl font-bold text-gray-700 dark:text-gray-300 mb-3 border-b-2 border-gray-300 dark:border-gray-600 pb-1">
-              Az Alapítástól szolgált tagok (1997 óta)
-            </h3>
-            <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg mb-4">
-              <p className="font-bold text-gray-800 dark:text-white mb-1">
-                Kuratórium korábbi tagjai:
-              </p>
-              <ul className="list-disc pl-5 text-gray-600 dark:text-gray-400 text-sm space-y-1">
-                {formerKuratorium.map((member, i) => (
-                  <li key={i}>{member}</li>
-                ))}
-              </ul>
+
+          <div className="bg-stone-50 dark:bg-stone-900 rounded-[3rem] p-10 md:p-12 text-stone-900 dark:text-white shadow-sm dark:shadow-2xl border border-stone-200 dark:border-stone-800 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-8 opacity-5 dark:opacity-5 text-stone-900 dark:text-white group-hover:rotate-12 transition-transform duration-700">
+              <i className="bi bi-bank text-9xl"></i>
             </div>
-            <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
-              <p className="font-bold text-gray-800 dark:text-white mb-1">
-                Ellenőrző Bizottság korábbi tagjai:
+            <h2 className="text-3xl font-black mb-8 border-b border-stone-200 dark:border-white/10 pb-6">Eredményeink</h2>
+            <div className="space-y-8 relative z-10">
+              <p className="text-stone-600 dark:text-white/70 font-light leading-relaxed">
+                Eltelt időszak alatt közel <strong className="text-stone-900 dark:text-white font-bold underline decoration-blue-500 decoration-4">száz egyetemi, főiskolai és középiskolai tanuló</strong> tanulmányait támogattuk.
               </p>
-              <ul className="list-disc pl-5 text-gray-600 dark:text-gray-400 text-sm space-y-1">
-                {formerEllenorzo.map((member, i) => (
-                  <li key={i}>{member}</li>
-                ))}
-              </ul>
+              <div className="grid gap-4">
+                <div className="p-6 bg-white dark:bg-white/5 rounded-2xl border border-stone-200 dark:border-white/10 shadow-sm">
+                  <p className="text-sm font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2">Induló vagyon</p>
+                  <p className="text-2xl font-black">1.000.000 Ft</p>
+                  <p className="text-xs text-stone-400 dark:text-white/40 mt-1">Értékpapírban elhelyezve</p>
+                </div>
+                <div className="p-6 bg-white dark:bg-white/5 rounded-2xl border border-stone-200 dark:border-white/10 shadow-sm">
+                  <p className="text-sm font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2">Finanszírozás</p>
+                  <p className="text-lg font-medium italic">"Adó 1%-a és egyéni adományok"</p>
+                </div>
+              </div>
+              <p className="text-xs italic text-stone-400 dark:text-white/40 pt-4 border-t border-stone-200 dark:border-white/10 uppercase tracking-tight">
+                Hálás köszönet minden adományozónak és az Önkormányzatnak!
+              </p>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
 
-      <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
-        <p className="text-gray-700 dark:text-gray-300 italic mb-4">
-          Bízunk benne, hogy Önkormányzat honlapján alapítványunkról megjelent
-          tájékoztató hasznos információkkal, érdekességekkel segíti a
-          település iránt érdeklődő látogatókat!
-        </p>
-        <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-3 border-b-2 pb-1 border-gray-200 dark:border-gray-700">
-          Kapcsolódó dokumentumok
-        </h3>
-        <ul className="space-y-2">
-          <a href="/tyukodkozsegeertalapitvany/alapító okirat.pdf" target="_blank" rel="noopener noreferrer">
-            <li className="flex items-center text-red-600 dark:text-red-400 font-semibold hover:underline cursor-pointer">
-              <svg
-                className="w-5 h-5 mr-2"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
-                  clipRule="evenodd"
-                ></path>
-              </svg>
-              Alapító okirat (PDF)
-            </li>
-          </a>
-        </ul>
+        {/* Governing Bodies */}
+        <section className="space-y-12">
+          <div className="text-center space-y-4">
+            <h2 className="text-4xl font-black text-stone-900 dark:text-white tracking-tight">Vezető Testületek</h2>
+            <p className="max-w-2xl mx-auto text-stone-500 dark:text-stone-500 font-light italic">
+              Tagjaink feladataikat önkéntesen, díjazás nélkül látják el, a falu iránti elköteleződésből.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Current Members */}
+            <div className="bg-white dark:bg-stone-900 p-10 rounded-[2.5rem] border border-stone-200 dark:border-stone-800 shadow-sm space-y-8">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xl font-bold text-stone-900 dark:text-white uppercase tracking-wider">Jelenlegi tagok</h3>
+                <span className="px-3 py-1 bg-blue-600 text-white text-[10px] font-black rounded-full uppercase">Aktív</span>
+              </div>
+              <div className="grid gap-6">
+                <div>
+                  <p className="text-xs font-black text-blue-600 uppercase mb-4 tracking-widest">Kuratórium</p>
+                  <ul className="grid sm:grid-cols-2 gap-3 text-sm font-medium text-stone-700 dark:text-stone-300">
+                    {currentKuratorium.map((member, i) => (
+                      <li key={i} className="flex items-center"><i className="bi bi-dot text-blue-600 text-xl"></i> {member}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-6 border-t border-stone-100 dark:border-stone-800">
+                  <p className="text-xs font-black text-blue-600 uppercase mb-4 tracking-widest">Ellenőrző Bizottság</p>
+                  <ul className="grid sm:grid-cols-2 gap-3 text-sm font-medium text-stone-700 dark:text-stone-300">
+                    {currentEllenorzo.map((member, i) => (
+                      <li key={i} className="flex items-center"><i className="bi bi-dot text-blue-600 text-xl"></i> {member}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Former Members */}
+            <div className="bg-stone-100/50 dark:bg-stone-900/30 p-10 rounded-[2.5rem] border border-stone-200 dark:border-stone-800 shadow-inner space-y-8">
+              <h3 className="text-xl font-bold text-stone-400 dark:text-stone-600 uppercase tracking-wider">Alapítástól szolgált tagok</h3>
+              <div className="grid gap-6">
+                <div>
+                  <p className="text-[10px] font-black text-stone-400 dark:text-stone-600 uppercase mb-4 tracking-widest">Kuratórium</p>
+                  <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[11px] text-stone-500 dark:text-stone-500 italic">
+                    {formerKuratorium.map((member, i) => (
+                      <li key={i}>{member}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-6 border-t border-stone-200 dark:border-stone-800">
+                  <p className="text-[10px] font-black text-stone-400 dark:text-stone-600 uppercase mb-4 tracking-widest">Ellenőrző Bizottság</p>
+                  <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[11px] text-stone-500 dark:text-stone-500 italic">
+                    {formerEllenorzo.map((member, i) => (
+                      <li key={i}>{member}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Closing & Documents */}
+        <section className="bg-white dark:bg-stone-900 p-12 md:p-16 rounded-[3rem] border border-stone-200 dark:border-stone-800 shadow-xl overflow-hidden relative">
+          <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+            <div className="max-w-xl">
+              <h3 className="text-3xl font-black text-stone-900 dark:text-white mb-4">Hasznos információk</h3>
+              <p className="text-stone-600 dark:text-stone-400 font-light italic leading-relaxed">
+                Bízunk benne, hogy ez a tájékoztató segít Önnek megismerni közalapítványunk fontos szerepét Tyukod mindennapi életében.
+              </p>
+            </div>
+            <a
+              href="/tyukodkozsegeertalapitvany/alapító okirat.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col items-center p-8 bg-stone-50 dark:bg-stone-800 rounded-[2.5rem] border border-stone-200 dark:border-stone-700 hover:border-blue-600 transition-all duration-500"
+            >
+              <div className="w-16 h-16 bg-white dark:bg-stone-700 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-4 shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
+                <i className="bi bi-file-earmark-pdf"></i>
+              </div>
+              <span className="font-bold text-stone-900 dark:text-white">Alapító okirat</span>
+              <span className="text-xs text-stone-400 dark:text-stone-500 mt-1 uppercase tracking-widest font-black transition-colors group-hover:text-blue-600">PDF megnyitása</span>
+            </a>
+          </div>
+        </section>
+
       </div>
     </div>
   );
