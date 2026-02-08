@@ -57,59 +57,54 @@ export default async function LiveStreamPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">
-        Élő közvetítés
-      </h1>
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">
+          Élő közvetítés
+        </h1>
 
-      {/* Videó lejátszó konténer */}
-      {isLive && embedCode ? (
-        <div className="bg-black aspect-video mb-8 w-full">
-          {/*
-            Fontos: Az ide beágyazott iframe-nek is rendelkeznie kell
-            `width="100%"` és `height="100%"` attribútumokkal
-            vagy a megfelelő Tailwind CSS osztályokkal (`w-full h-full`),
-            hogy pontosan illeszkedjen a konténerbe.
-            Ellenkező esetben a beágyazott kód felülírhatja a reszponzív viselkedést.
-          */}
-          <div className="w-full h-full" dangerouslySetInnerHTML={{ __html: embedCode }} />
-        </div>
-      ) : isLive && finalStreamUrl ? (
-        <div className="bg-black aspect-video mb-8 w-full">
-          <iframe
-            className="w-full h-full"
-            src={finalStreamUrl}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            title="Élő közvetítés"
-          ></iframe>
-        </div>
-      ) : (
-        /* Offline banner */
-        <div
-          className="relative bg-cover bg-center border border-gray-300 dark:border-gray-700 text-white rounded-lg overflow-hidden"
-          style={{ backgroundImage: `url('${banner}')` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/90"></div>
-          <div className="relative flex flex-col items-center justify-center text-center py-24 sm:py-32 px-4">
-            {siteEmblem ? (
-              <img
-                src={siteEmblem}
-                alt="Címer"
-                className="h-28 sm:h-32 mx-auto mb-6"
-              />
-            ) : (
-              <i className="bi bi-shield-fill text-6xl text-gray-400 mb-6 block"></i>
-            )}
-            <h2 className="text-4xl sm:text-5xl font-extrabold mb-4">
-              A közvetítés jelenleg nem elérhető.
-            </h2>
-            <p className="text-xl sm:text-2xl text-gray-200">
-              Kérjük, látogasson vissza később.
-            </p>
+        {/* Videó lejátszó konténer */}
+        {isLive && embedCode ? (
+          <div className="bg-black aspect-video mb-8 w-full rounded-xl overflow-hidden shadow-2xl">
+            <div className="w-full h-full" dangerouslySetInnerHTML={{ __html: embedCode }} />
           </div>
-        </div>
-      )}
+        ) : isLive && finalStreamUrl ? (
+          <div className="bg-black aspect-video mb-8 w-full rounded-xl overflow-hidden shadow-2xl">
+            <iframe
+              className="w-full h-full"
+              src={finalStreamUrl}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="Élő közvetítés"
+            ></iframe>
+          </div>
+        ) : (
+          /* Offline banner */
+          <div
+            className="relative bg-cover bg-center border border-gray-300 dark:border-gray-700 text-white rounded-xl overflow-hidden shadow-2xl"
+            style={{ backgroundImage: `url('${banner}')` }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/90"></div>
+            <div className="relative flex flex-col items-center justify-center text-center py-24 sm:py-32 px-4">
+              {siteEmblem ? (
+                <img
+                  src={siteEmblem}
+                  alt="Címer"
+                  className="h-28 sm:h-32 mx-auto mb-6"
+                />
+              ) : (
+                <i className="bi bi-shield-fill text-6xl text-gray-400 mb-6 block"></i>
+              )}
+              <h2 className="text-2xl sm:text-4xl font-extrabold mb-4 px-4">
+                A közvetítés jelenleg nem elérhető.
+              </h2>
+              <p className="text-lg sm:text-xl text-gray-200">
+                Kérjük, látogasson vissza később.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

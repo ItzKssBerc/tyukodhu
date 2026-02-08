@@ -2,6 +2,7 @@ import { client } from "@/sanity/lib/client";
 import { HIREK_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import NewsClient from "@/components/NewsClient";
+import EmptyState from "@/components/EmptyState";
 
 // Hardcoded category options from keystatic.config.ts for runtime lookup
 const categoryOptions = [
@@ -46,20 +47,25 @@ export default async function NewsPage(props: PageProps) {
         Hírek
       </h1>
 
-      <NewsClient initialPosts={sortedPosts.map((post: any) => {
-        const { content, ...restEntry } = post.entry;
-        return {
-          ...post,
-          entry: {
-            ...restEntry,
-            category: getCategoryLabel(restEntry.category),
-            categorySlug: restEntry.category,
-          }
-        };
-      })} categoryOptions={categoryOptions} />
-
-      <p>Hírek hamarosan...</p>
-
+      {sortedPosts.length > 0 ? (
+        <NewsClient initialPosts={sortedPosts.map((post: any) => {
+          const { content, ...restEntry } = post.entry;
+          return {
+            ...post,
+            entry: {
+              ...restEntry,
+              category: getCategoryLabel(restEntry.category),
+              categorySlug: restEntry.category,
+            }
+          };
+        })} categoryOptions={categoryOptions} />
+      ) : (
+        <EmptyState
+          title="Nincsenek friss hírek"
+          description="Ebbe a kategóriába még nem érkeztek bejegyzések. Kérjük, nézzen vissza később a legújabb tájékoztatásokért!"
+          icon="bi-megaphone"
+        />
+      )}
     </div>
   );
 }

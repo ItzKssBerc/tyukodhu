@@ -1,6 +1,7 @@
 import { client } from "@/sanity/lib/client";
 import { DOKUMENTUM_QUERY } from "@/sanity/lib/queries";
 import DocumentsClient from "@/components/DocumentsClient";
+import EmptyState from "@/components/EmptyState";
 
 export default async function DocumentsPage() {
   // Fetch documents from Sanity
@@ -27,7 +28,15 @@ export default async function DocumentsPage() {
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
         Dokumentumok
       </h1>
-      <DocumentsClient initialDocuments={documents} />
+      {documents.length > 0 ? (
+        <DocumentsClient initialDocuments={documents} />
+      ) : (
+        <EmptyState
+          title="Nincsenek letölthető dokumentumok"
+          description="Jelenleg nincs feltöltött dokumentum ebben a szekcióban. Kérjük, látogasson vissza később!"
+          icon="bi-file-earmark-text"
+        />
+      )}
     </div>
   );
 }

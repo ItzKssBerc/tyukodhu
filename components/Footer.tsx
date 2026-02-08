@@ -13,7 +13,7 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
     const hungarianDays = ["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek"]; // Only weekdays for office hours
 
     return (
-        <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-md mt-12 transition-colors duration-300">
+        <footer className="bg-stone-50 dark:bg-stone-950 border-t border-stone-200 dark:border-stone-800 transition-all duration-500">
             <div className="max-w-7xl mx-auto">
                 {/* FŐ TARTALOM - ACCORDION MOBILON */}
                 <div className="lg:hidden">
@@ -207,11 +207,11 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
                     </div>
                 </div>
             </div>
-            <div className="bg-gray-100 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
-                <div className="max-w-7xl mx-auto py-4 px-4">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-600 dark:text-gray-400">
+            <div className="bg-white dark:bg-stone-900/50 border-t border-stone-200 dark:border-stone-800 transition-all duration-500">
+                <div className="max-w-7xl mx-auto py-6 px-6">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-stone-600 dark:text-stone-400">
                         {/* Left: Copyright */}
-                        <p className="text-center md:text-left order-2 md:order-1">
+                        <p className="text-center md:text-left order-2 md:order-1 font-medium">
                             &copy; {new Date().getFullYear()} Tyukod Nagyközség Önkormányzata. Minden jog fenntartva.
                         </p>
 

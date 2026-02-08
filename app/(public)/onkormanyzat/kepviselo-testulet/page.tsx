@@ -2,6 +2,7 @@ import { client } from "@/sanity/lib/client";
 import { SZEMELY_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import Image from 'next/image';
+import EmptyState from "@/components/EmptyState";
 
 interface Person {
   slug: string;
@@ -87,36 +88,45 @@ export default async function KepviseloTestuletPage() {
           A Képviselő-testület tagjai
         </h1>
         <p className="text-center text-gray-600 dark:text-gray-400 mb-12">Tyukod Nagyközség Önkormányzatának vezetői és képviselői.</p>
-        <div className="flex flex-wrap justify-center gap-8">
-          {members.map((member) => (
-            <div
-              key={member.name}
-              className={`w-72 bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border-t-4 ${member.borderColor} transform hover:-translate-y-2 transition-transform duration-300`}
-            >
-              <div className="p-6 text-center">
-                <div className="relative w-32 h-32 mx-auto mb-4">
-                  {member.image ? (
-                    <Image
-                      src={member.image} // It is already a full URL from Sanity
-                      alt={`Profilkép - ${member.name}`}
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded-full"
-                    />
-                  ) : (
-                    <div className="w-full h-full rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                      <i className={`${defaultMetadata.icon} text-5xl text-gray-400 dark:text-gray-500`}></i>
-                    </div>
-                  )}
+
+        {members.length > 0 ? (
+          <div className="flex flex-wrap justify-center gap-8">
+            {members.map((member) => (
+              <div
+                key={member.name}
+                className={`w-72 bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border-t-4 ${member.borderColor} transform hover:-translate-y-2 transition-transform duration-300`}
+              >
+                <div className="p-6 text-center">
+                  <div className="relative w-32 h-32 mx-auto mb-4">
+                    {member.image ? (
+                      <Image
+                        src={member.image} // It is already a full URL from Sanity
+                        alt={`Profilkép - ${member.name}`}
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-full"
+                      />
+                    ) : (
+                      <div className="w-full h-full rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                        <i className={`${defaultMetadata.icon} text-5xl text-gray-400 dark:text-gray-500`}></i>
+                      </div>
+                    )}
+                  </div>
+                  <h4 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    {member.name}
+                  </h4>
+                  <p className="text-gray-600 dark:text-gray-400 capitalize">{member.role}</p>
                 </div>
-                <h4 className="text-xl font-semibold text-gray-900 dark:text-white">
-                  {member.name}
-                </h4>
-                <p className="text-gray-600 dark:text-gray-400 capitalize">{member.role}</p>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            title="Nincsenek feltöltött tagok"
+            description="A képviselő-testület adatainak betöltése folyamatban van. Kérjük, látogasson vissza később!"
+            icon="bi-person-badge"
+          />
+        )}
       </div>
     </div>
   );

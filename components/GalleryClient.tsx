@@ -1,17 +1,67 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import { urlFor } from '@/sanity/lib/image';
+import SearchAndFilter from './SearchAndFilter';
 
-export default function GalleryClient({ images }: { images: any[] }) {
+type GalleryImage = {
+    _id: string;
+    kepcim?: string;
+    album?: string;
+    kep: any;
+};
+export default function GalleryClient({ images }: { images: GalleryImage[] }) {
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const filteredImages = images?.filter((img) => {
+        const term = searchTerm.toLowerCase();
+        const matchesTitle = img.kepcim?.toLowerCase().includes(term);
+        const matchesAlbum = img.album?.toLowerCase().includes(term);
+        return !term || matchesTitle || matchesAlbum;
+    }) || [];
+
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {images && images.map((img, idx) => (
-                <div key={idx} className="relative aspect-square bg-gray-100">
-                    {/* Placeholder for gallery image */}
-                    <div className="absolute inset-0 flex items-center justify-center">Image {idx + 1}</div>
+        <div>
+            <SearchAndFilter
+                searchTerm={searchTerm}
+                onSearchChange={setSearchTerm}
+                searchPlaceholder="Keresés a galériában..."
+            />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {filteredImages.map((img) => (
+                    <div key={img._id} className="group relative break-inside-avoid">
+                        <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 shadow-sm hover:shadow-2xl transition-all duration-500">
+                            {img.kep ? (
+                                <img
+                                    src={urlFor(img.kep).width(600).height(600).url()}
+                                    alt={img.kepcim || "Galéria kép"}
+                                    className="h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                                    loading="lazy"
+                                />
+                            ) : (
+                                <div className="flex h-full items-center justify-center text-stone-400 dark:text-stone-600">
+                                    <i className="bi bi-image text-4xl"></i>
+                                </div>
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-stone-900/90 via-stone-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                                <p className="text-white font-bold text-lg leading-tight truncate">{img.kepcim || "Névtelen kép"}</p>
+                                {img.album && <p className="text-white/60 text-xs font-medium uppercase tracking-widest mt-1 truncate">{img.album}</p>}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {filteredImages.length === 0 && (
+                <div className="text-center py-24">
+                    <div className="inline-block p-6 rounded-3xl bg-stone-100 dark:bg-stone-900 mb-6">
+                        <i className="bi bi-images text-4xl text-stone-300 dark:text-stone-700"></i>
+                    </div>
+                    <h3 className="text-2xl font-bold text-stone-900 dark:text-white">A galéria jelenleg üres</h3>
+                    <p className="text-stone-500 dark:text-stone-400 mt-2 font-light">Próbálj más szűrőket vagy látogass vissza később.</p>
                 </div>
-            ))}
-            {(!images || images.length === 0) && <p>No images in gallery.</p>}
+            )}
         </div>
     );
 }

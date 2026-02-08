@@ -2,6 +2,7 @@ import { client } from "@/sanity/lib/client";
 import { KEP_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import GalleryClient from "@/components/GalleryClient";
+import EmptyState from "@/components/EmptyState";
 
 export default async function GalleryPage() {
   // Fetch images from Sanity
@@ -25,7 +26,15 @@ export default async function GalleryPage() {
       <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">
         Galéria
       </h1>
-      <GalleryClient images={galleryItems} />
+      {galleryItems.length > 0 ? (
+        <GalleryClient images={galleryItems} />
+      ) : (
+        <EmptyState
+          title="Nincsenek elérhető fotók"
+          description="A galéria jelenleg üres. Kérjük, látogasson vissza később a friss felvételekért!"
+          icon="bi-images"
+        />
+      )}
     </div>
   );
 }

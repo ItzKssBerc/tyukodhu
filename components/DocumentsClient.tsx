@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
+import CustomSelect from './CustomSelect';
+import SearchAndFilter from './SearchAndFilter';
 
 type DocumentItem = {
     slug: string;
@@ -28,40 +30,49 @@ export default function DocumentsClient({ initialDocuments }: { initialDocuments
 
     return (
         <div>
-            <div className="mb-6 flex gap-4">
-                <input
-                    type="text"
-                    placeholder="Keresés..."
-                    className="border p-2 rounded"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <select
-                    className="border p-2 rounded"
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                >
-                    <option value="">Összes kategória</option>
-                    {categories.map(cat => (
-                        <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                </select>
-            </div>
-            <div className="space-y-4">
+            <SearchAndFilter
+                searchTerm={searchTerm}
+                onSearchChange={setSearchTerm}
+                searchPlaceholder="Keresés a dokumentumok között..."
+                selectedCategory={selectedCategory}
+                onCategoryChange={setSelectedCategory}
+                categories={categories.map(cat => ({ value: cat, label: cat }))}
+            />
+            <div className="grid grid-cols-1 gap-4">
                 {filteredDocs.map((doc) => (
-                    <div key={doc.slug} className="border p-4 rounded shadow-sm flex justify-between items-center">
-                        <div>
-                            <h3 className="font-semibold">{doc.entry.title}</h3>
-                            <p className="text-sm text-gray-500">{doc.entry.publishedDate} {doc.entry.publishedTime} | {doc.entry.category}</p>
+                    <div key={doc.slug} className="group bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 p-6 rounded-[1.5rem] shadow-sm hover:shadow-xl transition-all duration-300 flex justify-between items-center">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-2xl bg-stone-100 dark:bg-stone-800 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
+                                <i className="bi bi-file-earmark-text text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-stone-900 dark:text-white leading-tight">{doc.entry.title}</h3>
+                                <div className="flex items-center gap-2 mt-1 text-xs font-medium uppercase tracking-widest text-stone-500 dark:text-stone-500">
+                                    <span>{doc.entry.publishedDate}</span>
+                                    <span className="w-1 h-1 bg-stone-300 dark:bg-stone-700 rounded-full"></span>
+                                    <span>{doc.entry.category}</span>
+                                </div>
+                            </div>
                         </div>
                         {doc.entry.file && (
-                            <a href={doc.entry.file} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                                Letöltés
+                            <a
+                                href={doc.entry.file}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 px-5 py-2.5 bg-blue-600/10 hover:bg-blue-600 text-blue-600 hover:text-white rounded-xl text-sm font-bold transition-all duration-300"
+                            >
+                                <i className="bi bi-download"></i>
+                                <span className="hidden sm:inline">Letöltés</span>
                             </a>
                         )}
                     </div>
                 ))}
-                {filteredDocs.length === 0 && <p className="text-gray-500">Nincs találat.</p>}
+                {filteredDocs.length === 0 && (
+                    <div className="text-center py-16 bg-stone-50 dark:bg-stone-900/50 rounded-[2rem] border border-dashed border-stone-200 dark:border-stone-800">
+                        <i className="bi bi-search text-3xl text-stone-300 dark:text-stone-700 mb-3 block"></i>
+                        <p className="text-stone-500 dark:text-stone-400 font-medium">Nincs a keresésnek megfelelő dokumentum.</p>
+                    </div>
+                )}
             </div>
         </div>
     );

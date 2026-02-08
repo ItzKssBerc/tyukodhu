@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ThemeToggle } from "./ThemeToggle";
 
 
 export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
@@ -56,16 +57,16 @@ export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
   };
 
   const getLinkClasses = (active: boolean) => {
-    return `flex items-center px-3 py-3 rounded-lg text-sm font-medium transition duration-150 ${active
-      ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-      : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-red-100 dark:hover:bg-red-900/30 hover:text-red-600 dark:hover:text-red-400"
+    return `flex items-center px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${active
+      ? "bg-blue-600/10 text-blue-600 dark:text-blue-400 border border-blue-600/20"
+      : "text-stone-600 dark:text-stone-400 hover:bg-stone-100/80 dark:hover:bg-stone-800/80 hover:text-stone-900 dark:hover:text-stone-200 border border-transparent"
       }`;
   };
 
   const getMobileLinkClasses = (active: boolean) => {
-    return `flex items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${active
-      ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-      : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
+    return `flex items-center px-4 py-3 rounded-xl text-base font-semibold transition-all duration-300 ${active
+      ? "bg-blue-600/10 text-blue-600 dark:text-blue-400 border border-blue-600/20"
+      : "bg-stone-50/50 dark:bg-stone-900/50 text-stone-700 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-800 border border-stone-100 dark:border-stone-800/50"
       }`;
   };
 
@@ -77,7 +78,7 @@ export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-md py-2 transition-colors duration-300 sticky top-0 z-[2000]">
+    <nav className="bg-white/80 dark:bg-stone-950/80 backdrop-blur-xl border-b border-stone-200 dark:border-stone-800 shadow-sm py-2 transition-all duration-500 sticky top-0 z-[2000]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-24">
           {/* Logo */}
@@ -137,13 +138,13 @@ export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
                 </button>
 
                 {mediaOpen && (
-                  <div className="absolute z-10 mt-2 w-64 rounded-xl shadow-2xl origin-top-center left-1/2 transform -translate-x-1/2">
-                    <div className="rounded-xl ring-1 ring-red-300 dark:ring-red-900 ring-opacity-50 border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-2">
+                  <div className="absolute z-10 mt-3 w-64 rounded-2xl shadow-2xl origin-top-center left-1/2 transform -translate-x-1/2 animate-in fade-in zoom-in duration-200">
+                    <div className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white/90 dark:bg-stone-950/90 backdrop-blur-xl p-2 shadow-2xl">
                       <Link
                         href="/hirek"
-                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${isActive("/hirek")
-                          ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                          : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group ${isActive("/hirek")
+                          ? "bg-stone-100 dark:bg-stone-800 text-blue-600 dark:text-blue-400"
+                          : "text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-900/50 hover:text-stone-900 dark:hover:text-stone-100"
                           }`}
                         onClick={() => setMediaOpen(false)}
                       >
@@ -192,13 +193,13 @@ export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
                 </button>
 
                 {onkormanyzatOpen && (
-                  <div className="absolute z-10 mt-2 w-64 rounded-xl shadow-2xl origin-top-center left-1/2 transform -translate-x-1/2">
-                    <div className="rounded-xl ring-1 ring-red-300 dark:ring-red-900 ring-opacity-50 border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-2">
+                  <div className="absolute z-10 mt-3 w-64 rounded-2xl shadow-2xl origin-top-center left-1/2 transform -translate-x-1/2 animate-in fade-in zoom-in duration-200">
+                    <div className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white/90 dark:bg-stone-950/90 backdrop-blur-xl p-2 shadow-2xl">
                       <Link
                         href="/onkormanyzat/kepviselo-testulet"
-                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${isActive("/onkormanyzat/kepviselo-testulet")
-                          ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                          : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group ${isActive("/onkormanyzat/kepviselo-testulet")
+                          ? "bg-stone-100 dark:bg-stone-800 text-blue-600 dark:text-blue-400"
+                          : "text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-900/50 hover:text-stone-900 dark:hover:text-stone-100"
                           }`}
                         onClick={() => setOnkormanyzatOpen(false)}
                       >
@@ -259,13 +260,13 @@ export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
                 </button>
 
                 {interaktivOpen && (
-                  <div className="absolute z-10 mt-2 w-64 rounded-xl shadow-2xl origin-top-center left-1/2 transform -translate-x-1/2">
-                    <div className="rounded-xl ring-1 ring-red-300 dark:ring-red-900 ring-opacity-50 border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-2">
+                  <div className="absolute z-10 mt-3 w-64 rounded-2xl shadow-2xl origin-top-center left-1/2 transform -translate-x-1/2 animate-in fade-in zoom-in duration-200">
+                    <div className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white/90 dark:bg-stone-950/90 backdrop-blur-xl p-2 shadow-2xl">
                       <Link
                         href="/elokozvetites"
-                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${isActive("/elokozvetites")
-                          ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                          : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group ${isActive("/elokozvetites")
+                          ? "bg-stone-100 dark:bg-stone-800 text-blue-600 dark:text-blue-400"
+                          : "text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-900/50 hover:text-stone-900 dark:hover:text-stone-100"
                           }`}
                         onClick={() => setInteraktivOpen(false)}
                       >
@@ -326,13 +327,13 @@ export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
                 </button>
 
                 {infoOpen && (
-                  <div className="absolute z-10 mt-2 w-64 rounded-xl shadow-2xl origin-top-center left-1/2 transform -translate-x-1/2">
-                    <div className="rounded-xl ring-1 ring-red-300 dark:ring-red-900 ring-opacity-50 border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-2">
+                  <div className="absolute z-10 mt-3 w-64 rounded-2xl shadow-2xl origin-top-center left-1/2 transform -translate-x-1/2 animate-in fade-in zoom-in duration-200">
+                    <div className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white/90 dark:bg-stone-950/90 backdrop-blur-xl p-2 shadow-2xl">
                       <Link
                         href="/kozsegunkrol"
-                        className={`flex items-center px-4 py-3 text-base rounded-lg transition duration-150 group ${isActive("/kozsegunkrol")
-                          ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
-                          : "text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group ${isActive("/kozsegunkrol")
+                          ? "bg-stone-100 dark:bg-stone-800 text-blue-600 dark:text-blue-400"
+                          : "text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-900/50 hover:text-stone-900 dark:hover:text-stone-100"
                           }`}
                         onClick={() => setInfoOpen(false)}
                       >
@@ -354,16 +355,13 @@ export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
           </div>
 
           {/* Right Side: Dark Mode & Mobile Toggle */}
-          <div className="flex items-center">
-            {/* Desktop Dark Mode Toggle */}
-
-
-
+          <div className="flex items-center space-x-4">
+            <ThemeToggle />
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               type="button"
-              className="bg-white dark:bg-gray-900 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-900"
+              className="lg:hidden bg-transparent inline-flex items-center justify-center p-2 rounded-xl text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
               aria-controls="mobile-menu"
               aria-expanded={mobileMenuOpen}
             >
@@ -407,7 +405,7 @@ export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
       </div>
       {mobileMenuOpen && (
         <div
-          className="lg:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800"
+          className="lg:hidden bg-white/95 dark:bg-stone-950/95 backdrop-blur-2xl border-t border-stone-200 dark:border-stone-800 animate-in slide-in-from-top duration-300"
           id="mobile-menu"
         >
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
