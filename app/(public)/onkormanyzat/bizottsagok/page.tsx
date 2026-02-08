@@ -1,40 +1,54 @@
-import { client } from '@/tina/__generated__/client';
+import { client } from "@/sanity/lib/client";
+import { SZEMELY_QUERY } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
 import Image from 'next/image';
 
 type CommitteeMember = {
   name: string;
   role: string;
-  image: string | null; // Changed from string | null | undefined
+  image: string | null;
+};
+
+// Define the type for the Sanity response item
+type SanityPerson = {
+  _id: string;
+  nev: string;
+  titulus?: string;
+  kep?: any;
+  kategoria?: string[];
+  bizottsagok?: {
+    nev: string;
+    pozicio: string;
+  }[];
 };
 
 export default async function BizottsagokPage() {
-  let people: any[] = [];
-  const tinaData = await client.queries.peopleConnection();
-  people = tinaData.data.peopleConnection.edges?.map((edge) => edge?.node).filter(Boolean).map(item => ({
-    slug: item?._sys.filename || '',
-    entry: {
-      name: item?.name || '',
-      body: item?.body || '',
-      position: item?.position,
-      committees: item?.committees,
-      image: item?.image,
-    }
-  })) || [];
+  // Fetch data from Sanity
+  const people = await client.fetch<SanityPerson[]>(SZEMELY_QUERY);
 
   const committeesMap = new Map<string, CommitteeMember[]>();
 
   for (const person of people) {
-    const { entry } = person;
-    if (entry.committees) {
-      for (const committee of entry.committees) {
-        if (committee && committee.name && committee.position) {
-          if (!committeesMap.has(committee.name)) {
-            committeesMap.set(committee.name, []);
+    if (person.bizottsagok) {
+      for (const committee of person.bizottsagok) {
+        if (committee && committee.nev && committee.pozicio) {
+          if (!committeesMap.has(committee.nev)) {
+            committeesMap.set(committee.nev, []);
           }
-          committeesMap.get(committee.name)!.push({
-            name: entry.name,
-            role: committee.position,
-            image: entry.image,
+
+          let imageUrl = null;
+          if (person.kep) {
+            try {
+              imageUrl = urlFor(person.kep).url();
+            } catch (e) {
+              console.error("Error generating image URL for person:", person.nev, e);
+            }
+          }
+
+          committeesMap.get(committee.nev)!.push({
+            name: person.nev,
+            role: committee.pozicio,
+            image: imageUrl,
           });
         }
       }
@@ -71,12 +85,12 @@ export default async function BizottsagokPage() {
 
   committees.forEach(committee => {
     committee.members.sort((a, b) => {
-        const roleA = roleOrder[a.role.toLowerCase()] || 99;
-        const roleB = roleOrder[b.role.toLowerCase()] || 99;
-        if (roleA !== roleB) {
-            return roleA - roleB;
-        }
-        return a.name.localeCompare(b.name);
+      const roleA = roleOrder[a.role.toLowerCase()] || 99;
+      const roleB = roleOrder[b.role.toLowerCase()] || 99;
+      if (roleA !== roleB) {
+        return roleA - roleB;
+      }
+      return a.name.localeCompare(b.name);
     });
   });
 
@@ -95,6 +109,10 @@ export default async function BizottsagokPage() {
         </div>
 
         <div className="space-y-16">
+          {committees.length === 0 && (
+            <p className="text-center text-gray-500">Nincsenek bizottságok feltöltve.</p>
+          )}
+
           {committees.map((committee) => (
             <div key={committee.name}>
               <div className="flex items-center mb-6">
@@ -106,14 +124,14 @@ export default async function BizottsagokPage() {
               <div className="flex flex-wrap justify-center gap-8">
                 {committee.members.map((member) => (
                   <div
-                    key={member.name}
+                    key={member.name + member.role}
                     className="w-72 bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300"
                   >
                     <div className="p-6 text-center">
                       <div className="relative w-28 h-28 mx-auto mb-4">
                         {member.image ? (
                           <Image
-                            src={`/images/people/${member.image}`}
+                            src={member.image}
                             alt={`Profilkép - ${member.name}`}
                             layout="fill"
                             objectFit="cover"
@@ -140,3 +158,4 @@ export default async function BizottsagokPage() {
     </div>
   );
 }
+
