@@ -31,7 +31,7 @@ export default function Greeting({ images = [], mayorName }: GreetingProps) {
     };
 
     return (
-        <section id="koszonto" className="w-full py-24 bg-stone-50 dark:bg-stone-950 overflow-hidden transition-colors duration-500">
+        <section id="koszonto" className="w-full py-12 md:py-24 bg-stone-50 dark:bg-stone-950 overflow-hidden transition-colors duration-500">
             <div className="max-w-7xl mx-auto px-6 md:px-12">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
 
@@ -76,32 +76,44 @@ export default function Greeting({ images = [], mayorName }: GreetingProps) {
                     {/* Text Section */}
                     <div className="lg:col-span-7 space-y-8">
                         <div className="space-y-2">
-                            <h2 className="text-4xl md:text-5xl font-black text-stone-900 dark:text-white tracking-tight">
+                            <h2 className="text-3xl md:text-5xl font-black text-stone-900 dark:text-white tracking-tight">
                                 Köszöntöm <span className="text-blue-600">Tyukod</span> község honlapján!
                             </h2>
-                            <div className="h-1.5 w-24 bg-blue-600 rounded-full"></div>
+                            <div className="h-1.5 w-16 md:w-24 bg-blue-600 rounded-full"></div>
                         </div>
 
                         <div className="prose prose-lg dark:prose-invert text-stone-600 dark:text-stone-400 font-light leading-relaxed">
-                            <p>
+                            <p className="mb-4">
                                 Tyukod megújult digitális platformja a legkorszerűbb technológiákkal szolgálja közösségünket. Fedezze fel az oldal legfontosabb funkcióit:
                             </p>
-                            <ul className="list-none p-0 space-y-3">
-                                <li className="flex items-center">
-                                    <i className="bi bi-check2-circle text-blue-600 mr-3"></i>
-                                    <strong>Korszerű hírközlés:</strong> Friss tájékoztatás és naprakész információk a község életéből.
+                            <ul className="list-none p-0 space-y-4 md:space-y-3">
+                                <li className="flex items-start">
+                                    <i className="bi bi-check2-circle text-blue-600 mr-3 mt-1 text-xl flex-shrink-0"></i>
+                                    <span className="text-base md:text-lg">
+                                        <strong className="block md:inline font-bold text-stone-800 dark:text-stone-200">Korszerű hírközlés:</strong>{" "}
+                                        <span className="block md:inline">Friss tájékoztatás és naprakész információk a község életéből.</span>
+                                    </span>
                                 </li>
-                                <li className="flex items-center">
-                                    <i className="bi bi-check2-circle text-blue-600 mr-3"></i>
-                                    <strong>Élő közvetítés:</strong> Kövesse nyomon a fontos eseményeket és üléseket valós időben.
+                                <li className="flex items-start">
+                                    <i className="bi bi-check2-circle text-blue-600 mr-3 mt-1 text-xl flex-shrink-0"></i>
+                                    <span className="text-base md:text-lg">
+                                        <strong className="block md:inline font-bold text-stone-800 dark:text-stone-200">Élő közvetítés:</strong>{" "}
+                                        <span className="block md:inline">Kövesse nyomon a fontos eseményeket és üléseket valós időben.</span>
+                                    </span>
                                 </li>
-                                <li className="flex items-center">
-                                    <i className="bi bi-check2-circle text-blue-600 mr-3"></i>
-                                    <strong>Interaktív térkép:</strong> Találja meg könnyen a helyi intézményeket és látnivalókat.
+                                <li className="flex items-start">
+                                    <i className="bi bi-check2-circle text-blue-600 mr-3 mt-1 text-xl flex-shrink-0"></i>
+                                    <span className="text-base md:text-lg">
+                                        <strong className="block md:inline font-bold text-stone-800 dark:text-stone-200">Interaktív térkép:</strong>{" "}
+                                        <span className="block md:inline">Találja meg könnyen a helyi intézményeket és látnivalókat.</span>
+                                    </span>
                                 </li>
-                                <li className="flex items-center">
-                                    <i className="bi bi-check2-circle text-blue-600 mr-3"></i>
-                                    <strong>Letölthető dokumentumok:</strong> Gyors és egyszerű hozzáférés a hivatalos nyomtatványokhoz.
+                                <li className="flex items-start">
+                                    <i className="bi bi-check2-circle text-blue-600 mr-3 mt-1 text-xl flex-shrink-0"></i>
+                                    <span className="text-base md:text-lg">
+                                        <strong className="block md:inline font-bold text-stone-800 dark:text-stone-200">Letölthető dokumentumok:</strong>{" "}
+                                        <span className="block md:inline">Gyors és egyszerű hozzáférés a hivatalos nyomtatványokhoz.</span>
+                                    </span>
                                 </li>
                             </ul>
                         </div>

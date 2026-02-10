@@ -1,0 +1,2 @@
+Testing ZIP URL: https://api.cloudinary.com/v1_1/dqauo3hlh/image/generate_archive?mode=download&public_ids%5B%5D=1._tyukodi_reform%C3%A1tus_templom_d6vahh&target_format=zip&timestamp=1770757404&signature=81a16f9a8e6e866cab44b397f86f10486a364fc0&api_key=571864512935356
+Status: 200

@@ -52,7 +52,7 @@ export default function NewsTicker({ items, mode = 'default' }: NewsTickerProps)
                     )}
                 </div>
                 <div className={`flex-grow text-left transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-                    <Link href={currentItem.url} className="text-white hover:text-blue-300 transition-colors line-clamp-1 text-sm md:text-base font-medium">
+                    <Link href={currentItem.url} className="text-white hover:text-blue-300 transition-colors line-clamp-2 md:line-clamp-1 text-sm md:text-base font-medium">
                         {currentItem.title}
                     </Link>
                     <div className="text-[10px] uppercase tracking-widest text-white/50 font-bold mt-0.5">

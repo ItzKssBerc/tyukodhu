@@ -1,0 +1,6 @@
+ID: 1._tyukodi_református_templom_d6vahh
+Type: upload
+Access Mode: undefined
+Access Control: undefined
+URL: http://res.cloudinary.com/dqauo3hlh/image/upload/v1770731045/1._tyukodi_reform%C3%A1tus_templom_d6vahh.pdf
+Secure URL: https://res.cloudinary.com/dqauo3hlh/image/upload/v1770731045/1._tyukodi_reform%C3%A1tus_templom_d6vahh.pdf

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import EmptyState from "@/components/EmptyState";
 
 export default function ErtektarPage() {
@@ -10,38 +11,40 @@ export default function ErtektarPage() {
   ];
 
   const relatedDocuments = [
-    { name: "Tyukodi Értéktár Szervezeti és Működési Szabályzata", url: "/tyukodertektara/kapcsolododokumentumok/Értéktár szmsz 1.pdf" },
-    { name: "Határozat", url: "/tyukodertektara/kapcsolododokumentumok/határozat.pdf" },
-    { name: "Kivonat", url: "/tyukodertektara/kapcsolododokumentumok/kivonat.pdf" },
+    { name: "Tyukodi Értéktár Szervezeti és Működési Szabályzata", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/%C3%89rt%C3%A9kt%C3%A1r%20szmsz%201.pdf" },
+    { name: "Határozat", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/hat%C3%A1rozat.pdf" },
+    { name: "Kivonat", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/kivonat.pdf" },
   ];
 
   const documentLinks = [
-    { name: "Tyukodi Református templom", url: "/tyukodertektara/1. tyukodi református templom.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/1. tyukodi református templom.pdf" },
-    { name: "Uray kastély", url: "/tyukodertektara/2. uray kastély.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/2. uray kastély.pdf" },
-    { name: "Szalay ház-parasztház", url: "/tyukodertektara/3. szalay ház.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/3. szalay ház.pdf" },
-    { name: "Tyukodi gyékényfonás", url: "/tyukodertektara/4. tyukodi gyékényfonás.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/4. tyukodi gyékényfonás.pdf" },
-    { name: "Ezüst úrasztali pohár", url: "/tyukodertektara/5. ezüst Úr asztala pohár .pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/5. ezüst Úr asztala pohár .pdf" },
-    { name: "Úrhimzéses úrasztali terítők", url: "/tyukodertektara/6. Úrihimzéses Úrasztali terítők.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/6. Úrihimzéses Úrasztali terítők.pdf" },
-    { name: "Nyomott mintás úrasztali terítő", url: "/tyukodertektara/7. nyomott mintás Úrasztali terítő .pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/7. nyomott mintás Úrasztali terítő .pdf" },
-    { name: "Úrasztali réz borgyűjtő kanna", url: "/tyukodertektara/8. Úrasztali réz borgyüjtő kanna.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/8. Úrasztali réz borgyüjtő kanna.pdf" },
-    { name: "Kenyérosztó óntál", url: "/tyukodertektara/9. kenyérosztó ón tál.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/9. kenyérosztó ón tál.pdf" },
-    { name: "Ezüst kenyérosztó tál", url: "/tyukodertektara/10. ezüst kenyérosztó tál.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/10. ezüst kenyérosztó tál.pdf" },
-    { name: "Urvacsorai terítő 1878-ból", url: "/tyukodertektara/11. Úrvacsorai terítő 1878.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/11. Úrvacsorai terítő 1878.pdf" },
-    { name: "Tatárjáráskori kincslelet Tyukod Bagolyvárról", url: "/tyukodertektara/12. tatárjáráskori kincslelet tyukod bagolyvár.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/12. tatárjáráskori kincslelet tyukod bagolyvár.pdf" },
-    { name: "Szalay család temetkezési helye", url: "/tyukodertektara/13. szalay család temetkezési hely.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/13. szalay család temetkezési hely.pdf" },
-    { name: "A Hősök tere I. és II. világháborús emlékműve", url: "/tyukodertektara/14. a hősök tere i. és ii. világháborús.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/14. a hősök tere i. és ii. világháborús.pdf" },
-    { name: "Tyukod-1181-es említésének emlékműve", url: "/tyukodertektara/15. tyukod 1181-es említésének emlékműve.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/15. tyukod 1181-es említésének emlékműve.pdf" },
-    { name: "A hortobágyi kitelepítettek emlékműve", url: "/tyukodertektara/16. a hortobágyi kitelepitettek emlékműve.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/16. a hortobágyi kitelepitettek emlékműve.pdf" },
-    { name: "Dózsa György mellszobra", url: "/tyukodertektara/17. dózsa györgy mellszobra.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/17. dózsa györgy mellszobra.pdf" },
-    { name: "Tyukodi táncok Kulturális érték", url: "/tyukodertektara/18. tyukodi táncok kulturális érték.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/18. tyukodi táncok kulturális érték.pdf" },
-    { name: "Ezüst úrvacsorai kehely", url: "/tyukodertektara/19. ezüst úrvacsorai kehely .pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/19. ezüst úrvacsorai kehely .pdf" },
-    { name: "Dr. Szalay Zsigmond helytörténeti kiállítás", url: "/tyukodertektara/20. dr. szalay zsigmond helytörténeti kiállítás.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/20. dr. szalay zsigmond helytörténeti kiállítás.pdf" },
-    { name: "Dr. Szalay Zsigmond helytörténeti gyűjtemény", url: "/tyukodertektara/21. dr. szalay zsigmond helytörténeti gyüjtemény.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/21. dr. szalay zsigmond helytörténeti gyüjtemény.pdf" },
-    { name: "Kossuth Lajos mellszobra", url: "/tyukodertektara/22. kossuth lajos mellszobra.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/22. kossuth lajos mellszobra.pdf" },
-    { name: "Kádár József síremléke", url: "/tyukodertektara/23. kádár józsef síremléke.pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/23. kádár józsef síremléke.pdf" },
-    { name: "Dr. Szalay Zsigmond: Tyukod története és néprajza", url: "/tyukodertektara/24.  dr. szalay zsigmondtyukodtyukod története és néprajza .pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/24.  dr. szalay zsigmondtyukodtyukod története és néprajza .pdf" },
-    { name: "P. Szalay Emőke - Szalay Csilla: Tartozunk a múltnak c. kiadvány", url: "/tyukodertektara/25. p. szalay emöke-szalay csilla tartozunk a múltnak c. kiadvány .pdf", relatedUrl: "/tyukodertektara/kapcsolododokumentumok/25. p. szalay emöke-szalay csilla tartozunk a múltnak c. kiadvány .pdf" },
+    { name: "Tyukodi Református templom", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/1.%20tyukodi%20reform%C3%A1tus%20templom.pdf" },
+    { name: "Uray kastély", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/2.%20uray%20kast%C3%A9ly.pdf" },
+    { name: "Szalay ház-parasztház", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/3.%20szalay%20h%C3%A1z.pdf" },
+    { name: "Tyukodi gyékényfonás", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/4.%20tyukodi%20gy%C3%A9k%C3%A9nyfon%C3%A1s.pdf" },
+    { name: "Ezüst úrasztali pohár", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/5.%20ez%C3%BCst%20%C3%9Ar%20asztala%20poh%C3%A1r%20.pdf" },
+    { name: "Úrhimzéses úrasztali terítők", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/6.%20%C3%9Arihimz%C3%A9ses%20%C3%9Arasztali%20ter%C3%ADt%C5%91k.pdf" },
+    { name: "Nyomott mintás úrasztali terítő", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/7.%20nyomott%20mint%C3%A1s%20%C3%9Arasztali%20ter%C3%ADt%C5%91%20.pdf" },
+    { name: "Úrasztali réz borgyűjtő kanna", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/8.%20%C3%9Arasztali%20r%C3%A9z%20borgy%C3%BCjt%C5%91%20kanna.pdf" },
+    { name: "Kenyérosztó óntál", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/9.%20keny%C3%A9roszt%C3%B3%20%C3%B3n%20t%C3%A1l.pdf" },
+    { name: "Ezüst kenyérosztó tál", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/10.%20ez%C3%BCst%20keny%C3%A9roszt%C3%B3%20t%C3%A1l.pdf" },
+    { name: "Urvacsorai terítő 1878-ból", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/11.%20%C3%9Arvacsorai%20ter%C3%ADt%C5%91%201878.pdf" },
+    { name: "Tatárjáráskori kincslelet Tyukod Bagolyvárról", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/12.%20tat%C3%A1rj%C3%A1r%C3%A1skori%20kincslelet%20tyukod%20bagolyv%C3%A1r.pdf" },
+    { name: "Szalay család temetkezési helye", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/13.%20szalay%20csal%C3%A1d%20temetkez%C3%A9si%20hely.pdf" },
+    { name: "A Hősök tere I. és II. világháborús emlékműve", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/14.%20a%20h%C5%91s%C3%B6k%20tere%20i.%20%C3%A9s%20ii.%20vil%C3%A1gh%C3%A1bor%C3%BAs.pdf" },
+    { name: "Tyukod-1181-es említésének emlékműve", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/15.%20tyukod%201181-es%20eml%C3%ADt%C3%A9s%C3%A9nek%20eml%C3%A9km%C5%B1ve.pdf" },
+    { name: "A hortobágyi kitelepítettek emlékműve", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/16.%20a%20hortob%C3%A1gyi%20kitelepitettek%20eml%C3%A9km%C5%B1ve.pdf" },
+    { name: "Dózsa György mellszobra", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/17.%20d%C3%B3zsa%20gy%C3%B6rgy%20mellszobra.pdf" },
+    { name: "Tyukodi táncok Kulturális érték", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/18.%20tyukodi%20t%C3%A1ncok%20kultur%C3%A1lis%20%C3%A9rt%C3%A9k.pdf" },
+    { name: "Ezüst úrvacsorai kehely", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/19.%20ez%C3%BCst%20%C3%BArvacsorai%20kehely%20.pdf" },
+    { name: "Dr. Szalay Zsigmond helytörténeti kiállítás", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/20.%20dr.%20szalay%20zsigmond%20helyt%C3%B6rt%C3%A9neti%20ki%C3%A1ll%C3%ADt%C3%A1s.pdf" },
+    { name: "Dr. Szalay Zsigmond helytörténeti gyűjtemény", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/21.%20dr.%20szalay%20zsigmond%20helyt%C3%B6rt%C3%A9neti%20gy%C3%BCjtem%C3%A9ny.pdf" },
+    { name: "Kossuth Lajos mellszobra", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/22.%20kossuth%20lajos%20mellszobra.pdf" },
+    { name: "Kádár József síremléke", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/23.%20k%C3%A1d%C3%A1r%20j%C3%B3zsef%20s%C3%ADreml%C3%A9ke.pdf" },
+    { name: "Dr. Szalay Zsigmond: Tyukod története és néprajza", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/24.%20%20dr.%20szalay%20zsigmondtyukodtyukod%20t%C3%B6rt%C3%A9nete%20%C3%A9s%20n%C3%A9prajza%20.pdf" },
+    { name: "P. Szalay Emőke - Szalay Csilla: Tartozunk a múltnak c. kiadvány", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/25.%20p.%20szalay%20em%C3%B6ke-szalay%20csilla%20tartozunk%20a%20m%C3%BAltnak%20c.%20kiadv%C3%A1ny%20.pdf" },
   ];
+
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-stone-950 transition-colors duration-500">
@@ -146,35 +149,63 @@ export default function ErtektarPage() {
             </div>
           </div>
 
+
+
           {documentLinks.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {documentLinks.map((value, index) => (
-                <div key={index} className="group bg-white dark:bg-stone-900 p-6 rounded-[2rem] border border-stone-200 dark:border-stone-800 hover:border-blue-500/50 shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 h-full flex flex-col justify-between">
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-start">
-                      <span className="text-3xl font-black text-stone-400 dark:text-stone-500 group-hover:text-blue-600 transition-colors duration-500">
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
-                      <div className="w-10 h-10 rounded-xl bg-stone-50 dark:bg-stone-800 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
-                        <i className="bi bi-file-earmark-pdf"></i>
+                <a
+                  key={index}
+                  href={value.imageId ? `/api/documents/${encodeURIComponent(value.imageId)}` : value.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 hover:border-blue-500/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col overflow-hidden"
+                >
+
+                  {/* Image Section */}
+                  <div className="relative h-32 w-full bg-stone-100 dark:bg-stone-800 overflow-hidden">
+                    {value.imageId && cloudName ? (
+                      <Image
+                        src={`https://res.cloudinary.com/${cloudName}/image/upload/pg_1/${encodeURIComponent(value.imageId)}.jpg`}
+                        alt={value.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        unoptimized
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-stone-50 dark:bg-stone-800/50 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/10 transition-colors duration-500">
+                        <div className="w-12 h-12 rounded-2xl bg-white dark:bg-stone-800 shadow-sm flex items-center justify-center text-blue-500/80 group-hover:text-blue-600 group-hover:scale-110 transition-all duration-500">
+                          <i className="bi bi-file-earmark-pdf-fill text-2xl"></i>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Overlay gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent opacity-60"></div>
+
+                    {/* Index Badge */}
+                    <div className="absolute top-4 left-4 w-10 h-10 rounded-xl bg-white/90 dark:bg-stone-900/90 backdrop-blur-sm flex items-center justify-center text-stone-900 dark:text-white font-black text-sm shadow-lg z-10">
+                      {String(index + 1).padStart(2, '0')}
+                    </div>
+                  </div>
+
+                  <div className="p-3 flex flex-col justify-between flex-grow">
+                    <div className="space-y-2">
+                      <h3 className="text-sm font-bold text-stone-900 dark:text-white leading-snug group-hover:text-blue-600 transition-colors">
+                        {value.name}
+                      </h3>
+                    </div>
+                    <div className="mt-3 space-y-1 pt-3 border-t border-stone-100 dark:border-stone-800">
+                      <div className="flex items-center justify-between p-2 rounded-lg bg-stone-50 dark:bg-stone-800/50 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 text-[10px] uppercase font-bold text-stone-600 dark:text-stone-400 group-hover:text-blue-600 transition-all">
+                        <span>Dokumentum</span>
+                        <div className="w-5 h-5 rounded bg-white dark:bg-stone-800 flex items-center justify-center shadow-sm text-stone-400 group-hover:text-blue-600 transition-colors">
+                          <i className="bi bi-file-earmark-arrow-down"></i>
+                        </div>
                       </div>
                     </div>
-                    <h3 className="text-lg font-bold text-stone-900 dark:text-white leading-tight group-hover:text-blue-600 transition-colors">
-                      {value.name}
-                    </h3>
                   </div>
-                  <div className="mt-8 space-y-2">
-                    <a href={value.url} target="_blank" rel="noopener noreferrer" className="flex items-center text-sm font-medium text-stone-400 dark:text-stone-500 hover:text-blue-600 transition-colors uppercase tracking-wider">
-                      Dokumentum megnyitása
-                      <i className="bi bi-arrow-up-right ml-2"></i>
-                    </a>
-                    {value.relatedUrl && (
-                      <a href={value.relatedUrl} target="_blank" rel="noopener noreferrer" className="flex items-center text-xs italic text-blue-600/60 dark:text-blue-400/40 hover:text-blue-600 transition-colors">
-                        Kapcsolódó irat megtekintése
-                      </a>
-                    )}
-                  </div>
-                </div>
+                </a>
               ))}
             </div>
           ) : (
@@ -187,37 +218,37 @@ export default function ErtektarPage() {
         </section>
 
         {/* Related Documents Footer */}
-        <section className="bg-stone-50 dark:bg-stone-900 rounded-[3rem] p-12 md:p-24 text-stone-900 dark:text-white relative overflow-hidden group border border-stone-200 dark:border-stone-800">
+        <section className="bg-stone-50 dark:bg-stone-900 rounded-[2rem] md:rounded-[3rem] p-6 md:p-12 lg:p-24 text-stone-900 dark:text-white relative overflow-hidden group border border-stone-200 dark:border-stone-800">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
-          <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+          <div className="relative z-10 grid lg:grid-cols-2 gap-8 lg:gap-16 items-start lg:items-center">
             <div className="space-y-8">
-              <h2 className="text-4xl font-black tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-black tracking-tight">
                 Hivatalos <span className="text-blue-600 dark:text-blue-500">Iratok</span>
               </h2>
               <div className="space-y-4">
                 {relatedDocuments.map((doc, index) => (
-                  <a key={index} href={doc.url} target="_blank" rel="noopener noreferrer" className="flex items-center p-6 bg-white dark:bg-white/5 hover:bg-stone-100 dark:hover:bg-white/10 rounded-3xl border border-stone-200 dark:border-white/10 transition-all duration-300 group/link shadow-sm">
-                    <div className="w-12 h-12 bg-blue-50 dark:bg-white/10 rounded-2xl flex items-center justify-center mr-6 group-hover/link:bg-blue-600 group-hover/link:text-white transition-colors text-blue-600 dark:text-white">
-                      <i className="bi bi-file-earmark-text text-xl"></i>
+                  <a key={index} href={doc.url} target="_blank" rel="noopener noreferrer" className="flex items-start p-4 md:p-6 bg-white dark:bg-white/5 hover:bg-stone-100 dark:hover:bg-white/10 rounded-2xl md:rounded-3xl border border-stone-200 dark:border-white/10 transition-all duration-300 group/link shadow-sm">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-50 dark:bg-white/10 rounded-xl md:rounded-2xl flex items-center justify-center mr-4 md:mr-6 group-hover/link:bg-blue-600 group-hover/link:text-white transition-colors text-blue-600 dark:text-white flex-shrink-0 mt-1">
+                      <i className="bi bi-file-earmark-text text-lg md:text-xl"></i>
                     </div>
-                    <span className="font-bold flex-grow text-stone-800 dark:text-white">{doc.name}</span>
-                    <i className="bi bi-download text-stone-300 dark:text-white/20 group-hover/link:text-blue-600 dark:group-hover/link:text-white transition-colors"></i>
+                    <span className="font-bold flex-grow text-sm md:text-base text-stone-800 dark:text-white pt-1">{doc.name}</span>
+                    <i className="bi bi-download text-stone-300 dark:text-white/20 group-hover/link:text-blue-600 dark:group-hover/link:text-white transition-colors pt-1 ml-2"></i>
                   </a>
                 ))}
               </div>
             </div>
-            <div className="bg-white dark:bg-white/5 p-10 rounded-[2.5rem] border border-stone-200 dark:border-white/10 space-y-8 shadow-sm">
-              <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-3xl shadow-2xl shadow-blue-500/20 rotate-12 text-white">
+            <div className="bg-white dark:bg-white/5 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-stone-200 dark:border-white/10 space-y-6 md:space-y-8 shadow-sm">
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-blue-600 rounded-xl md:rounded-2xl flex items-center justify-center text-2xl md:text-3xl shadow-2xl shadow-blue-500/20 rotate-12 text-white">
                 <i className="bi bi-info-circle"></i>
               </div>
-              <h3 className="text-2xl font-bold text-stone-900 dark:text-white">Javaslattétel</h3>
-              <p className="text-stone-600 dark:text-white/60 font-light leading-relaxed">
+              <h3 className="text-xl md:text-2xl font-bold text-stone-900 dark:text-white">Javaslattétel</h3>
+              <p className="text-stone-600 dark:text-white/60 font-light leading-relaxed text-sm md:text-base">
                 Az Értéktár listája folyamatosan bővül. Ha olyan helyi értéket, örökséget ismer, amelyet érdemes lenne felvenni, kérjük, jelezze az Önkormányzatnál vagy a bizottság tagjainál.
               </p>
-              <div className="pt-8 border-t border-stone-100 dark:border-white/10">
-                <p className="text-sm text-stone-400 dark:text-white/40 uppercase tracking-widest font-black mb-1">Kapcsolat</p>
-                <p className="font-bold text-lg text-stone-900 dark:text-white">Tyukod Nagyközség Önkormányzata</p>
-                <p className="text-stone-500 dark:text-white/60 font-light italic">"Tyukod Községért" Közalapítvány</p>
+              <div className="pt-6 md:pt-8 border-t border-stone-100 dark:border-white/10">
+                <p className="text-xs md:text-sm text-stone-400 dark:text-white/40 uppercase tracking-widest font-black mb-1">Kapcsolat</p>
+                <p className="font-bold text-base md:text-lg text-stone-900 dark:text-white">Tyukod Nagyközség Önkormányzata</p>
+                <p className="text-sm md:text-base text-stone-500 dark:text-white/60 font-light italic">"Tyukod Községért" Közalapítvány</p>
               </div>
             </div>
           </div>
