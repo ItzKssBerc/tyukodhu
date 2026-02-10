@@ -44,7 +44,7 @@ export default function ErtektarPage() {
     { name: "P. Szalay Emőke - Szalay Csilla: Tartozunk a múltnak c. kiadvány", url: "https://iggprj7vxvjr1ueg.public.blob.vercel-storage.com/tyukodertektara/25.%20p.%20szalay%20em%C3%B6ke-szalay%20csilla%20tartozunk%20a%20m%C3%BAltnak%20c.%20kiadv%C3%A1ny%20.pdf" },
   ];
 
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+
 
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-stone-950 transition-colors duration-500">
@@ -149,14 +149,12 @@ export default function ErtektarPage() {
             </div>
           </div>
 
-
-
           {documentLinks.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {documentLinks.map((value, index) => (
                 <a
                   key={index}
-                  href={value.imageId ? `/api/documents/${encodeURIComponent(value.imageId)}` : value.url}
+                  href={value.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 hover:border-blue-500/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col overflow-hidden"
@@ -164,22 +162,11 @@ export default function ErtektarPage() {
 
                   {/* Image Section */}
                   <div className="relative h-32 w-full bg-stone-100 dark:bg-stone-800 overflow-hidden">
-                    {value.imageId && cloudName ? (
-                      <Image
-                        src={`https://res.cloudinary.com/${cloudName}/image/upload/pg_1/${encodeURIComponent(value.imageId)}.jpg`}
-                        alt={value.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-700"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        unoptimized
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-stone-50 dark:bg-stone-800/50 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/10 transition-colors duration-500">
-                        <div className="w-12 h-12 rounded-2xl bg-white dark:bg-stone-800 shadow-sm flex items-center justify-center text-blue-500/80 group-hover:text-blue-600 group-hover:scale-110 transition-all duration-500">
-                          <i className="bi bi-file-earmark-pdf-fill text-2xl"></i>
-                        </div>
+                    <div className="w-full h-full flex items-center justify-center bg-stone-50 dark:bg-stone-800/50 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/10 transition-colors duration-500">
+                      <div className="w-12 h-12 rounded-2xl bg-white dark:bg-stone-800 shadow-sm flex items-center justify-center text-blue-500/80 group-hover:text-blue-600 group-hover:scale-110 transition-all duration-500">
+                        <i className="bi bi-file-earmark-pdf-fill text-2xl"></i>
                       </div>
-                    )}
+                    </div>
 
                     {/* Overlay gradient */}
                     <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent opacity-60"></div>
