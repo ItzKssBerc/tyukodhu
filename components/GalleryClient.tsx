@@ -12,13 +12,43 @@ type GalleryImage = {
 };
 export default function GalleryClient({ images }: { images: GalleryImage[] }) {
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedAlbum, setSelectedAlbum] = useState('');
 
-    const filteredImages = images?.filter((img) => {
+    const [selectedSort, setSelectedSort] = useState('title-asc');
+
+    const albums = Array.from(new Set(images.map(img => img.album))).filter(Boolean);
+
+    const sortOptions = [
+        { label: "Név szerint A-Z", value: "title-asc" },
+        { label: "Név szerint Z-A", value: "title-desc" },
+        { label: "Album szerint A-Z", value: "album-asc" },
+        { label: "Album szerint Z-A", value: "album-desc" },
+    ];
+
+    const filteredImages = (images?.filter((img) => {
         const term = searchTerm.toLowerCase();
         const matchesTitle = img.kepcim?.toLowerCase().includes(term);
-        const matchesAlbum = img.album?.toLowerCase().includes(term);
-        return !term || matchesTitle || matchesAlbum;
-    }) || [];
+        const matchesAlbumText = img.album?.toLowerCase().includes(term);
+        const matchesSearch = !term || matchesTitle || matchesAlbumText;
+
+        const matchesAlbumSelect = selectedAlbum ? img.album === selectedAlbum : true;
+
+        return matchesSearch && matchesAlbumSelect;
+    }) || []).sort((a, b) => {
+        if (selectedSort === 'title-asc') {
+            return (a.kepcim || "").localeCompare(b.kepcim || "", 'hu');
+        }
+        if (selectedSort === 'title-desc') {
+            return (b.kepcim || "").localeCompare(a.kepcim || "", 'hu');
+        }
+        if (selectedSort === 'album-asc') {
+            return (a.album || "").localeCompare(b.album || "", 'hu');
+        }
+        if (selectedSort === 'album-desc') {
+            return (b.album || "").localeCompare(a.album || "", 'hu');
+        }
+        return 0;
+    });
 
     return (
         <div>
@@ -26,6 +56,13 @@ export default function GalleryClient({ images }: { images: GalleryImage[] }) {
                 searchTerm={searchTerm}
                 onSearchChange={setSearchTerm}
                 searchPlaceholder="Keresés a galériában..."
+                selectedCategory={selectedAlbum}
+                onCategoryChange={setSelectedAlbum}
+                categories={albums.map(album => ({ value: album as string, label: album as string }))}
+                categoryPlaceholder="Válasszon albumot"
+                selectedSort={selectedSort}
+                onSortChange={setSelectedSort}
+                sortOptions={sortOptions}
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">

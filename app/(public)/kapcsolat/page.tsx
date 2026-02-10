@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import CustomSelect from "@/components/CustomSelect";
+import Dropdown from "@/components/Dropdown";
 
 // --- Simplified OfficeHours Component ---
 const OfficeHours = ({ hours }: { hours: Record<string, { start: string; end: string }> }) => {
@@ -26,7 +26,7 @@ const OfficeHours = ({ hours }: { hours: Record<string, { start: string; end: st
 
     const [startHour, startMinute] = hoursData.start.split(':').map(Number);
     const [endHour, endMinute] = hoursData.end.split(':').map(Number);
-    
+
     const startTime = new Date(currentDate);
     startTime.setHours(startHour, startMinute, 0, 0);
 
@@ -47,15 +47,14 @@ const OfficeHours = ({ hours }: { hours: Record<string, { start: string; end: st
         const hourData = hours[dayIndex.toString()];
         const today = currentDate.getDay() === dayIndex;
         const status = getStatus(dayIndex);
-        
+
         return (
           <div
             key={dayIndex}
-            className={`flex justify-between items-center p-3 rounded-lg border ${
-              today 
-              ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700' 
+            className={`flex justify-between items-center p-3 rounded-lg border ${today
+              ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700'
               : 'bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700'
-            }`}
+              }`}
           >
             <span className={`font-bold ${today ? 'text-amber-700 dark:text-amber-300' : 'text-gray-800 dark:text-gray-200'}`}>
               {getDayName(dayIndex)}
@@ -222,21 +221,19 @@ export default function ContactPage() {
             <div className="flex rounded-lg p-1 bg-gray-200/60 dark:bg-gray-700/60 backdrop-blur-sm">
               <button
                 onClick={() => setActiveTab('tyukod')}
-                className={`px-6 py-2 text-lg font-semibold rounded-md transition-all duration-200 ease-in-out ${
-                  activeTab === 'tyukod'
-                    ? 'bg-white dark:bg-gray-600 shadow-md text-amber-600 dark:text-amber-400'
-                    : 'text-gray-600 dark:text-gray-300 hover:bg-white/60 dark:hover:bg-gray-600/60'
-                }`}
+                className={`px-6 py-2 text-lg font-semibold rounded-md transition-all duration-200 ease-in-out ${activeTab === 'tyukod'
+                  ? 'bg-white dark:bg-gray-600 shadow-md text-amber-600 dark:text-amber-400'
+                  : 'text-gray-600 dark:text-gray-300 hover:bg-white/60 dark:hover:bg-gray-600/60'
+                  }`}
               >
                 Tyukodi önkormányzat
               </button>
               <button
                 onClick={() => setActiveTab('ura')}
-                className={`px-6 py-2 text-lg font-semibold rounded-md transition-all duration-200 ease-in-out ${
-                  activeTab === 'ura'
-                    ? 'bg-white dark:bg-gray-600 shadow-md text-amber-600 dark:text-amber-400'
-                    : 'text-gray-600 dark:text-gray-300 hover:bg-white/60 dark:hover:bg-gray-600/60'
-                }`}
+                className={`px-6 py-2 text-lg font-semibold rounded-md transition-all duration-200 ease-in-out ${activeTab === 'ura'
+                  ? 'bg-white dark:bg-gray-600 shadow-md text-amber-600 dark:text-amber-400'
+                  : 'text-gray-600 dark:text-gray-300 hover:bg-white/60 dark:hover:bg-gray-600/60'
+                  }`}
               >
                 Urai kirendeltség
               </button>
@@ -253,7 +250,7 @@ export default function ContactPage() {
                     <form onSubmit={handleSubmit} className="space-y-6">
                       <input type="text" name="name" placeholder="Teljes név" className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-amber-500 focus:border-amber-500 transition-shadow duration-150" disabled={submissionStatus === 'loading' || cooldownActive} />
                       <input id="email" name="email" type="email" placeholder="Email cím" className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-amber-500 focus:border-amber-500 transition-shadow duration-150" disabled={submissionStatus === 'loading' || cooldownActive} />
-                      <CustomSelect
+                      <Dropdown
                         name="subject"
                         options={[
                           { value: "Általános érdeklődés", label: "Általános érdeklődés" },

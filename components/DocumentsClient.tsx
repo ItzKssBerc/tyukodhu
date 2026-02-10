@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import CustomSelect from './CustomSelect';
+
 import SearchAndFilter from './SearchAndFilter';
 
 type DocumentItem = {
@@ -20,12 +20,35 @@ export default function DocumentsClient({ initialDocuments }: { initialDocuments
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
 
+    const [selectedSort, setSelectedSort] = useState('date-desc');
+
     const categories = Array.from(new Set(initialDocuments.map(doc => doc.entry.category))).filter(Boolean);
+
+    const sortOptions = [
+        { label: "Legfrissebb elöl", value: "date-desc" },
+        { label: "Legrégebbi elöl", value: "date-asc" },
+        { label: "Név szerint A-Z", value: "title-asc" },
+        { label: "Név szerint Z-A", value: "title-desc" },
+    ];
 
     const filteredDocs = initialDocuments.filter(doc => {
         const matchesSearch = doc.entry.title.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = selectedCategory ? doc.entry.category === selectedCategory : true;
         return matchesSearch && matchesCategory;
+    }).sort((a, b) => {
+        if (selectedSort === 'date-desc') {
+            return new Date(b.entry.publishedDate).getTime() - new Date(a.entry.publishedDate).getTime();
+        }
+        if (selectedSort === 'date-asc') {
+            return new Date(a.entry.publishedDate).getTime() - new Date(b.entry.publishedDate).getTime();
+        }
+        if (selectedSort === 'title-asc') {
+            return a.entry.title.localeCompare(b.entry.title, 'hu');
+        }
+        if (selectedSort === 'title-desc') {
+            return b.entry.title.localeCompare(a.entry.title, 'hu');
+        }
+        return 0;
     });
 
     return (
@@ -37,6 +60,9 @@ export default function DocumentsClient({ initialDocuments }: { initialDocuments
                 selectedCategory={selectedCategory}
                 onCategoryChange={setSelectedCategory}
                 categories={categories.map(cat => ({ value: cat, label: cat }))}
+                selectedSort={selectedSort}
+                onSortChange={setSelectedSort}
+                sortOptions={sortOptions}
             />
             <div className="grid grid-cols-1 gap-4">
                 {filteredDocs.map((doc) => (

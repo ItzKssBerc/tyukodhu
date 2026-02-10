@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import CustomSelect from './CustomSelect';
+
 import SearchAndFilter from './SearchAndFilter';
 
 type Post = {
@@ -30,11 +30,33 @@ type NewsClientProps = {
 export default function NewsClient({ initialPosts, categoryOptions }: NewsClientProps) {
     const [searchTerm, setSearchTerm] = React.useState('');
     const [selectedCategory, setSelectedCategory] = React.useState('');
+    const [selectedSort, setSelectedSort] = React.useState('date-desc');
+
+    const sortOptions = [
+        { label: "Legfrissebb elöl", value: "date-desc" },
+        { label: "Legrégebbi elöl", value: "date-asc" },
+        { label: "Név szerint A-Z", value: "title-asc" },
+        { label: "Név szerint Z-A", value: "title-desc" },
+    ];
 
     const filteredPosts = initialPosts.filter((post) => {
         const matchesSearch = post.entry.title.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = selectedCategory ? post.entry.categorySlug === selectedCategory : true;
         return matchesSearch && matchesCategory;
+    }).sort((a, b) => {
+        if (selectedSort === 'date-desc') {
+            return new Date(b.entry.publishedDate).getTime() - new Date(a.entry.publishedDate).getTime();
+        }
+        if (selectedSort === 'date-asc') {
+            return new Date(a.entry.publishedDate).getTime() - new Date(b.entry.publishedDate).getTime();
+        }
+        if (selectedSort === 'title-asc') {
+            return a.entry.title.localeCompare(b.entry.title, 'hu');
+        }
+        if (selectedSort === 'title-desc') {
+            return b.entry.title.localeCompare(a.entry.title, 'hu');
+        }
+        return 0;
     });
 
     return (
@@ -45,6 +67,9 @@ export default function NewsClient({ initialPosts, categoryOptions }: NewsClient
                 selectedCategory={selectedCategory}
                 onCategoryChange={setSelectedCategory}
                 categories={categoryOptions}
+                selectedSort={selectedSort}
+                onSortChange={setSelectedSort}
+                sortOptions={sortOptions}
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
