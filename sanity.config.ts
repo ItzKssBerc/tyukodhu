@@ -8,6 +8,7 @@ import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 
 import { cloudinarySchemaPlugin, cloudinaryImageSource } from 'sanity-plugin-cloudinary'
+import { iconPicker } from 'sanity-plugin-icon-picker'
 
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import { apiVersion, dataset, projectId } from './sanity/env'
@@ -28,6 +29,7 @@ export default defineConfig({
     plugins: [
         structureTool({ structure }),
         cloudinarySchemaPlugin(),
+        iconPicker(),
         // Vision is a tool that lets you query your content with GROQ in the studio
         // https://www.sanity.io/docs/the-vision-plugin
         // visionTool({defaultApiVersion: apiVersion}),

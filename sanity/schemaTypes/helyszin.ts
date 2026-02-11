@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import LeafletInput from '../components/LeafletInput'
 
 export const helyszin = defineType({
     name: 'helyszin',
@@ -15,11 +16,18 @@ export const helyszin = defineType({
             name: 'koordinata',
             title: 'Koordináta',
             type: 'geopoint',
+            components: {
+                input: LeafletInput
+            }
         }),
         defineField({
             name: 'helyszinikon',
             title: 'Helyszín Ikon',
-            type: 'image',
+            type: 'iconPicker',
+            options: {
+                providers: ['lu'], // Lucide icons
+                outputFormat: 'react',
+            }
         }),
         defineField({
             name: 'leiras',
