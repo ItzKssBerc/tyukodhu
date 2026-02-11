@@ -308,7 +308,7 @@ export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
                 <button
                   onClick={() => setInfoOpen(!infoOpen)}
                   className={`${getLinkClasses(
-                    isActive("/kozsegunkrol")
+                    isActive("/kozsegunkrol") || isActive("/tyukodkozsegert") || isActive("/ertektar")
                   )} inline-flex focus:outline-none`}
                 >
                   <i className="bi bi-info-circle-fill mr-2"></i>Információk
@@ -340,6 +340,30 @@ export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
                       >
                         <i className="bi bi-info-square-fill mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
                         Községünkről
+                      </Link>
+                      <div className="border-t border-gray-100 dark:border-gray-800 my-1"></div>
+                      <Link
+                        href="/tyukodkozsegert"
+                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group ${isActive("/tyukodkozsegert")
+                          ? "bg-stone-100 dark:bg-stone-800 text-blue-600 dark:text-blue-400"
+                          : "text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-900/50 hover:text-stone-900 dark:hover:text-stone-100"
+                          }`}
+                        onClick={() => setInfoOpen(false)}
+                      >
+                        <i className="bi bi-heart-fill mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
+                        Tyukod Községért
+                      </Link>
+                      <div className="border-t border-gray-100 dark:border-gray-800 my-1"></div>
+                      <Link
+                        href="/ertektar"
+                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group ${isActive("/ertektar")
+                          ? "bg-stone-100 dark:bg-stone-800 text-blue-600 dark:text-blue-400"
+                          : "text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-900/50 hover:text-stone-900 dark:hover:text-stone-100"
+                          }`}
+                        onClick={() => setInfoOpen(false)}
+                      >
+                        <i className="bi bi-gem mr-3 text-xl text-gray-500 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400"></i>
+                        Tyukod Értéktára
                       </Link>
                     </div>
                   </div>
@@ -574,7 +598,7 @@ export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
             <div>
               <button
                 onClick={() => setMobileInfoOpen(!mobileInfoOpen)}
-                className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${isActive("/kozsegunkrol")
+                className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium transition-colors ${isActive("/kozsegunkrol") || isActive("/tyukodkozsegert") || isActive("/ertektar")
                   ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
                   : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30"
                   }`}
@@ -604,6 +628,20 @@ export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <i className="bi bi-info-square-fill mr-2"></i>Községünkről
+                  </Link>
+                  <Link
+                    href="/tyukodkozsegert"
+                    className={getMobileSubLinkClasses(isActive("/tyukodkozsegert"))}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <i className="bi bi-heart-fill mr-2"></i>Tyukod Községért
+                  </Link>
+                  <Link
+                    href="/ertektar"
+                    className={getMobileSubLinkClasses(isActive("/ertektar"))}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <i className="bi bi-gem mr-2"></i>Tyukod Értéktára
                   </Link>
                 </div>
               )}

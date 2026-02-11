@@ -66,9 +66,9 @@ export default function DocumentsClient({ initialDocuments }: { initialDocuments
             />
             <div className="grid grid-cols-1 gap-4">
                 {filteredDocs.map((doc) => (
-                    <div key={doc.slug} className="group bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 p-6 rounded-[1.5rem] shadow-sm hover:shadow-xl transition-all duration-300 flex justify-between items-center">
+                    <div key={doc.slug} className="group bg-white/40 dark:bg-stone-900/40 backdrop-blur-sm border border-stone-200 dark:border-stone-800 p-6 rounded-[1.5rem] shadow-sm hover:shadow-xl transition-all duration-300 flex justify-between items-center">
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-2xl bg-stone-100 dark:bg-stone-800 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
+                            <div className="w-12 h-12 rounded-2xl bg-white/20 dark:bg-stone-800/20 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
                                 <i className="bi bi-file-earmark-text text-xl"></i>
                             </div>
                             <div>
@@ -94,7 +94,7 @@ export default function DocumentsClient({ initialDocuments }: { initialDocuments
                     </div>
                 ))}
                 {filteredDocs.length === 0 && (
-                    <div className="text-center py-16 bg-stone-50 dark:bg-stone-900/50 rounded-[2rem] border border-dashed border-stone-200 dark:border-stone-800">
+                    <div className="text-center py-16 bg-white/10 dark:bg-stone-900/20 rounded-[2rem] border border-dashed border-stone-200 dark:border-stone-800">
                         <i className="bi bi-search text-3xl text-stone-300 dark:text-stone-700 mb-3 block"></i>
                         <p className="text-stone-500 dark:text-stone-400 font-medium">Nincs a keresésnek megfelelő dokumentum.</p>
                     </div>

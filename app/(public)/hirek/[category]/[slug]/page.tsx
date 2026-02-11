@@ -25,10 +25,11 @@ const categoryLabels: Record<string, string> = {
 };
 
 const categoryColors: Record<string, string> = {
-    hirek: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300',
-    kozlemenyek: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
-    rendezvenyek: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
-    egyeb: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300',
+    kozerdeku: 'bg-blue-100/50 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300',
+    onkormanyzati: 'bg-amber-100/50 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300',
+    kulturalis: 'bg-purple-100/50 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300',
+    sport: 'bg-green-100/50 text-green-800 dark:bg-green-900/40 dark:text-green-300',
+    egyeb: 'bg-gray-100/50 text-gray-800 dark:bg-gray-700/40 dark:text-gray-300',
 };
 
 export async function generateStaticParams() {
@@ -76,7 +77,7 @@ export default async function PostPage({ params }: PageProps) {
                     Vissza a hírekhez
                 </Link>
 
-                <article className="glass-card rounded-2xl shadow-xl overflow-hidden">
+                <article className="bg-transparent rounded-2xl shadow-xl overflow-hidden">
                     {post.featuredImage && (
                         <div className="relative w-full aspect-video max-h-[300px]">
                             <Image

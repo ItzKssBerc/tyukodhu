@@ -79,7 +79,7 @@ const OfficeHours = ({ hours }: { hours: Record<string, { start: string; end: st
 
 // --- Contact Info Component ---
 const ContactInfo = ({ activeTab, className = "" }: { activeTab: string, className?: string }) => (
-  <div className={`bg-white dark:bg-stone-900 rounded-[2.5rem] p-8 shadow-xl border border-stone-100 dark:border-stone-800 relative overflow-hidden group ${className}`}>
+  <div className={`bg-white/40 dark:bg-stone-900/40 rounded-[2.5rem] p-8 shadow-xl border border-stone-100 dark:border-stone-800 relative overflow-hidden group ${className}`}>
     <h3 className="text-xl font-bold text-stone-900 dark:text-white mb-6 flex items-center gap-3 relative z-10">
       <span className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
         <i className="bi bi-info-circle-fill"></i>
@@ -96,21 +96,21 @@ const ContactInfo = ({ activeTab, className = "" }: { activeTab: string, classNa
     <div className="space-y-6">
       {activeTab === 'tyukod' ? (
         <>
-          <div className="flex items-start gap-4 p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">
+          <div className="flex items-start gap-4 p-4 rounded-2xl bg-white/20 dark:bg-stone-800/20 hover:bg-white/30 dark:hover:bg-stone-800/30 transition-colors">
             <i className="bi bi-geo-alt-fill text-2xl text-amber-500 mt-1"></i>
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-stone-400 dark:text-stone-500 mb-1">Cím</p>
               <p className="text-stone-900 dark:text-white font-medium">4762 Tyukod, Árpád u. 33.</p>
             </div>
           </div>
-          <div className="flex items-start gap-4 p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">
+          <div className="flex items-start gap-4 p-4 rounded-2xl bg-white/20 dark:bg-stone-800/20 hover:bg-white/30 dark:hover:bg-stone-800/30 transition-colors">
             <i className="bi bi-envelope-fill text-2xl text-amber-500 mt-1"></i>
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-stone-400 dark:text-stone-500 mb-1">Email / Posta</p>
               <a href="mailto:tyukod@outlook.hu" className="block text-stone-900 dark:text-white font-medium hover:text-blue-600 transition-colors break-all">tyukod@outlook.hu</a>
             </div>
           </div>
-          <div className="flex items-start gap-4 p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">
+          <div className="flex items-start gap-4 p-4 rounded-2xl bg-white/20 dark:bg-stone-800/20 hover:bg-white/30 dark:hover:bg-stone-800/30 transition-colors">
             <i className="bi bi-telephone-fill text-2xl text-amber-500 mt-1"></i>
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-stone-400 dark:text-stone-500 mb-1">Telefon / Fax</p>
@@ -121,21 +121,21 @@ const ContactInfo = ({ activeTab, className = "" }: { activeTab: string, classNa
         </>
       ) : (
         <>
-          <div className="flex items-start gap-4 p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">
+          <div className="flex items-start gap-4 p-4 rounded-2xl bg-white/20 dark:bg-stone-800/20 hover:bg-white/30 dark:hover:bg-stone-800/30 transition-colors">
             <i className="bi bi-geo-alt-fill text-2xl text-amber-500 mt-1"></i>
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-stone-400 dark:text-stone-500 mb-1">Cím</p>
               <p className="text-stone-900 dark:text-white font-medium">4763 Ura, Kossuth út 43.</p>
             </div>
           </div>
-          <div className="flex items-start gap-4 p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">
+          <div className="flex items-start gap-4 p-4 rounded-2xl bg-white/20 dark:bg-stone-800/20 hover:bg-white/30 dark:hover:bg-stone-800/30 transition-colors">
             <i className="bi bi-envelope-fill text-2xl text-amber-500 mt-1"></i>
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-stone-400 dark:text-stone-500 mb-1">Email / Posta</p>
               <a href="mailto:urahiv@freemail.hu" className="block text-stone-900 dark:text-white font-medium hover:text-blue-600 transition-colors break-all">urahiv@freemail.hu</a>
             </div>
           </div>
-          <div className="flex items-start gap-4 p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">
+          <div className="flex items-start gap-4 p-4 rounded-2xl bg-white/20 dark:bg-stone-800/20 hover:bg-white/30 dark:hover:bg-stone-800/30 transition-colors">
             <i className="bi bi-telephone-fill text-2xl text-amber-500 mt-1"></i>
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-stone-400 dark:text-stone-500 mb-1">Telefon / Fax</p>
@@ -156,7 +156,7 @@ const ContactInfo = ({ activeTab, className = "" }: { activeTab: string, classNa
 
 // --- Map Card Component ---
 const MapCard = ({ activeTab, className = "" }: { activeTab: string, className?: string }) => (
-  <div className={`bg-white dark:bg-stone-900 rounded-[2.5rem] p-8 shadow-xl border border-stone-100 dark:border-stone-800 overflow-hidden ${className}`}>
+  <div className={`bg-white/40 dark:bg-stone-900/40 rounded-[2.5rem] p-8 shadow-xl border border-stone-100 dark:border-stone-800 overflow-hidden ${className}`}>
     <div className="aspect-video w-full rounded-2xl overflow-hidden shadow-inner border border-stone-200 dark:border-stone-800 relative group">
       <iframe
         src={activeTab === 'tyukod'
@@ -179,7 +179,7 @@ const MapCard = ({ activeTab, className = "" }: { activeTab: string, className?:
 // --- Office Hours & Map Component ---
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const OfficeHoursAndMap = ({ activeTab, officeHours, className = "", showMap = true }: { activeTab: string, officeHours: any, className?: string, showMap?: boolean }) => (
-  <div className={`bg-white dark:bg-stone-900 rounded-[2.5rem] p-8 shadow-xl border border-stone-100 dark:border-stone-800 overflow-hidden ${className}`}>
+  <div className={`bg-white/40 dark:bg-stone-900/40 rounded-[2.5rem] p-8 shadow-xl border border-stone-100 dark:border-stone-800 overflow-hidden ${className}`}>
     <h3 className="text-xl font-bold text-stone-900 dark:text-white mb-6 flex items-center gap-3">
       <span className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
         <i className="bi bi-clock-fill"></i>
@@ -339,10 +339,10 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen theme-transition glass-card">
       {/* Hero Section */}
-      <div className="relative bg-stone-50 dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800 py-24 sm:py-32 overflow-hidden">
+      <div className="relative bg-transparent border-b border-stone-200 dark:border-stone-800 py-24 sm:py-32 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 to-amber-100/50 dark:from-blue-900/20 dark:to-amber-900/20" />
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-stone-50 dark:from-stone-950 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-transparent to-transparent" />
         </div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-black text-stone-900 dark:text-white tracking-tight mb-6">
@@ -355,7 +355,7 @@ export default function ContactPage() {
       </div>
 
       <div className="relative z-30 -mt-8 flex justify-center mb-16">
-        <div className="inline-flex p-1.5 bg-white dark:bg-stone-900 shadow-2xl border border-stone-200 dark:border-stone-800 rounded-full">
+        <div className="inline-flex p-1.5 bg-white/60 dark:bg-stone-900/60 backdrop-blur-md shadow-2xl border border-stone-200 dark:border-stone-800 rounded-full">
           <button
             onClick={() => setActiveTab('tyukod')}
             className={`px-8 py-3 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 ${activeTab === 'tyukod'
@@ -386,7 +386,7 @@ export default function ContactPage() {
             <>
               {/* Left Column: Contact Form and Map */}
               <div className="lg:col-span-7 space-y-6" key="tyukod-left">
-                <div className="bg-white dark:bg-stone-900 rounded-[2.5rem] p-8 sm:p-12 shadow-2xl border border-stone-100 dark:border-stone-800 relative overflow-hidden group">
+                <div className="bg-white/40 dark:bg-stone-900/40 rounded-[2.5rem] p-8 sm:p-12 shadow-2xl border border-stone-100 dark:border-stone-800 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 p-8 opacity-5 dark:opacity-10 pointer-events-none transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3">
                     <i className="bi bi-send-fill text-9xl text-stone-900 dark:text-white"></i>
                   </div>
@@ -398,11 +398,11 @@ export default function ContactPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div className="space-y-1">
                         <label htmlFor="name" className="text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-400 ml-1">Név</label>
-                        <input type="text" id="name" name="name" placeholder="Teljes név" className="block w-full px-5 py-4 bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700 rounded-2xl text-stone-900 dark:text-white placeholder-stone-400 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200" disabled={submissionStatus === 'loading' || cooldownActive} />
+                        <input type="text" id="name" name="name" placeholder="Teljes név" className="block w-full px-5 py-4 bg-white/20 dark:bg-stone-800/20 border border-stone-200 dark:border-stone-700 rounded-2xl text-stone-900 dark:text-white placeholder-stone-400 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200" disabled={submissionStatus === 'loading' || cooldownActive} />
                       </div>
                       <div className="space-y-1">
                         <label htmlFor="email" className="text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-400 ml-1">Email</label>
-                        <input id="email" name="email" type="email" placeholder="Email cím" className="block w-full px-5 py-4 bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700 rounded-2xl text-stone-900 dark:text-white placeholder-stone-400 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200" disabled={submissionStatus === 'loading' || cooldownActive} />
+                        <input id="email" name="email" type="email" placeholder="Email cím" className="block w-full px-5 py-4 bg-white/20 dark:bg-stone-800/20 border border-stone-200 dark:border-stone-700 rounded-2xl text-stone-900 dark:text-white placeholder-stone-400 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200" disabled={submissionStatus === 'loading' || cooldownActive} />
                       </div>
                     </div>
 
@@ -426,7 +426,7 @@ export default function ContactPage() {
 
                     <div className="space-y-1">
                       <label htmlFor="message" className="text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-400 ml-1">Üzenet</label>
-                      <textarea id="message" name="message" rows={6} placeholder="Írja ide az üzenetét..." className="block w-full px-5 py-4 bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700 rounded-2xl text-stone-900 dark:text-white placeholder-stone-400 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 resize-none" disabled={submissionStatus === 'loading' || cooldownActive}></textarea>
+                      <textarea id="message" name="message" rows={6} placeholder="Írja ide az üzenetét..." className="block w-full px-5 py-4 bg-white/20 dark:bg-stone-800/20 border border-stone-200 dark:border-stone-700 rounded-2xl text-stone-900 dark:text-white placeholder-stone-400 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 resize-none" disabled={submissionStatus === 'loading' || cooldownActive}></textarea>
                     </div>
 
                     <button type="submit" className="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed" disabled={submissionStatus === 'loading' || cooldownActive}>

@@ -49,7 +49,7 @@ export default function TyukodKozsegertPage() {
     <div className="min-h-screen theme-transition glass-card">
 
       {/* Hero Section */}
-      <section className="relative py-12 md:py-24 bg-white dark:bg-stone-900/40 border-b border-stone-200 dark:border-stone-800/50 overflow-hidden text-center">
+      <section className="relative py-12 md:py-24 bg-transparent border-b border-stone-200 dark:border-stone-800/50 overflow-hidden text-center">
         <div className="container mx-auto px-6 relative z-10">
           <h1 className="text-4xl md:text-6xl font-black text-stone-900 dark:text-white tracking-tight mb-6">
             &quot;Tyukod Községért&quot; <span className="text-blue-600 font-light italic">Közalapítvány</span>
@@ -68,7 +68,7 @@ export default function TyukodKozsegertPage() {
 
         {/* Intro Card */}
         <section className="max-w-4xl mx-auto">
-          <div className="bg-white dark:bg-stone-900 p-6 md:p-12 rounded-[2.5rem] border border-stone-200 dark:border-stone-800 shadow-sm relative overflow-hidden">
+          <div className="bg-white/40 dark:bg-stone-900/40 p-6 md:p-12 rounded-[2.5rem] border border-stone-200 dark:border-stone-800 shadow-sm relative overflow-hidden">
             <h2 className="text-2xl font-bold text-stone-900 dark:text-white mb-6">Üdvözlő gondolatok</h2>
             <div className="space-y-6 text-stone-600 dark:text-stone-400 font-light leading-relaxed">
               <p>Tisztelt Tyukodiak! Kedves Tyukodról Elszármazottak! Kedves Érdeklődők!</p>
@@ -90,7 +90,7 @@ export default function TyukodKozsegertPage() {
             </h2>
             <div className="space-y-4">
               {mainGoals.map((goal, index) => (
-                <div key={index} className="flex items-start p-5 bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm group hover:border-blue-500/50 transition-colors">
+                <div key={index} className="flex items-start p-5 bg-white/20 dark:bg-stone-900/20 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm group hover:border-blue-500/50 transition-colors">
                   <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold">
                     {index + 1}
                   </div>
@@ -100,7 +100,7 @@ export default function TyukodKozsegertPage() {
             </div>
           </div>
 
-          <div className="bg-stone-50 dark:bg-stone-900 rounded-[3rem] p-6 md:p-12 text-stone-900 dark:text-white shadow-sm dark:shadow-2xl border border-stone-200 dark:border-stone-800 relative overflow-hidden group">
+          <div className="bg-transparent rounded-[3rem] p-6 md:p-12 text-stone-900 dark:text-white shadow-sm dark:shadow-2xl border border-stone-200 dark:border-stone-800 relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-8 opacity-5 dark:opacity-5 text-stone-900 dark:text-white group-hover:rotate-12 transition-transform duration-700">
               <i className="bi bi-bank text-9xl"></i>
             </div>
@@ -138,7 +138,7 @@ export default function TyukodKozsegertPage() {
 
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Current Members */}
-            <div className="bg-white dark:bg-stone-900 p-6 md:p-10 rounded-[2.5rem] border border-stone-200 dark:border-stone-800 shadow-sm space-y-8">
+            <div className="bg-white/40 dark:bg-stone-900/40 p-6 md:p-10 rounded-[2.5rem] border border-stone-200 dark:border-stone-800 shadow-sm space-y-8">
               <div className="flex items-center justify-between">
                 <h3 className="text-xl font-bold text-stone-900 dark:text-white uppercase tracking-wider">Jelenlegi tagok</h3>
                 <span className="px-3 py-1 bg-blue-600 text-white text-[10px] font-black rounded-full uppercase">Aktív</span>
@@ -189,7 +189,7 @@ export default function TyukodKozsegertPage() {
         </section>
 
         {/* Closing & Documents */}
-        <section className="bg-white dark:bg-stone-900 p-6 md:p-16 rounded-[2rem] md:rounded-[3rem] border border-stone-200 dark:border-stone-800 shadow-xl overflow-hidden relative">
+        <section className="bg-white/40 dark:bg-stone-900/40 p-6 md:p-16 rounded-[2rem] md:rounded-[3rem] border border-stone-200 dark:border-stone-800 shadow-xl overflow-hidden relative">
           <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
             <div className="max-w-xl">

@@ -39,7 +39,7 @@ export default function Greeting({ images = [], mayorName }: GreetingProps) {
                     {/* Random Gallery Image Placeholder */}
                     <div className="lg:col-span-5 relative group">
                         <div className="absolute -inset-4 bg-gradient-to-tr from-blue-500/20 to-cyan-500/20 rounded-[2.5rem] blur-2xl transition-all duration-700 opacity-0 group-hover:opacity-100"></div>
-                        <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden border border-stone-200 dark:border-stone-800 shadow-2xl bg-stone-100 dark:bg-stone-900">
+                        <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden border border-stone-200 dark:border-stone-800 shadow-2xl bg-white/20 dark:bg-stone-900/20 backdrop-blur-md">
                             {randomImage ? (
                                 <>
                                     <Image

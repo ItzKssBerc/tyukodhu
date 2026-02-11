@@ -16,7 +16,7 @@ export default function EmptyState({ title, description, icon = "bi-search" }: E
                 <div className="absolute inset-0 bg-blue-500/10 blur-[60px] rounded-full"></div>
 
                 {/* Icon Container */}
-                <div className="relative w-24 h-24 bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-[2rem] flex items-center justify-center shadow-xl group transition-all duration-500 hover:scale-110">
+                <div className="relative w-24 h-24 bg-white/20 dark:bg-stone-900/20 backdrop-blur-md border border-stone-200 dark:border-stone-800 rounded-[2rem] flex items-center justify-center shadow-xl group transition-all duration-500 hover:scale-110">
                     <i className={`bi ${icon} text-4xl text-stone-400 dark:text-stone-600 transition-colors duration-500 group-hover:text-blue-500`}></i>
 
                     {/* Floating badge */}

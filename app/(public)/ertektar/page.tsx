@@ -48,7 +48,7 @@ export default function ErtektarPage() {
   return (
     <div className="min-h-screen theme-transition glass-card">
       {/* Hero Section */}
-      <section className="relative py-24 bg-white dark:bg-stone-900/40 border-b border-stone-200 dark:border-stone-800/50 overflow-hidden">
+      <section className="relative py-24 bg-transparent border-b border-stone-200 dark:border-stone-800/50 overflow-hidden">
         <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
         <div className="container mx-auto px-6 relative z-10 text-center">
           <h1 className="text-5xl md:text-7xl font-black text-stone-900 dark:text-white tracking-tight mb-6">
@@ -64,7 +64,7 @@ export default function ErtektarPage() {
       <div className="container mx-auto px-6 py-20 space-y-32">
         {/* Intro Section */}
         <section className="max-w-4xl mx-auto">
-          <div className="bg-white dark:bg-stone-900 p-8 md:p-12 rounded-[2.5rem] border border-stone-200 dark:border-stone-800 shadow-sm relative overflow-hidden group hover:shadow-xl transition-all duration-500">
+          <div className="bg-white/40 dark:bg-stone-900/40 p-8 md:p-12 rounded-[2.5rem] border border-stone-200 dark:border-stone-800 shadow-sm relative overflow-hidden group hover:shadow-xl transition-all duration-500">
             <i className="bi bi-bookmark-star absolute -top-4 -right-4 text-9xl text-blue-500/5 transition-transform duration-700 group-hover:rotate-12"></i>
             <p className="text-lg md:text-xl text-stone-700 dark:text-stone-300 leading-relaxed font-light">
               A <strong className="font-semibold text-stone-900 dark:text-white">Tyukod Nagyközség Önkormányzata</strong> és a <strong className="font-semibold text-stone-900 dark:text-white">&quot;Tyukod Községért&quot; Közalapítvány</strong> büszkén mutatja be a település értéktárát, melyet a helyi közösség hivatott gondozni és bővíteni.
@@ -100,7 +100,7 @@ export default function ErtektarPage() {
                 "Természet",
                 "Turizmus"
               ].map((cat, i) => (
-                <div key={i} className="flex items-center p-4 bg-white dark:bg-stone-900/50 rounded-2xl border border-stone-200 dark:border-stone-800 text-sm text-stone-600 dark:text-stone-400 shadow-sm">
+                <div key={i} className="flex items-center p-4 bg-white/20 dark:bg-stone-900/20 rounded-2xl border border-stone-200 dark:border-stone-800 text-sm text-stone-600 dark:text-stone-400 shadow-sm">
                   <i className="bi bi-check2-circle text-blue-600 mr-3"></i>
                   {cat}
                 </div>
@@ -108,7 +108,7 @@ export default function ErtektarPage() {
             </div>
           </div>
 
-          <div className="space-y-8 bg-white dark:bg-stone-900/40 p-10 rounded-[2.5rem] border border-stone-200 dark:border-stone-800/50 shadow-sm">
+          <div className="space-y-8 bg-white/20 dark:bg-stone-900/20 p-10 rounded-[2.5rem] border border-stone-200 dark:border-stone-800/50 shadow-sm">
             <h2 className="text-3xl font-black text-stone-900 dark:text-white tracking-tight flex items-center">
               <span className="w-12 h-12 bg-stone-50 dark:bg-stone-800 text-blue-600 rounded-2xl flex items-center justify-center mr-4 shadow-sm border border-stone-100 dark:border-stone-700">
                 <i className="bi bi-people"></i>
@@ -118,7 +118,7 @@ export default function ErtektarPage() {
             <p className="text-stone-600 dark:text-stone-400 font-light text-sm">A bizottság tagjai felelnek a javaslatok elbírálásáért és az értéktár kezeléséért.</p>
             <div className="space-y-4">
               {committeeMembers.map((member, index) => (
-                <div key={index} className="flex items-center p-4 bg-stone-50/50 dark:bg-stone-900 rounded-2xl border border-stone-100 dark:border-stone-800 shadow-sm">
+                <div key={index} className="flex items-center p-4 bg-white/20 dark:bg-stone-900/20 rounded-2xl border border-stone-100 dark:border-stone-800 shadow-sm">
                   <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center mr-4 font-bold">
                     {member.name.charAt(0)}
                   </div>
@@ -156,7 +156,7 @@ export default function ErtektarPage() {
                   href={value.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 hover:border-blue-500/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col overflow-hidden"
+                  className="group bg-white/30 dark:bg-stone-900/30 rounded-2xl border border-stone-200 dark:border-stone-800 hover:border-blue-500/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col overflow-hidden"
                 >
 
                   {/* Image Section */}
@@ -204,7 +204,7 @@ export default function ErtektarPage() {
         </section>
 
         {/* Related Documents Footer */}
-        <section className="bg-stone-50 dark:bg-stone-900 rounded-[2rem] md:rounded-[3rem] p-6 md:p-12 lg:p-24 text-stone-900 dark:text-white relative overflow-hidden group border border-stone-200 dark:border-stone-800">
+        <section className="bg-transparent rounded-[2rem] md:rounded-[3rem] p-6 md:p-12 lg:p-24 text-stone-900 dark:text-white relative overflow-hidden group border border-stone-200 dark:border-stone-800">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
           <div className="relative z-10 grid lg:grid-cols-2 gap-8 lg:gap-16 items-start lg:items-center">
             <div className="space-y-8">

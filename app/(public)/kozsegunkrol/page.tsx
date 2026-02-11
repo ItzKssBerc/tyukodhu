@@ -49,7 +49,7 @@ export default function AboutPage() {
     <div className="min-h-screen theme-transition glass-card">
 
       {/* Hero Section */}
-      <section className="relative py-32 bg-stone-50 dark:bg-stone-900/40 border-b border-stone-200 dark:border-stone-800/50 overflow-hidden text-center">
+      <section className="relative py-32 bg-transparent border-b border-stone-200 dark:border-stone-800/50 overflow-hidden text-center">
         <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent"></div>
         <div className="container mx-auto px-6 relative z-10">
           <h1 className="text-5xl md:text-7xl font-black text-stone-900 dark:text-white tracking-tight mb-6">
@@ -149,8 +149,8 @@ export default function AboutPage() {
 
                     {/* Right Column: Content */}
                     <div className={`p-6 md:p-8 rounded-[2rem] border transition-all duration-700 ${isActive
-                      ? 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 shadow-xl translate-x-1'
-                      : 'bg-stone-50/30 dark:bg-stone-900/5 border-transparent opacity-50'
+                      ? 'bg-white/40 dark:bg-stone-900/40 border-stone-200 dark:border-stone-800 shadow-xl translate-x-1'
+                      : 'bg-stone-50/20 dark:bg-stone-900/10 border-transparent opacity-50'
                       }`}>
                       <div className={`font-black text-xl md:text-2xl mb-2 tracking-tighter transition-colors duration-700 ${isActive ? 'text-blue-600' : 'text-stone-400 dark:text-stone-700'
                         }`}>
@@ -169,7 +169,7 @@ export default function AboutPage() {
         </section>
 
         {/* Closing Section */}
-        <section className="py-24 text-center bg-stone-50 dark:bg-stone-900 p-12 md:p-18 rounded-[3rem] border border-stone-100 dark:border-stone-800 relative overflow-hidden">
+        <section className="py-24 text-center bg-transparent p-12 md:p-18 rounded-[3rem] border border-stone-100 dark:border-stone-800 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
           <h2 className="text-3xl md:text-5xl font-black text-stone-900 dark:text-white mb-8 tracking-tight">
             Új évezred, <span className="text-blue-600">új remények</span>

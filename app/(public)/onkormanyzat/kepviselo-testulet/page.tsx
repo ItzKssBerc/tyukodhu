@@ -84,7 +84,7 @@ export default async function KepviseloTestuletPage() {
   });
 
   return (
-    <div className="mt-10 py-12 theme-transition glass-card">
+    <div className="mt-10 py-12 theme-transition bg-transparent">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-2 text-gray-800 dark:text-white">
           A Képviselő-testület tagjai
@@ -96,7 +96,7 @@ export default async function KepviseloTestuletPage() {
             {members.map((member) => (
               <div
                 key={member.name}
-                className={`w-72 bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border-t-4 ${member.borderColor} transform hover:-translate-y-2 transition-transform duration-300`}
+                className={`w-72 bg-white/40 dark:bg-stone-900/40 backdrop-blur-sm rounded-lg shadow-md overflow-hidden border-t-4 ${member.borderColor} transform hover:-translate-y-2 transition-transform duration-300`}
               >
                 <div className="p-6 text-center">
                   <div className="relative w-32 h-32 mx-auto mb-4">

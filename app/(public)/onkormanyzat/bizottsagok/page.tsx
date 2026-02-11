@@ -101,7 +101,7 @@ export default async function BizottsagokPage() {
   committees.sort((a, b) => a.name.localeCompare(b.name));
 
   return (
-    <div className="mt-10 py-12">
+    <div className="mt-10 py-12 theme-transition bg-transparent">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
@@ -133,7 +133,7 @@ export default async function BizottsagokPage() {
                     {committee.members.map((member) => (
                       <div
                         key={member.name + member.role}
-                        className="w-72 bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300"
+                        className="w-72 bg-white/40 dark:bg-stone-900/40 rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300"
                       >
                         <div className="p-6 text-center">
                           <div className="relative w-28 h-28 mx-auto mb-4">

@@ -76,7 +76,7 @@ export default function NewsClient({ initialPosts, categoryOptions }: NewsClient
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredPosts.map((post) => (
-                    <Link href={`/hirek/${post.entry.categorySlug}/${post.slug}`} key={post.slug} className="group bg-white dark:bg-stone-900 rounded-[2rem] shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden border border-stone-200 dark:border-stone-800 flex flex-col h-full transform hover:-translate-y-1 block">
+                    <Link href={`/hirek/${post.entry.categorySlug}/${post.slug}`} key={post.slug} className="group bg-white/40 dark:bg-stone-900/40 backdrop-blur-sm rounded-[2rem] shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden border border-stone-200 dark:border-stone-800 flex flex-col h-full transform hover:-translate-y-1 block">
                         <div className="relative h-48 overflow-hidden">
                             {post.entry.featuredImage ? (
                                 /* eslint-disable-next-line @next/next/no-img-element */
@@ -86,7 +86,7 @@ export default function NewsClient({ initialPosts, categoryOptions }: NewsClient
                                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                                 />
                             ) : (
-                                <div className="w-full h-full bg-stone-100 dark:bg-stone-800 flex items-center justify-center">
+                                <div className="w-full h-full bg-stone-100/50 dark:bg-stone-800/50 flex items-center justify-center">
                                     <span className="text-stone-300 dark:text-stone-700 text-5xl"><i className="bi bi-image"></i></span>
                                 </div>
                             )}
@@ -119,7 +119,7 @@ export default function NewsClient({ initialPosts, categoryOptions }: NewsClient
 
             {filteredPosts.length === 0 && (
                 <div className="text-center py-24">
-                    <div className="inline-block p-6 rounded-3xl bg-stone-100 dark:bg-stone-900 mb-6">
+                    <div className="inline-block p-6 rounded-3xl bg-white/20 dark:bg-stone-900/20 mb-6">
                         <i className="bi bi-search text-4xl text-stone-300 dark:text-stone-700"></i>
                     </div>
                     <h3 className="text-2xl font-bold text-stone-900 dark:text-white">Nincs találat</h3>

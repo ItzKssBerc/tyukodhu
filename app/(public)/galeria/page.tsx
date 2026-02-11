@@ -23,7 +23,7 @@ export default async function GalleryPage() {
   }));
 
   return (
-    <div className="container mx-auto py-8 px-4 theme-transition glass-card">
+    <div className="container mx-auto py-8 px-4 theme-transition bg-transparent">
       <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">
         Galéria
       </h1>

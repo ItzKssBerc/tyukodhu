@@ -40,7 +40,7 @@ export default async function NewsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl theme-transition glass-card">
+    <div className="container mx-auto px-4 py-8 max-w-6xl theme-transition bg-transparent">
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
         Hírek
       </h1>

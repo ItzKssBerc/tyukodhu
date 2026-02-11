@@ -69,7 +69,7 @@ export default function GalleryClient({ images }: { images: GalleryImage[] }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {filteredImages.map((img) => (
                     <div key={img._id} className="group relative break-inside-avoid">
-                        <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 shadow-sm hover:shadow-2xl transition-all duration-500">
+                        <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-white/40 dark:bg-stone-900/40 backdrop-blur-sm border border-stone-200 dark:border-stone-800 shadow-sm hover:shadow-2xl transition-all duration-500">
                             {img.kep ? (
                                 /* eslint-disable-next-line @next/next/no-img-element */
                                 <img
@@ -94,7 +94,7 @@ export default function GalleryClient({ images }: { images: GalleryImage[] }) {
 
             {filteredImages.length === 0 && (
                 <div className="text-center py-24">
-                    <div className="inline-block p-6 rounded-3xl bg-stone-100 dark:bg-stone-900 mb-6">
+                    <div className="inline-block p-6 rounded-3xl bg-white/20 dark:bg-stone-900/20 mb-6">
                         <i className="bi bi-images text-4xl text-stone-300 dark:text-stone-700"></i>
                     </div>
                     <h3 className="text-2xl font-bold text-stone-900 dark:text-white">A galéria jelenleg üres</h3>

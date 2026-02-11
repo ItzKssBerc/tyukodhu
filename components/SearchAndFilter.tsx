@@ -35,7 +35,7 @@ export default function SearchAndFilter({
             <input
                 type="text"
                 placeholder={searchPlaceholder}
-                className="col-span-2 p-4 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl shadow-sm focus:ring-2 focus:ring-blue-600 focus:border-blue-600 dark:text-white outline-none transition-all duration-300"
+                className="col-span-2 p-4 bg-white/40 dark:bg-stone-900/40 backdrop-blur-sm border border-stone-200 dark:border-stone-800 rounded-2xl shadow-sm focus:ring-2 focus:ring-blue-600 focus:border-blue-600 dark:text-white outline-none transition-all duration-300"
                 value={searchTerm}
                 onChange={(e) => onSearchChange(e.target.value)}
             />
