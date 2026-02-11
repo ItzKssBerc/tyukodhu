@@ -33,7 +33,7 @@ export default async function Home() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const newsItems = news?.slice(0, 3).map((item: any) => ({
     title: item.cim,
-    url: `/hirek/${item.slug.current}`,
+    url: `/hirek/${item.hirkategoria}/${item.slug.current}`,
     imageUrl: item.hirindexkep ? urlFor(item.hirindexkep).url() : null,
     date: item.datum ? item.datum.split('T')[0] : '',
     category: item.hirkategoria,
