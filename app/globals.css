@@ -12,3 +12,17 @@
     scrollbar-width: none;
   }
 }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.dark body::before {
+  background-image: radial-gradient(circle, rgba(231, 229, 228, 0.05) 1px, transparent 1px);
+}
