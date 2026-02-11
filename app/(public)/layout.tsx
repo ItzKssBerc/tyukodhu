@@ -34,7 +34,7 @@ export default async function PublicLayout({
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
       </head>
-      <body className="antialiased bg-white dark:bg-stone-950 transition-colors duration-500">
+      <body className="antialiased bg-stone-50 dark:bg-stone-950 bg-[radial-gradient(#a8a29e_1px,transparent_1px)] [background-size:40px_40px] dark:bg-[image:none] transition-colors duration-500">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

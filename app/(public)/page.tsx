@@ -29,14 +29,16 @@ export default async function Home() {
   const carouselImages = siteConfig?.fokepcarousel?.map((image: any) => urlFor(image).url()) || [];
 
   // Prepare Items for Dashboard
-  const newsItems = news?.slice(0, 5).map((item: any) => ({
+  const newsItems = news?.slice(0, 3).map((item: any) => ({
     title: item.cim,
     url: `/hirek/${item.slug.current}`,
-    date: item.datum,
+    imageUrl: item.hirindexkep ? urlFor(item.hirindexkep).url() : null,
+    date: item.datum ? item.datum.split('T')[0] : '',
+    category: item.hirkategoria,
     type: 'news' as const
   })) || [];
 
-  const docItems = docs?.slice(0, 5).map((item: any) => ({
+  const docItems = docs?.slice(0, 3).map((item: any) => ({
     title: item.dokumentumcim,
     url: `/onkormanyzat/dokumentumok`,
     date: item._createdAt.split('T')[0],

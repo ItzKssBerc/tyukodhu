@@ -31,7 +31,7 @@ export default function Greeting({ images = [], mayorName }: GreetingProps) {
     };
 
     return (
-        <section id="koszonto" className="w-full py-12 md:py-24 bg-stone-50 dark:bg-stone-950 overflow-hidden transition-colors duration-500">
+        <section id="koszonto" className="w-full py-12 md:py-24 bg-transparent dark:bg-stone-950 overflow-hidden transition-colors duration-500">
             <div className="max-w-7xl mx-auto px-6 md:px-12">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
 

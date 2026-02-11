@@ -33,9 +33,9 @@ export default function CarouselOverlay({ news, documents }: CarouselOverlayProp
 
                 {/* C2: Info Section (News/Docs) */}
                 <div className="pointer-events-auto flex flex-col justify-center animate-fade-in delay-100 w-full">
-                    <div className="bg-white/5 backdrop-blur-3xl rounded-[1.5rem] lg:rounded-[2rem] border border-white/10 p-1.5 lg:p-2 shadow-2xl">
-                        <div className="bg-black/20 rounded-[1rem] lg:rounded-[1.5rem] p-4 lg:p-8">
-                            <NewsTicker items={allItems} mode="minimal" />
+                    <div className="bg-white/5 backdrop-blur-3xl rounded-[1.5rem] lg:rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden min-h-[12rem] md:min-h-[14rem] flex flex-col">
+                        <div className="bg-black/20 w-full flex-grow flex flex-col">
+                            <NewsTicker news={news} docs={documents} mode="minimal" />
                         </div>
                     </div>
                 </div>
