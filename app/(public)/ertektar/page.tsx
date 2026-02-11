@@ -46,7 +46,7 @@ export default function ErtektarPage() {
 
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-stone-950 transition-colors duration-500">
+    <div className="min-h-screen theme-transition glass-card">
       {/* Hero Section */}
       <section className="relative py-24 bg-white dark:bg-stone-900/40 border-b border-stone-200 dark:border-stone-800/50 overflow-hidden">
         <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>

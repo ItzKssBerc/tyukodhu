@@ -33,7 +33,8 @@ export default async function PublicLayout({
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
       </head>
-      <body className="antialiased bg-stone-50 dark:bg-stone-950 transition-colors duration-500">
+      <body className="antialiased theme-transition min-h-screen flex flex-col">
+        <div className="fixed inset-0 z-[-1] bg-dot-pattern pointer-events-none" aria-hidden="true"></div>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -41,7 +42,9 @@ export default async function PublicLayout({
           disableTransitionOnChange
         >
           <Nav siteEmblem={siteEmblem} />
-          <main className="flex-grow w-full">{children}</main>
+          <main className="flex-grow w-full relative">
+            {children}
+          </main>
           <Footer siteEmblem={siteEmblem} />
           <Analytics />
           <SpeedInsights />

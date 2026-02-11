@@ -13,7 +13,7 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
   const hungarianDays = ["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek"];
 
   return (
-    <footer className="bg-stone-50 dark:bg-stone-950 border-t border-stone-200 dark:border-stone-800 transition-all duration-500">
+    <footer className="bg-stone-50/50 dark:bg-stone-950/50 backdrop-blur-sm border-t border-stone-200 dark:border-stone-800 theme-transition">
       <div className="max-w-7xl mx-auto">
         {/* Mobilon Accordion (lg:hidden) */}
         <div className="lg:hidden">

@@ -66,17 +66,17 @@ export default async function PostPage({ params }: PageProps) {
     const categoryColor = categoryColors[post.category] || categoryColors.egyeb;
 
     return (
-        <div className="min-h-screen py-12">
+        <div className="min-h-screen py-12 theme-transition">
             <div className="container mx-auto px-4 max-w-6xl">
                 <Link
                     href="/hirek"
-                    className="inline-flex items-center text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 mb-8 transition-colors duration-200 font-medium"
+                    className="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 mb-8 transition-colors duration-200 font-medium"
                 >
                     <ArrowLeft className="w-5 h-5 mr-2" />
                     Vissza a hírekhez
                 </Link>
 
-                <article className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+                <article className="glass-card rounded-2xl shadow-xl overflow-hidden">
                     {post.featuredImage && (
                         <div className="relative w-full aspect-video max-h-[300px]">
                             <Image

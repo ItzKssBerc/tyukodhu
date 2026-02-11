@@ -78,7 +78,7 @@ export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
   };
 
   return (
-    <nav className="bg-white/80 dark:bg-stone-950/80 backdrop-blur-xl border-b border-stone-200 dark:border-stone-800 shadow-sm py-2 transition-all duration-500 sticky top-0 z-[2000]">
+    <nav className="bg-white/70 dark:bg-stone-950/70 backdrop-blur-xl border-b border-stone-200 dark:border-stone-800 shadow-sm py-2 theme-transition sticky top-0 z-[2000]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-24">
           {/* Logo */}

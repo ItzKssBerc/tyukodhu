@@ -46,7 +46,7 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-stone-950 transition-colors duration-500">
+    <div className="min-h-screen theme-transition glass-card">
 
       {/* Hero Section */}
       <section className="relative py-32 bg-stone-50 dark:bg-stone-900/40 border-b border-stone-200 dark:border-stone-800/50 overflow-hidden text-center">

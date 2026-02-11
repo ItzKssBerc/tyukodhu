@@ -2,7 +2,61 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+@layer base {
+  :root {
+    --background: #fafaf9;
+    /* stone-50 */
+    --foreground: #1c1917;
+    /* stone-900 */
+    --card: #ffffff;
+    --card-foreground: #1c1917;
+    --border: #e7e5e4;
+    /* stone-200 */
+    --ring: #3b82f6;
+    /* blue-500 */
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: #0c0a09;
+    /* stone-950 */
+    --foreground: #fafaf9;
+    /* stone-50 */
+    --card: #1c1917;
+    /* stone-900 */
+    --card-foreground: #fafaf9;
+    --border: #292524;
+    /* stone-800 */
+    --ring: #60a5fa;
+    /* blue-400 */
+  }
+
+  html {
+    background-color: var(--background);
+    color: var(--foreground);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: transparent !important;
+  }
+}
+
 @layer utilities {
+  .bg-dot-pattern {
+    background-image: radial-gradient(circle, #d1d5db 1.5px, transparent 1.5px);
+    background-size: 48px 48px;
+  }
+
+  .dark .bg-dot-pattern {
+    background-image: radial-gradient(circle, rgba(239, 68, 68, 0.2) 1.5px, transparent 1.5px);
+  }
+
+  .glass-card {
+    @apply bg-white/70 dark:bg-stone-900/70 backdrop-blur-md border border-stone-200/50 dark:border-stone-800/50 shadow-sm;
+  }
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
@@ -13,16 +67,7 @@
   }
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
-  background-size: 32px 32px;
-}
-
-.dark body::before {
-  background-image: radial-gradient(circle, rgba(231, 229, 228, 0.05) 1px, transparent 1px);
+/* Custom transitions */
+.theme-transition {
+  @apply transition-colors duration-500;
 }

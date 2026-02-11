@@ -337,7 +337,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-stone-950">
+    <div className="min-h-screen theme-transition glass-card">
       {/* Hero Section */}
       <div className="relative bg-stone-50 dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800 py-24 sm:py-32 overflow-hidden">
         <div className="absolute inset-0 z-0">
