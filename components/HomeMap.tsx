@@ -12,6 +12,7 @@ const MapComponent = dynamic(() => import('./MapComponent'), {
     )
 });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HomeMap({ locations }: { locations: any[] }) {
     return (
         <div className="relative h-[600px] w-full">

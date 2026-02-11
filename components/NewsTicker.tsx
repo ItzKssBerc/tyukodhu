@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 /* Start of Selection */
-interface NewsItem {
+export interface NewsItem {
     title: string;
     url: string;
     date: string;
@@ -13,13 +13,15 @@ interface NewsItem {
     type: "news" | "document";
 }
 
-interface NewsTickerProps {
-    news: NewsItem[];
-    docs: NewsItem[];
+export interface NewsTickerProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    news: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    docs: any[];
     mode?: 'default' | 'minimal';
 }
 
-export default function NewsTicker({ news, docs, mode = 'default' }: NewsTickerProps) {
+export default function NewsTicker({ news, docs }: NewsTickerProps) {
     const [activeType, setActiveType] = useState<'news' | 'docs'>('news');
     const [isVisible, setIsVisible] = useState(true);
 
@@ -69,10 +71,6 @@ export default function NewsTicker({ news, docs, mode = 'default' }: NewsTickerP
 
     const containerClasses = "w-full flex-grow flex flex-col transition-all duration-500 overflow-hidden";
 
-    const innerClasses = mode === 'minimal'
-        ? "flex items-stretch w-full h-full bg-transparent group"
-        : "flex items-stretch w-full h-full min-h-[5rem] md:min-h-[6rem] bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden group";
-
 
     return (
         <div className={containerClasses}>
@@ -96,6 +94,7 @@ export default function NewsTicker({ news, docs, mode = 'default' }: NewsTickerP
                             {/* Right Side: Image */}
                             <div className="w-1/3 md:w-40 relative flex-shrink-0 pointer-events-none border-l border-white/5">
                                 {item.imageUrl ? (
+                                    /* eslint-disable-next-line @next/next/no-img-element */
                                     <img
                                         src={item.imageUrl}
                                         alt={item.title}

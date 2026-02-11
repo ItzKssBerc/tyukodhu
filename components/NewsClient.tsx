@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-
 import SearchAndFilter from './SearchAndFilter';
 
 type Post = {
@@ -13,8 +12,10 @@ type Post = {
         categorySlug: string;
         publishedDate: string;
         featuredImage: string | null;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         [key: string]: any;
     };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
 };
 
@@ -78,6 +79,7 @@ export default function NewsClient({ initialPosts, categoryOptions }: NewsClient
                     <Link href={`/hirek/${post.entry.categorySlug}/${post.slug}`} key={post.slug} className="group bg-white dark:bg-stone-900 rounded-[2rem] shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden border border-stone-200 dark:border-stone-800 flex flex-col h-full transform hover:-translate-y-1 block">
                         <div className="relative h-48 overflow-hidden">
                             {post.entry.featuredImage ? (
+                                /* eslint-disable-next-line @next/next/no-img-element */
                                 <img
                                     src={post.entry.featuredImage}
                                     alt={post.entry.title}

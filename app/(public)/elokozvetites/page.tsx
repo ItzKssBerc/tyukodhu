@@ -87,6 +87,7 @@ export default async function LiveStreamPage() {
             <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/90"></div>
             <div className="relative flex flex-col items-center justify-center text-center py-24 sm:py-32 px-4">
               {siteEmblem ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                   src={siteEmblem}
                   alt="Címer"

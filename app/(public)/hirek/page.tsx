@@ -13,16 +13,13 @@ const categoryOptions = [
   { title: 'Egyéb', value: 'egyeb' },
 ].map(opt => ({ label: opt.title, value: opt.value }));
 
-type PageProps = {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
-
-export default async function NewsPage(props: PageProps) {
+export default async function NewsPage() {
   // Fetch news from Sanity
   const sanityPosts = await client.fetch(HIREK_QUERY);
 
   // Map Sanity data to the structure expected by NewsClient
   // structure: { slug, entry: { title, category, publishedDate, featuredImage } }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const posts = sanityPosts.map((post: any) => ({
     slug: post.slug.current,
     entry: {
@@ -49,7 +46,9 @@ export default async function NewsPage(props: PageProps) {
       </h1>
 
       {sortedPosts.length > 0 ? (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         <NewsClient initialPosts={sortedPosts.map((post: any) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { content, ...restEntry } = post.entry;
           return {
             ...post,

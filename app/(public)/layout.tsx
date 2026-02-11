@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import "../globals.css";
 
 import { Analytics } from "@vercel/analytics/next"
@@ -8,10 +8,10 @@ import { OLDALBEALLITASOK_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 
 import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
+import Footer from "./Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
@@ -24,7 +24,6 @@ export default async function PublicLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Fetch siteConfig data
   const data = await client.fetch(OLDALBEALLITASOK_QUERY);
   const siteEmblem = data?.oldalemblema ? urlFor(data.oldalemblema).url() : null;
 
@@ -34,7 +33,7 @@ export default async function PublicLayout({
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
       </head>
-      <body className="antialiased bg-stone-50 dark:bg-stone-950 bg-[radial-gradient(#a8a29e_1px,transparent_1px)] [background-size:40px_40px] dark:bg-[image:none] transition-colors duration-500">
+      <body className="antialiased bg-stone-50 dark:bg-stone-950 transition-colors duration-500">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

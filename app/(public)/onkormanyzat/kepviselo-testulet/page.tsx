@@ -22,12 +22,14 @@ export default async function KepviseloTestuletPage() {
   const sanityPeople = await client.fetch(SZEMELY_QUERY);
 
   // Map Sanity data to Person structure
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const people: Person[] = sanityPeople.map((item: any) => ({
     slug: item._id,
     entry: {
       name: item.nev || '',
       body: item.kategoria?.includes('kepviselo-testulet') ? 'kepviselo-testulet' : '', // Mock body check to match existing logic
       position: item.titulus,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       committees: item.bizottsagok?.map((biz: any) => ({ name: biz.nev, position: biz.pozicio })) || [],
       image: item.kep ? urlFor(item.kep).url() : null, // Store full URL here
     }

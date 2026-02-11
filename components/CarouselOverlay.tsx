@@ -1,17 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import NewsTicker from "./NewsTicker";
-import React from "react"; // Import React for React.ReactNode
+import NewsTicker, { NewsItem } from "./NewsTicker";
+import React from "react";
 
 interface CarouselOverlayProps {
-    news: any[];
-    documents: any[];
-    children?: React.ReactNode; // Added children prop
+    news: NewsItem[];
+    documents: NewsItem[];
 }
 
 export default function CarouselOverlay({ news, documents }: CarouselOverlayProps) {
-    const allItems = [...news, ...documents];
 
     return (
         <div className="relative w-full h-full pointer-events-none flex flex-col items-center justify-start px-4 md:px-12 py-12 md:py-24">

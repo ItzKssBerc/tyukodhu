@@ -9,6 +9,7 @@ export default async function GalleryPage() {
   const sanityImages = await client.fetch(KEP_QUERY);
 
   // Map Sanity data to GalleryClient structure
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const galleryItems = sanityImages.map((item: any) => ({
     slug: item._id,
     entry: {

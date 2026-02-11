@@ -2,15 +2,16 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { urlFor } from "@/sanity/lib/image";
 
 interface GreetingProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     images?: any[];
     mayorName?: string;
 }
 
 export default function Greeting({ images = [], mayorName }: GreetingProps) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [randomImage, setRandomImage] = React.useState<any>(null);
 
     React.useEffect(() => {

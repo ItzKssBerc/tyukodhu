@@ -1,4 +1,3 @@
-import Image from "next/image";
 import EmptyState from "@/components/EmptyState";
 
 export default function ErtektarPage() {
@@ -68,7 +67,7 @@ export default function ErtektarPage() {
           <div className="bg-white dark:bg-stone-900 p-8 md:p-12 rounded-[2.5rem] border border-stone-200 dark:border-stone-800 shadow-sm relative overflow-hidden group hover:shadow-xl transition-all duration-500">
             <i className="bi bi-bookmark-star absolute -top-4 -right-4 text-9xl text-blue-500/5 transition-transform duration-700 group-hover:rotate-12"></i>
             <p className="text-lg md:text-xl text-stone-700 dark:text-stone-300 leading-relaxed font-light">
-              A <strong className="font-semibold text-stone-900 dark:text-white">Tyukod Nagyközség Önkormányzata</strong> és a <strong className="font-semibold text-stone-900 dark:text-white">"Tyukod Községért" Közalapítvány</strong> büszkén mutatja be a település értéktárát, melyet a helyi közösség hivatott gondozni és bővíteni.
+              A <strong className="font-semibold text-stone-900 dark:text-white">Tyukod Nagyközség Önkormányzata</strong> és a <strong className="font-semibold text-stone-900 dark:text-white">&quot;Tyukod Községért&quot; Közalapítvány</strong> büszkén mutatja be a település értéktárát, melyet a helyi közösség hivatott gondozni és bővíteni.
             </p>
           </div>
         </section>
@@ -235,7 +234,7 @@ export default function ErtektarPage() {
               <div className="pt-6 md:pt-8 border-t border-stone-100 dark:border-white/10">
                 <p className="text-xs md:text-sm text-stone-400 dark:text-white/40 uppercase tracking-widest font-black mb-1">Kapcsolat</p>
                 <p className="font-bold text-base md:text-lg text-stone-900 dark:text-white">Tyukod Nagyközség Önkormányzata</p>
-                <p className="text-sm md:text-base text-stone-500 dark:text-white/60 font-light italic">"Tyukod Községért" Közalapítvány</p>
+                <p className="text-sm md:text-base text-stone-500 dark:text-white/60 font-light italic">&quot;Tyukod Községért&quot; Közalapítvány</p>
               </div>
             </div>
           </div>

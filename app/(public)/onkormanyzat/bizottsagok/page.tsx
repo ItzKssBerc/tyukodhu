@@ -15,6 +15,9 @@ type SanityPerson = {
   _id: string;
   nev: string;
   titulus?: string;
+  // The 'any' type for 'kep' is already suppressed as per the original code.
+  // If a more specific type is known, it should replace 'any'.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   kep?: any;
   kategoria?: string[];
   bizottsagok?: {

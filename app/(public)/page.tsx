@@ -1,12 +1,10 @@
 
 
 
-import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import { OLDALBEALLITASOK_QUERY, HIREK_QUERY, DOKUMENTUM_QUERY, KEP_QUERY, SZEMELY_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import Carousel from "@/components/Carousel";
-import NewsTicker from "@/components/NewsTicker";
 import CarouselOverlay from "@/components/CarouselOverlay";
 import Greeting from "@/components/Greeting";
 
@@ -21,14 +19,18 @@ export default async function Home() {
   ]);
 
   // Find Mayor
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mayor = people?.find((p: any) =>
     p.titulus?.toLowerCase().includes("polgármester")
   );
   const mayorName = mayor?.nev;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const carouselImages = siteConfig?.fokepcarousel?.map((image: any) => urlFor(image).url()) || [];
 
   // Prepare Items for Dashboard
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const newsItems = news?.slice(0, 3).map((item: any) => ({
     title: item.cim,
     url: `/hirek/${item.slug.current}`,
@@ -38,6 +40,7 @@ export default async function Home() {
     type: 'news' as const
   })) || [];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const docItems = docs?.slice(0, 3).map((item: any) => ({
     title: item.dokumentumcim,
     url: `/onkormanyzat/dokumentumok`,

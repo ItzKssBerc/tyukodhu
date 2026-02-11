@@ -52,12 +52,12 @@ export default function TyukodKozsegertPage() {
       <section className="relative py-12 md:py-24 bg-white dark:bg-stone-900/40 border-b border-stone-200 dark:border-stone-800/50 overflow-hidden text-center">
         <div className="container mx-auto px-6 relative z-10">
           <h1 className="text-4xl md:text-6xl font-black text-stone-900 dark:text-white tracking-tight mb-6">
-            "Tyukod Községért" <span className="text-blue-600 font-light italic">Közalapítvány</span>
+            &quot;Tyukod Községért&quot; <span className="text-blue-600 font-light italic">Közalapítvány</span>
           </h1>
           <div className="max-w-3xl mx-auto border-y border-stone-100 dark:border-stone-800 py-8 relative">
             <i className="bi bi-quote absolute top-2 left-2 text-4xl text-blue-600/10"></i>
             <blockquote className="text-xl md:text-2xl italic text-stone-600 dark:text-stone-400 font-light leading-relaxed">
-              "Mindenkinek kellene, hogy legyen valami, amit önzetlenül tesz, pusztán azért, hogy másoknak szerzett örömmel magát boldogítsa"
+              &quot;Mindenkinek kellene, hogy legyen valami, amit önzetlenül tesz, pusztán azért, hogy másoknak szerzett örömmel magát boldogítsa&quot;
             </blockquote>
             <p className="mt-4 font-bold text-stone-900 dark:text-stone-200 uppercase tracking-widest text-sm">— Becca Prior</p>
           </div>
@@ -117,7 +117,7 @@ export default function TyukodKozsegertPage() {
                 </div>
                 <div className="p-6 bg-white dark:bg-white/5 rounded-2xl border border-stone-200 dark:border-white/10 shadow-sm">
                   <p className="text-sm font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2">Finanszírozás</p>
-                  <p className="text-lg font-medium italic">"Adó 1%-a és egyéni adományok"</p>
+                  <p className="text-lg font-medium italic">&quot;Adó 1%-a és egyéni adományok&quot;</p>
                 </div>
               </div>
               <p className="text-xs italic text-stone-400 dark:text-white/40 pt-4 border-t border-stone-200 dark:border-white/10 uppercase tracking-tight">

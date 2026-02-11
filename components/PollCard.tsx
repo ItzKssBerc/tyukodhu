@@ -6,12 +6,13 @@ type PollCardProps = {
     id: string;
     question: string;
     options: string[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     initialResults?: any;
     userVote?: number | null;
     allowChange?: boolean;
 };
 
-export default function PollCard({ id, question, options, initialResults, userVote, allowChange }: PollCardProps) {
+export default function PollCard({ id, question, options, userVote }: PollCardProps) {
     return (
         <div className="border p-6 rounded-lg shadow-md bg-white dark:bg-gray-800">
             <h3 className="text-xl font-bold mb-4">{question}</h3>

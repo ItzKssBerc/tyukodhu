@@ -8,6 +8,7 @@ type GalleryImage = {
     _id: string;
     kepcim?: string;
     album?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     kep: any;
 };
 export default function GalleryClient({ images }: { images: GalleryImage[] }) {
@@ -70,6 +71,7 @@ export default function GalleryClient({ images }: { images: GalleryImage[] }) {
                     <div key={img._id} className="group relative break-inside-avoid">
                         <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 shadow-sm hover:shadow-2xl transition-all duration-500">
                             {img.kep ? (
+                                /* eslint-disable-next-line @next/next/no-img-element */
                                 <img
                                     src={urlFor(img.kep).width(600).height(600).url()}
                                     alt={img.kepcim || "Galéria kép"}

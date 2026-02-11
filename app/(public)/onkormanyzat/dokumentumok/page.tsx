@@ -8,6 +8,7 @@ export default async function DocumentsPage() {
   const sanityDocs = await client.fetch(DOKUMENTUM_QUERY);
 
   // Map Sanity data to DocumentsClient structure
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const documents = sanityDocs.map((item: any) => {
     const publishedDateTime = new Date(item._createdAt);
     return {

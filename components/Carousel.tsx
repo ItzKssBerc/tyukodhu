@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
@@ -12,11 +12,9 @@ interface CarouselProps {
 
 export default function Carousel({ images, children }: CarouselProps) {
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30 }, [Autoplay({ delay: 5000, stopOnInteraction: false })]);
-    const [selectedIndex, setSelectedIndex] = useState(0);
 
     const onSelect = useCallback(() => {
         if (!emblaApi) return;
-        setSelectedIndex(emblaApi.selectedScrollSnap());
     }, [emblaApi]);
 
     useEffect(() => {
@@ -28,10 +26,7 @@ export default function Carousel({ images, children }: CarouselProps) {
         };
     }, [emblaApi, onSelect]);
 
-    const scrollTo = useCallback(
-        (index: number) => emblaApi && emblaApi.scrollTo(index),
-        [emblaApi]
-    );
+
 
     if (!images || images.length === 0) {
         return null;

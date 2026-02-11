@@ -177,6 +177,7 @@ const MapCard = ({ activeTab, className = "" }: { activeTab: string, className?:
 );
 
 // --- Office Hours & Map Component ---
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const OfficeHoursAndMap = ({ activeTab, officeHours, className = "", showMap = true }: { activeTab: string, officeHours: any, className?: string, showMap?: boolean }) => (
   <div className={`bg-white dark:bg-stone-900 rounded-[2.5rem] p-8 shadow-xl border border-stone-100 dark:border-stone-800 overflow-hidden ${className}`}>
     <h3 className="text-xl font-bold text-stone-900 dark:text-white mb-6 flex items-center gap-3">

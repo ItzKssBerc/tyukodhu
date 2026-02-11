@@ -68,7 +68,7 @@ export default function AdatvedelemPage() {
       title: "7. Kapcsolat",
       icon: "bi-envelope-fill",
       content: (
-        <p>Ha bármilyen kérdése van ezzel az adatvédelmi nyilatkozattal kapcsolatban, kérjük, vegye fel velünk a kapcsolatot a "Kapcsolat" oldalunkon található elérhetőségeinken.</p>
+        <p>Ha bármilyen kérdése van ezzel az adatvédelmi nyilatkozattal kapcsolatban, kérjük, vegye fel velünk a kapcsolatot a &quot;Kapcsolat&quot; oldalunkon található elérhetőségeinken.</p>
       )
     }
   ];
@@ -79,7 +79,7 @@ export default function AdatvedelemPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="lg:grid lg:grid-cols-12 lg:gap-12">
-          
+
           {/* Sidebar / Header Area (Sticky on Desktop) */}
           <div className="lg:col-span-4 xl:col-span-3 mb-12 lg:mb-0">
             <div className="sticky top-8">
@@ -87,11 +87,11 @@ export default function AdatvedelemPage() {
                 <div className="flex items-center justify-center w-16 h-16 bg-indigo-100 dark:bg-indigo-900/50 rounded-2xl mb-6 mx-auto lg:mx-0">
                   <i className="bi bi-shield-lock-fill text-3xl text-indigo-600 dark:text-indigo-400"></i>
                 </div>
-                
+
                 <h1 className="text-2xl md:text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-4 text-center lg:text-left">
                   Adatvédelmi Nyilatkozat
                 </h1>
-                
+
                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 text-center lg:text-left">
                   <i className="bi bi-clock-history mr-2"></i>
                   Utoljára frissítve: <span className="font-medium text-gray-700 dark:text-gray-300">{lastUpdated}</span>
@@ -103,7 +103,7 @@ export default function AdatvedelemPage() {
                 <nav className="hidden lg:block space-y-1" aria-label="Tartalomjegyzék">
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Tartalom</p>
                   {sections.map((section) => (
-                    <a 
+                    <a
                       key={section.id}
                       href={`#${section.id}`}
                       className="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 rounded-md hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all"
@@ -119,18 +119,18 @@ export default function AdatvedelemPage() {
 
           {/* Mobile Navigation (Wrapping) */}
           <div className="lg:hidden mb-8">
-             <div className="flex flex-wrap gap-2">
-                {sections.map((section) => (
-                  <a
-                    key={section.id}
-                    href={`#${section.id}`}
-                    className="inline-flex items-center px-4 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm"
-                  >
-                    <i className={`bi ${section.icon} mr-2 text-indigo-500`}></i>
-                    {section.title.split('. ')[1]}
-                  </a>
-                ))}
-             </div>
+            <div className="flex flex-wrap gap-2">
+              {sections.map((section) => (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  className="inline-flex items-center px-4 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm"
+                >
+                  <i className={`bi ${section.icon} mr-2 text-indigo-500`}></i>
+                  {section.title.split('. ')[1]}
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Main Content Area */}
@@ -145,8 +145,8 @@ export default function AdatvedelemPage() {
             {/* Sections */}
             <div className="space-y-8">
               {sections.map((section) => (
-                <section 
-                  key={section.id} 
+                <section
+                  key={section.id}
                   id={section.id}
                   className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 scroll-mt-8 transition-all hover:shadow-md"
                 >
@@ -158,7 +158,7 @@ export default function AdatvedelemPage() {
                       {section.title}
                     </h2>
                   </div>
-                  
+
                   <div className="prose prose-indigo dark:prose-invert max-w-none text-gray-600 dark:text-gray-300">
                     {section.content}
                   </div>

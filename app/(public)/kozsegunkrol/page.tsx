@@ -76,7 +76,7 @@ export default function AboutPage() {
               Írásos emlékek <strong className="font-semibold text-stone-900 dark:text-white underline decoration-blue-500/30 decoration-4">1181-ben</strong> említik először a község nevét. Az évszázadok során számos változatban fordult elő: Tenykod, Tenykowd, Egyedkuttya, Eketyukod.
             </p>
             <p>
-              A név eredete a Tyukodi nemzetséghez köthető, mely a magyar tyúk főnév "-d" képzős változata. Bár a név 1181-ben tűnik fel először, a település valószínűleg már évszázadokkal korábban is létezett a láp szigetein.
+              A név eredete a Tyukodi nemzetséghez köthető, mely a magyar tyúk főnév &quot;-d&quot; képzős változata. Bár a név 1181-ben tűnik fel először, a település valószínűleg már évszázadokkal korábban is létezett a láp szigetein.
             </p>
           </div>
         </section>
@@ -140,8 +140,8 @@ export default function AboutPage() {
                     {/* Left Column: Point/Icon */}
                     <div className="relative z-10 flex justify-center">
                       <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center transition-all duration-700 ${isActive
-                          ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/20 scale-110'
-                          : 'bg-white dark:bg-stone-900 text-stone-300 dark:text-stone-700 border-2 border-stone-100 dark:border-stone-800'
+                        ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/20 scale-110'
+                        : 'bg-white dark:bg-stone-900 text-stone-300 dark:text-stone-700 border-2 border-stone-100 dark:border-stone-800'
                         }`}>
                         <i className={`bi ${event.icon} text-lg md:text-xl`}></i>
                       </div>
@@ -149,8 +149,8 @@ export default function AboutPage() {
 
                     {/* Right Column: Content */}
                     <div className={`p-6 md:p-8 rounded-[2rem] border transition-all duration-700 ${isActive
-                        ? 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 shadow-xl translate-x-1'
-                        : 'bg-stone-50/30 dark:bg-stone-900/5 border-transparent opacity-50'
+                      ? 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 shadow-xl translate-x-1'
+                      : 'bg-stone-50/30 dark:bg-stone-900/5 border-transparent opacity-50'
                       }`}>
                       <div className={`font-black text-xl md:text-2xl mb-2 tracking-tighter transition-colors duration-700 ${isActive ? 'text-blue-600' : 'text-stone-400 dark:text-stone-700'
                         }`}>

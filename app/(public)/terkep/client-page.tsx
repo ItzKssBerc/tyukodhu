@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 // Dynamically import MapComponent to ensure client-side rendering
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const DynamicMapComponent = dynamic<{ markers: any[] }>(() => import('@/components/MapComponent'), {
   ssr: false,
   loading: () => <p>Térkép betöltése...</p>,

@@ -27,6 +27,7 @@ export default async function PollsPage() {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const polls: Poll[] = sanityPolls.map((item: any) => ({
     slug: item._id,
     entry: {
