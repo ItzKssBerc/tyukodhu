@@ -7,6 +7,10 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  env: {
+    SANITY_STUDIO_CLOUDINARY_CLOUD_NAME: process.env.NEXT_CLOUDINARY_CLOUD_NAME,
+    SANITY_STUDIO_CLOUDINARY_API_KEY: process.env.NEXT_CLOUDINARY_API_KEY,
+  },
   transpilePackages: ["next-tinacms-cloudinary", "@tinacms/auth"],
   outputFileTracingIncludes: {
     '/': ['content/**'],
