@@ -77,7 +77,7 @@ export default async function PostPage({ params }: PageProps) {
                     Vissza a hírekhez
                 </Link>
 
-                <article className="bg-transparent rounded-2xl shadow-xl overflow-hidden">
+                <article className="bg-white dark:bg-stone-900 rounded-2xl shadow-xl overflow-hidden">
                     {post.featuredImage && (
                         <div className="relative w-full aspect-video max-h-[300px]">
                             <Image
