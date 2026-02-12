@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
   const [currentDay, setCurrentDay] = useState<number | null>(null);
@@ -21,10 +22,12 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
             <Link href="/" className="flex items-center justify-center">
               <div className="h-16 w-16 bg-white dark:bg-stone-800 p-2 rounded-full shadow-lg flex items-center justify-center border-2 border-stone-300 dark:border-stone-600">
                 {siteEmblem ? (
-                  <img
-                    className="max-h-full max-w-full"
+                  <Image
+                    className="max-h-full max-w-full object-contain"
                     src={siteEmblem}
                     alt="Tyukod Címere"
+                    width={64}
+                    height={64}
                   />
                 ) : (
                   <i className="bi bi-shield-fill text-3xl text-stone-400 dark:text-stone-600"></i>
@@ -210,10 +213,12 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
               <Link href="/" className="flex items-center mb-6">
                 <div className="h-16 w-16 bg-white dark:bg-stone-800 p-2 rounded-full shadow-lg flex items-center justify-center border-2 border-stone-300 dark:border-stone-600">
                   {siteEmblem ? (
-                    <img
-                      className="max-h-full max-w-full"
+                    <Image
+                      className="max-h-full max-w-full object-contain"
                       src={siteEmblem}
                       alt="Tyukod Címere"
+                      width={64}
+                      height={64}
                     />
                   ) : (
                     <i className="bi bi-shield-fill text-3xl text-stone-400 dark:text-stone-600"></i>

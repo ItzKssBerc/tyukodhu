@@ -15,7 +15,7 @@ interface MapMarker {
         lng: number;
     };
     leiras?: { cim?: string; tartalom?: string }[];
-    helyszinikon?: any;
+    helyszinikon?: { name: string };
 }
 
 export interface MapRef {
@@ -118,9 +118,8 @@ const MapComponent = forwardRef<MapRef, { markers?: MapMarker[] }>(({ markers = 
                 if (marker.koordinata?.lat && marker.koordinata?.lng) {
 
                     // Simple custom icon using Lucide
-                    const iconName = marker.helyszinikon?.name;
-                    // eslint-disable-next-line import/namespace
-                    const IconComponent = (LucideIcons as any)[iconName] || MapPin;
+                    const iconName = marker.helyszinikon?.name as keyof typeof LucideIcons;
+                    const IconComponent = (LucideIcons[iconName] as React.ElementType) || MapPin;
 
                     const iconHtml = renderToString(
                         <div className="bg-indigo-600 dark:bg-indigo-500 p-2 rounded-full shadow-lg border-2 border-white dark:border-stone-800 text-white flex items-center justify-center">

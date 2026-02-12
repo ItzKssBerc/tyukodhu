@@ -2,16 +2,17 @@
 
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
-import { Search, MapPin, Navigation, Info, X } from "lucide-react";
+import { Search, MapPin, X } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { MapMarker, MapRef } from "@/components/MapComponent";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 // Dynamically import MapComponent to ensure client-side rendering
-const DynamicMapComponent = dynamic<any>(() => import('@/components/MapComponent'), {
+const DynamicMapComponent = dynamic<{ markers: MapMarker[] }>(() => import('@/components/MapComponent'), {
   ssr: false,
   loading: () => (
     <div className="w-full h-full flex items-center justify-center bg-stone-100 dark:bg-stone-900 animate-pulse">
@@ -20,15 +21,7 @@ const DynamicMapComponent = dynamic<any>(() => import('@/components/MapComponent
   ),
 });
 
-interface Location {
-  _id: string;
-  helyszinnev: string;
-  koordinata: {
-    lat: number;
-    lng: number;
-  };
-  leiras?: { cim?: string; tartalom?: string }[];
-  helyszinikon?: any;
+interface Location extends MapMarker {
   kategoria?: string;
 }
 
@@ -51,7 +44,7 @@ export default function MapPage({ locations }: MapPageProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
-  const mapRef = useRef<any>(null);
+  const mapRef = useRef<MapRef | null>(null);
 
   useEffect(() => {
     setMounted(true);
