@@ -78,7 +78,7 @@ async function migrate() {
             const result = await client.create({
                 _type: 'szemely',
                 ...person,
-            })
+            } as any)
             console.log(`Létrehozva: ${result.nev} (${result._id})`)
         } catch (error) {
             console.error(`Hiba a létrehozás során (${person.nev}):`, error)

@@ -7,7 +7,7 @@ import { renderToString } from 'react-dom/server';
 import { MapPin, Plus, Minus } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
 
-interface MapMarker {
+export interface MapMarker {
     _id: string;
     helyszinnev: string;
     koordinata: {
@@ -22,7 +22,11 @@ export interface MapRef {
     focusOnMarker: (lat: number, lng: number, title: string) => void;
 }
 
-const MapComponent = forwardRef<MapRef, { markers?: MapMarker[] }>(({ markers = [] }, ref) => {
+export interface MapComponentProps {
+    markers?: MapMarker[];
+}
+
+const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, ref) => {
     const mapRef = useRef<HTMLDivElement>(null);
     const mapInstanceRef = useRef<L.Map | null>(null);
     const markersLayerRef = useRef<L.LayerGroup | null>(null);

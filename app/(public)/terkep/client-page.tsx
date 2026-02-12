@@ -5,14 +5,15 @@ import dynamic from "next/dynamic";
 import { Search, MapPin, X } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { MapMarker, MapRef } from "@/components/MapComponent";
+import type { MapMarker, MapRef, MapComponentProps } from "@/components/MapComponent";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 // Dynamically import MapComponent to ensure client-side rendering
-const DynamicMapComponent = dynamic<{ markers: MapMarker[] }>(() => import('@/components/MapComponent'), {
+const DynamicMapComponent = dynamic<MapComponentProps & React.RefAttributes<MapRef>>(() =>
+  import('@/components/MapComponent').then(mod => mod.default), {
   ssr: false,
   loading: () => (
     <div className="w-full h-full flex items-center justify-center bg-stone-100 dark:bg-stone-900 animate-pulse">
