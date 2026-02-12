@@ -115,6 +115,10 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
                     <span>+36 44 556 062</span>
                   </div>
                   <div className="flex items-center">
+                    <i className="bi bi-printer-fill text-red-600 dark:text-red-500 mr-3 flex-shrink-0"></i>
+                    <span>+36 44 556 064 (fax)</span>
+                  </div>
+                  <div className="flex items-center">
                     <i className="bi bi-envelope-fill text-red-600 dark:text-red-500 mr-3 flex-shrink-0"></i>
                     <a
                       href="mailto:tyukod@outlook.hu"
@@ -124,6 +128,76 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
                     </a>
                   </div>
                 </div>
+              </div>
+            </details>
+
+            <details className="group">
+              <summary className="flex items-center justify-between px-4 py-4 cursor-pointer list-none">
+                <span className="font-bold text-stone-800 dark:text-stone-200">
+                  Hasznos linkek
+                </span>
+                <svg
+                  className="w-5 h-5 text-stone-500 dark:text-stone-400 group-open:rotate-180 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </summary>
+              <div className="px-4 pb-4">
+                <ul className="space-y-2 text-sm text-stone-700 dark:text-stone-300">
+                  <li>
+                    <a
+                      href="https://magyarorszag.hu/"
+                      target="_blank"
+                      className="hover:text-red-600 dark:hover:text-red-400 block py-1"
+                    >
+                      Magyarország.hu
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://kozigazgatas.magyarorszag.hu/kozigazgatas/kozadat-kereso"
+                      target="_blank"
+                      className="hover:text-red-600 dark:hover:text-red-400 block py-1"
+                    >
+                      Közadatkereső
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.valasztas.hu/ugyintezes"
+                      target="_blank"
+                      className="hover:text-red-600 dark:hover:text-red-400 block py-1"
+                    >
+                      Nemzeti Választási Iroda
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://csenger.jarasihivatal.hu/"
+                      target="_blank"
+                      className="hover:text-red-600 dark:hover:text-red-400 block py-1"
+                    >
+                      Csengeri Járási Hivatal
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.police.hu/"
+                      target="_blank"
+                      className="hover:text-red-600 dark:hover:text-red-400 block py-1"
+                    >
+                      Rendőrség honlapja
+                    </a>
+                  </li>
+                </ul>
               </div>
             </details>
           </div>
@@ -196,6 +270,10 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
                   <span>+36 44 556 062</span>
                 </div>
                 <div className="flex items-center">
+                  <i className="bi bi-printer-fill text-red-600 dark:text-red-500 mr-3 flex-shrink-0"></i>
+                  <span>+36 44 556 064 (fax)</span>
+                </div>
+                <div className="flex items-center">
                   <i className="bi bi-envelope-fill text-red-600 dark:text-red-500 mr-3 flex-shrink-0"></i>
                   <a
                     href="mailto:tyukod@outlook.hu"
@@ -227,7 +305,34 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
                     target="_blank"
                     className="hover:text-red-600 dark:hover:text-red-400 block py-1"
                   >
-                    Közadatkerő
+                    Közadatkereső
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.valasztas.hu/ugyintezes"
+                    target="_blank"
+                    className="hover:text-red-600 dark:hover:text-red-400 block py-1"
+                  >
+                    Nemzeti Választási Iroda
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://csenger.jarasihivatal.hu/"
+                    target="_blank"
+                    className="hover:text-red-600 dark:hover:text-red-400 block py-1"
+                  >
+                    Csengeri Járási Hivatal
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.police.hu/"
+                    target="_blank"
+                    className="hover:text-red-600 dark:hover:text-red-400 block py-1"
+                  >
+                    Rendőrség honlapja
                   </a>
                 </li>
               </ul>
