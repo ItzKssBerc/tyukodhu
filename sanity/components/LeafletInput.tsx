@@ -13,12 +13,15 @@ export default function LeafletInput(props: any) {
     const markerRef = useRef<any>(null)
     const LRef = useRef<any>(null)
 
+    const isMounted = useRef(true)
+
     // Local state for inputs
     const [lat, setLat] = useState<string>(value?.lat?.toString() || '')
     const [lng, setLng] = useState<string>(value?.lng?.toString() || '')
 
     // Synchronize local state with props
     useEffect(() => {
+        isMounted.current = true
         setLat(value?.lat?.toString() || '')
         setLng(value?.lng?.toString() || '')
 
@@ -37,6 +40,10 @@ export default function LeafletInput(props: any) {
                 markerRef.current = null
             }
         }
+
+        return () => {
+            isMounted.current = false
+        }
     }, [value?.lat, value?.lng])
 
     useEffect(() => {
@@ -44,10 +51,16 @@ export default function LeafletInput(props: any) {
 
         // Only load Leaflet on the client
         import('leaflet').then((L) => {
+            // Check if still mounted and map not already initialized
+            if (!isMounted.current || mapRef.current) return
+
             LRef.current = L
 
             const initialLat = value?.lat || 47.8447
             const initialLng = value?.lng || 22.5029
+
+            // Double check container exists
+            if (!containerRef.current) return
 
             const map = L.map(containerRef.current!).setView([initialLat, initialLng], 13)
             mapRef.current = map
