@@ -56,121 +56,121 @@ export default function LeafletInput(props: any) {
         }
     }, [value?.lat, value?.lng])
 
-useEffect(() => {
-    if (!containerRef.current || mapRef.current) return
+    useEffect(() => {
+        if (!containerRef.current || mapRef.current) return
 
-    // Only load Leaflet on the client
-    import('leaflet').then((L) => {
-        // Check if still mounted and map not already initialized
-        if (!isMounted.current || mapRef.current) return
+        // Only load Leaflet on the client
+        import('leaflet').then((L) => {
+            // Check if still mounted and map not already initialized
+            if (!isMounted.current || mapRef.current) return
 
-        LRef.current = L
+            LRef.current = L
 
-        const initialLat = value?.lat || 47.85280970494161
-        const initialLng = value?.lng || 22.55567259744638
+            const initialLat = value?.lat || 47.85280970494161
+            const initialLng = value?.lng || 22.55567259744638
 
-        // Double check container exists
-        if (!containerRef.current) return
+            // Double check container exists
+            if (!containerRef.current) return
 
-        const map = L.map(containerRef.current!).setView([initialLat, initialLng], 14)
-        mapRef.current = map
+            const map = L.map(containerRef.current!).setView([initialLat, initialLng], 14)
+            mapRef.current = map
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map)
 
-        // Fix for markers
-        const DefaultIcon = L.icon({
-            iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-            shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41]
+            // Fix for markers
+            const DefaultIcon = L.icon({
+                iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+                shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41]
+            })
+
+            if (value?.lat && value?.lng) {
+                markerRef.current = L.marker([value.lat, value.lng], { icon: DefaultIcon }).addTo(map)
+            }
+
+            map.on('click', (e) => {
+                const { lat, lng } = e.latlng
+                const nextValue = { _type: 'geopoint', lat: lat, lng: lng }
+                onChange(set(nextValue))
+            })
         })
 
-        if (value?.lat && value?.lng) {
-            markerRef.current = L.marker([value.lat, value.lng], { icon: DefaultIcon }).addTo(map)
+        return () => {
+            if (mapRef.current) {
+                mapRef.current.remove()
+                mapRef.current = null
+            }
         }
+    }, [])
 
-        map.on('click', (e) => {
-            const { lat, lng } = e.latlng
-            const nextValue = { _type: 'geopoint', lat: lat, lng: lng }
+    const handleInputChange = () => {
+        const latNum = parseFloat(lat)
+        const lngNum = parseFloat(lng)
+        if (!isNaN(latNum) && !isNaN(lngNum)) {
+            const nextValue = { _type: 'geopoint', lat: latNum, lng: lngNum }
             onChange(set(nextValue))
-        })
-    })
-
-    return () => {
-        if (mapRef.current) {
-            mapRef.current.remove()
-            mapRef.current = null
+        } else if (lat === '' && lng === '') {
+            onChange(unset())
         }
     }
-}, [])
 
-const handleInputChange = () => {
-    const latNum = parseFloat(lat)
-    const lngNum = parseFloat(lng)
-    if (!isNaN(latNum) && !isNaN(lngNum)) {
-        const nextValue = { _type: 'geopoint', lat: latNum, lng: lngNum }
-        onChange(set(nextValue))
-    } else if (lat === '' && lng === '') {
-        onChange(unset())
-    }
-}
-
-return (
-    <Stack space={3}>
-        <div
-            ref={containerRef}
-            className="leaflet-input-map"
-            style={{
-                height: '400px',
-                width: '100%',
-                borderRadius: '8px',
-                zIndex: 0,
-                border: '1px solid #ccc',
-                overflow: 'hidden',
-                background: '#f0f0f0'
-            }}
-        />
-
-        <Grid columns={[1, 2]} gap={3}>
-            <Stack space={2}>
-                <Text size={1} weight="semibold">Szélesség (Lat)</Text>
-                <TextInput
-                    value={lat}
-                    onChange={(e: any) => setLat(e.currentTarget.value)}
-                    onBlur={handleInputChange}
-                    placeholder="pl. 47.8447"
-                />
-            </Stack>
-            <Stack space={2}>
-                <Text size={1} weight="semibold">Hosszúság (Lng)</Text>
-                <TextInput
-                    value={lng}
-                    onChange={(e: any) => setLng(e.currentTarget.value)}
-                    onBlur={handleInputChange}
-                    placeholder="pl. 22.5029"
-                />
-            </Stack>
-        </Grid>
-
-        <Flex justify="flex-end">
-            <Button
-                fontSize={1}
-                padding={2}
-                text="Koordináták törlése"
-                tone="critical"
-                onClick={() => {
-                    setLat('')
-                    setLng('')
-                    onChange(unset())
-                    if (markerRef.current) {
-                        markerRef.current.remove()
-                        markerRef.current = null
-                    }
+    return (
+        <Stack space={3}>
+            <div
+                ref={containerRef}
+                className="leaflet-input-map"
+                style={{
+                    height: '400px',
+                    width: '100%',
+                    borderRadius: '8px',
+                    zIndex: 0,
+                    border: '1px solid #ccc',
+                    overflow: 'hidden',
+                    background: '#f0f0f0'
                 }}
             />
-        </Flex>
-    </Stack>
-)
+
+            <Grid columns={[1, 2]} gap={3}>
+                <Stack space={2}>
+                    <Text size={1} weight="semibold">Szélesség (Lat)</Text>
+                    <TextInput
+                        value={lat}
+                        onChange={(e: any) => setLat(e.currentTarget.value)}
+                        onBlur={handleInputChange}
+                        placeholder="pl. 47.8447"
+                    />
+                </Stack>
+                <Stack space={2}>
+                    <Text size={1} weight="semibold">Hosszúság (Lng)</Text>
+                    <TextInput
+                        value={lng}
+                        onChange={(e: any) => setLng(e.currentTarget.value)}
+                        onBlur={handleInputChange}
+                        placeholder="pl. 22.5029"
+                    />
+                </Stack>
+            </Grid>
+
+            <Flex justify="flex-end">
+                <Button
+                    fontSize={1}
+                    padding={2}
+                    text="Koordináták törlése"
+                    tone="critical"
+                    onClick={() => {
+                        setLat('')
+                        setLng('')
+                        onChange(unset())
+                        if (markerRef.current) {
+                            markerRef.current.remove()
+                            markerRef.current = null
+                        }
+                    }}
+                />
+            </Flex>
+        </Stack>
+    )
 }

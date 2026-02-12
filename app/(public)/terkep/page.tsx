@@ -16,31 +16,13 @@ interface LocationProps {
 }
 
 export default async function MapPage() {
-  let locations: LocationProps[] = [];
+  let locations: any[] = [];
 
   try {
-    const sanityLocations = await client.fetch(HELYSZIN_QUERY);
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    locations = sanityLocations.map((loc: any) => ({
-      title: loc.helyszinnev,
-      address: '', // Sanity schema doesn't have address yet? or assume coordinata is enough
-      // If leiras is an array of objects {label, value}, map it.
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      details: loc.leiras?.map((item: any) => ({
-        label: item.cim || item.label, // Adjust based on actual schema
-        value: item.tartalom || item.value
-      })) || [],
-      coordinates: loc.koordinata,
-      markerIcon: loc.helyszinikon ? urlFor(loc.helyszinikon).url() : undefined,
-      description: '', // Computed from details?
-      category: 'egyeb', // Default category
-    }));
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    locations = await client.fetch(HELYSZIN_QUERY);
   } catch (err: any) {
     console.error("Failed to fetch locations from Sanity in Server Component:", err);
   }
 
-  // Pass the locations (or an empty array if error) to the client component
   return <MapClientPage locations={locations} />;
 }

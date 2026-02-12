@@ -30,6 +30,23 @@ export const helyszin = defineType({
             }
         }),
         defineField({
+            name: 'kategoria',
+            title: 'Kategória',
+            type: 'string',
+            options: {
+                list: [
+                    { title: 'Közintézmény', value: 'kozintezmeny' },
+                    { title: 'Bolt / Szolgáltatás', value: 'bolt_szolgaltatas' },
+                    { title: 'Kultúra / Szabadidő', value: 'kultura_szabadido' },
+                    { title: 'Vallás', value: 'vallas' },
+                    { title: 'Sport', value: 'sport' },
+                    { title: 'Egyéb', value: 'egyeb' },
+                ],
+            },
+            initialValue: 'egyeb',
+            validation: (Rule) => Rule.required(),
+        }),
+        defineField({
             name: 'leiras',
             title: 'Leírás',
             type: 'array',

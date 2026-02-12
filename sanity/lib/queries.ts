@@ -62,7 +62,8 @@ export const HELYSZIN_QUERY = groq`*[_type == "helyszin"] {
   helyszinnev,
   koordinata,
   helyszinikon,
-  leiras
+  leiras,
+  kategoria
 }`
 
 export const SZEMELY_QUERY = groq`*[_type == "szemely"] | order(nev asc) {
