@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
-import { Search, MapPin, X } from "lucide-react";
+import { Search, MapPin, X, RotateCcw } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import type { MapMarker, MapRef, MapComponentProps } from "@/components/MapComponent";
@@ -65,6 +65,15 @@ export default function MapPage({ locations }: MapPageProps) {
       mapRef.current.focusOnMarker(loc.koordinata.lat, loc.koordinata.lng, loc.helyszinnev);
     }
     // On mobile, we might want to scroll to map, but let's keep it simple for now
+  };
+
+  const handleReset = () => {
+    setSearchQuery("");
+    setSelectedCategory("all");
+    setSelectedLocation(null);
+    if (mapRef.current) {
+      mapRef.current.resetView();
+    }
   };
 
   return (
@@ -176,7 +185,18 @@ export default function MapPage({ locations }: MapPageProps) {
         {/* Map area */}
         <div className="flex-1 relative min-h-[400px] md:h-[600px] rounded-[1.5rem] overflow-hidden shadow-inner bg-stone-50 dark:bg-stone-950">
           {mounted ? (
-            <DynamicMapComponent ref={mapRef} markers={locations || []} />
+            <>
+              <div className="absolute top-6 right-6 z-[1000]">
+                <button
+                  onClick={handleReset}
+                  className="w-12 h-12 bg-white dark:bg-stone-800 text-stone-600 dark:text-stone-300 rounded-2xl shadow-xl border border-stone-200 dark:border-stone-700 flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/40 hover:text-indigo-600 dark:hover:text-indigo-400 hover:scale-105 active:scale-95 transition-all duration-200"
+                  title="Térkép alaphelyzetbe"
+                >
+                  <RotateCcw size={24} />
+                </button>
+              </div>
+              <DynamicMapComponent ref={mapRef} markers={locations || []} />
+            </>
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
               <p className="text-stone-500">Térkép betöltése...</p>

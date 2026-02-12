@@ -20,6 +20,7 @@ export interface MapMarker {
 
 export interface MapRef {
     focusOnMarker: (lat: number, lng: number, title: string) => void;
+    resetView: () => void;
 }
 
 export interface MapComponentProps {
@@ -40,6 +41,12 @@ const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, re
                 if (marker) {
                     marker.openPopup();
                 }
+            }
+        },
+        resetView: () => {
+            if (mapInstanceRef.current) {
+                mapInstanceRef.current.setView([47.85280970494161, 22.55567259744638], 14, { animate: true });
+                mapInstanceRef.current.closePopup();
             }
         }
     }));
