@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+import { defineField, defineType, defineArrayMember } from 'sanity'
 import LeafletInput from '../components/LeafletInput'
 
 export const helyszin = defineType({
@@ -34,13 +34,15 @@ export const helyszin = defineType({
             title: 'Leírás',
             type: 'array',
             of: [
-                {
+                defineArrayMember({
                     type: 'object',
+                    name: 'leirasElem',
+                    title: 'Leírás Elem',
                     fields: [
                         { name: 'cim', type: 'string', title: 'Cím' },
                         { name: 'tartalom', type: 'text', title: 'Tartalom' },
                     ],
-                },
+                }),
             ],
         }),
     ],

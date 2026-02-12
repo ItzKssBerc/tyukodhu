@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+import { defineField, defineType, defineArrayMember } from 'sanity'
 
 export const szavazas = defineType({
     name: 'szavazas',
@@ -24,7 +24,7 @@ export const szavazas = defineType({
             name: 'valaszok',
             title: 'Válaszlehetőségek',
             type: 'array',
-            of: [{ type: 'string' }],
+            of: [defineArrayMember({ type: 'string' })],
         }),
         defineField({
             name: 'aktiv',

@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { cloudinaryImageSource } from 'sanity-plugin-cloudinary'
 
 export const elokozvetites = defineType({
     name: 'elokozvetites',
@@ -12,6 +13,7 @@ export const elokozvetites = defineType({
             description: 'Ez a kép jelenik meg, amikor nincs élő adás.',
             options: {
                 hotspot: true,
+                sources: [cloudinaryImageSource],
             },
         }),
         defineField({

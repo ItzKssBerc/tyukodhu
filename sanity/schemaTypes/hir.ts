@@ -1,4 +1,5 @@
-import { defineField, defineType } from 'sanity'
+import { defineField, defineType, defineArrayMember } from 'sanity'
+import { cloudinaryImageSource } from 'sanity-plugin-cloudinary'
 
 export const hir = defineType({
     name: 'hir',
@@ -27,6 +28,7 @@ export const hir = defineType({
             type: 'image',
             options: {
                 hotspot: true,
+                sources: [cloudinaryImageSource],
             },
         }),
         defineField({
@@ -49,15 +51,18 @@ export const hir = defineType({
             title: 'Tartalom',
             type: 'array',
             of: [
-                { type: 'block' },
-                { type: 'image' },
+                defineArrayMember({ type: 'block' }),
+                defineArrayMember({
+                    type: 'image',
+                    options: { sources: [cloudinaryImageSource] }
+                }),
             ],
         }),
         defineField({
             name: 'hircimke',
             title: 'Címkék',
             type: 'array',
-            of: [{ type: 'string' }],
+            of: [defineArrayMember({ type: 'string' })],
             options: {
                 layout: 'tags',
             },

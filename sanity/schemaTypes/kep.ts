@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { cloudinaryImageSource } from 'sanity-plugin-cloudinary'
 
 export const kep = defineType({
     name: 'kep',
@@ -16,6 +17,7 @@ export const kep = defineType({
             type: 'image',
             options: {
                 hotspot: true,
+                sources: [cloudinaryImageSource],
             },
             validation: (Rule) => Rule.required(),
         }),

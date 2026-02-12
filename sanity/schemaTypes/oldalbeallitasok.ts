@@ -1,4 +1,5 @@
-import { defineField, defineType } from 'sanity'
+import { defineField, defineType, defineArrayMember } from 'sanity'
+import { cloudinaryImageSource } from 'sanity-plugin-cloudinary'
 
 export const oldalbeallitasok = defineType({
     name: 'oldalbeallitasok',
@@ -11,13 +12,19 @@ export const oldalbeallitasok = defineType({
             type: 'image',
             options: {
                 hotspot: true,
+                sources: [cloudinaryImageSource],
             },
         }),
         defineField({
             name: 'fokepcarousel',
             title: 'Főoldali Körhinta Képek',
             type: 'array',
-            of: [{ type: 'image' }],
+            of: [
+                defineArrayMember({
+                    type: 'image',
+                    options: { sources: [cloudinaryImageSource] }
+                })
+            ],
             options: {
                 layout: 'grid',
             },
