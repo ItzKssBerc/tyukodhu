@@ -23,7 +23,7 @@ export default function MapComponent({ markers = [] }: { markers?: MapMarker[] }
     useEffect(() => {
         if (!mapRef.current || mapInstanceRef.current) return;
 
-        const map = L.map(mapRef.current).setView([47.854, 22.564], 14);
+        const map = L.map(mapRef.current).setView([47.85280970494161, 22.55567259744638], 14);
         mapInstanceRef.current = map;
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

@@ -56,13 +56,13 @@ export default function LeafletInput(props: any) {
 
             LRef.current = L
 
-            const initialLat = value?.lat || 47.8447
-            const initialLng = value?.lng || 22.5029
+            const initialLat = value?.lat || 47.85280970494161
+            const initialLng = value?.lng || 22.55567259744638
 
             // Double check container exists
             if (!containerRef.current) return
 
-            const map = L.map(containerRef.current!).setView([initialLat, initialLng], 13)
+            const map = L.map(containerRef.current!).setView([initialLat, initialLng], 14)
             mapRef.current = map
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
