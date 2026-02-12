@@ -25,6 +25,9 @@ export default defineConfig({
         image: {
             assetSources: () => [cloudinaryImageSource],
         },
+        file: {
+            assetSources: () => [cloudinaryImageSource],
+        },
     },
     plugins: [
         structureTool({ structure }),
