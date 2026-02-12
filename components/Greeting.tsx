@@ -8,18 +8,21 @@ interface GreetingProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     images?: any[];
     mayorName?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mayorImage?: any;
 }
 
-export default function Greeting({ images = [], mayorName }: GreetingProps) {
+export default function Greeting({ images = [], mayorName, mayorImage }: GreetingProps) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [randomImage, setRandomImage] = React.useState<any>(null);
 
     React.useEffect(() => {
-        if (images.length > 0) {
+        // Fallback if no mayor image
+        if (!mayorImage && images.length > 0) {
             const randomIndex = Math.floor(Math.random() * images.length);
             setRandomImage(images[randomIndex]);
         }
-    }, [images]);
+    }, [images, mayorImage]);
 
     const handleShuffle = () => {
         if (images.length > 1) {
@@ -40,7 +43,21 @@ export default function Greeting({ images = [], mayorName }: GreetingProps) {
                     <div className="lg:col-span-5 relative group">
                         <div className="absolute -inset-4 bg-gradient-to-tr from-blue-500/20 to-cyan-500/20 rounded-[2.5rem] blur-2xl transition-all duration-700 opacity-0 group-hover:opacity-100"></div>
                         <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden border border-stone-200 dark:border-stone-800 shadow-2xl bg-white/20 dark:bg-stone-900/20 backdrop-blur-md">
-                            {randomImage ? (
+                            {mayorImage ? (
+                                <>
+                                    <Image
+                                        src={urlFor(mayorImage).url()}
+                                        alt={mayorName || "Polgármester"}
+                                        fill
+                                        className="object-cover transition-all duration-1000 group-hover:scale-105"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <div className="absolute bottom-6 left-6 right-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                                        <p className="text-white font-bold text-lg line-clamp-2">{mayorName}</p>
+                                        <p className="text-white/60 text-xs uppercase tracking-widest mt-1">Tyukod polgármestere</p>
+                                    </div>
+                                </>
+                            ) : randomImage ? (
                                 <>
                                     <Image
                                         src={urlFor(randomImage.kep).url()}
@@ -61,8 +78,8 @@ export default function Greeting({ images = [], mayorName }: GreetingProps) {
                                 </div>
                             )}
 
-                            {/* Shuffle Button */}
-                            {images.length > 1 && (
+                            {/* Shuffle Button (Only for random gallery images) */}
+                            {!mayorImage && images.length > 1 && (
                                 <button
                                     onClick={handleShuffle}
                                     className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all active:scale-90 z-20"

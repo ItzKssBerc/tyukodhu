@@ -21,7 +21,7 @@ export default async function Home() {
   // Find Mayor
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mayor = people?.find((p: any) =>
-    p.titulus?.toLowerCase().includes("polgármester")
+    p.titulus?.toLowerCase() === "polgármester"
   );
   const mayorName = mayor?.nev;
 
@@ -52,6 +52,8 @@ export default async function Home() {
   if (newsItems.length === 0) newsItems.push({ title: "Nincsenek friss hírek.", url: "#", date: "", type: "news" });
   if (docItems.length === 0) docItems.push({ title: "Nincsenek friss dokumentumok.", url: "#", date: "", type: "document" });
 
+  const mayorImage = mayor?.kep;
+
   return (
     <>
       {/* Carousel Section (Acts as background and dashboard container) */}
@@ -61,7 +63,7 @@ export default async function Home() {
         </Carousel>
       </section>
 
-      <Greeting images={gallery || []} mayorName={mayorName} />
+      <Greeting images={gallery || []} mayorName={mayorName} mayorImage={mayorImage} />
     </>
   );
 }
