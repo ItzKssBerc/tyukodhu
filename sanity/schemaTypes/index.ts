@@ -8,6 +8,7 @@ import { szavazas } from './szavazas'
 import { oldalbeallitasok } from './oldalbeallitasok'
 import { elokozvetites } from './elokozvetites'
 import { szemely } from './szemely'
+import { album } from './album'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
     types: [
@@ -19,5 +20,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         oldalbeallitasok,
         elokozvetites,
         szemely,
+        album,
     ],
 }
