@@ -12,13 +12,14 @@ export const dokumentum = defineType({
             validation: (Rule) => Rule.required(),
         }),
         defineField({
-            name: 'fajl',
-            title: 'Fájl',
-            type: 'file',
-            options: {
-                accept: '.pdf,.jpg,.png,.doc,.docx',
-            },
-            validation: (Rule) => Rule.required(),
+            name: 'fajlok',
+            title: 'Fájlok / Képek',
+            type: 'array',
+            of: [
+                { type: 'file', options: { accept: '.pdf,.jpg,.png,.doc,.docx' } },
+                { type: 'image', options: { hotspot: true } },
+            ],
+            validation: (Rule) => Rule.required().min(1),
         }),
         defineField({
             name: 'kategoria',
@@ -26,6 +27,7 @@ export const dokumentum = defineType({
             type: 'string',
             options: {
                 list: [
+                    { title: 'Pályázat', value: 'palyazat' },
                     { title: 'Jegyzőkönyv', value: 'jegyzokonyv' },
                     { title: 'Rendelet', value: 'rendelet' },
                     { title: 'Határozat', value: 'hatarozat' },
