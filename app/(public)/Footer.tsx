@@ -79,7 +79,7 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
                       >
                         <span>{day}</span>
                         <span className="font-medium">
-                          {day === "Szerda" ? "8:00  16:00" : "8:00  12:00"}
+                          {day === "Szerda" ? "8:00 - 16:00" : "8:00 - 12:00"}
                         </span>
                       </li>
                     );
@@ -253,7 +253,7 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
                     >
                       <span>{day}</span>
                       <span className="font-medium">
-                        {day === "Szerda" ? "8:00  16:00" : "8:00  12:00"}
+                        {day === "Szerda" ? "8:00 - 16:00" : "8:00 - 12:00"}
                       </span>
                     </li>
                   );

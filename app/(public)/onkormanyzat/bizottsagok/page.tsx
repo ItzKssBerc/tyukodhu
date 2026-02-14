@@ -101,65 +101,103 @@ export default async function BizottsagokPage() {
   committees.sort((a, b) => a.name.localeCompare(b.name));
 
   return (
-    <div className="mt-10 py-12 theme-transition bg-transparent">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
-            Bizottságok
+    <div className="relative min-h-screen pt-24 pb-20 overflow-hidden theme-transition bg-transparent">
+      {/* Background ambient glows */}
+      <div className="absolute top-0 right-0 -z-10 w-[500px] h-[500px] bg-red-600/10 dark:bg-red-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 -z-10 w-[600px] h-[600px] bg-indigo-600/10 dark:bg-indigo-500/5 blur-[150px] rounded-full pointer-events-none"></div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-20">
+          <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-red-100/80 dark:bg-red-900/30 border border-red-200 dark:border-red-800 backdrop-blur-md">
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-red-600 dark:text-red-400 font-orbitron">
+              Helyi Irányítás
+            </span>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tighter font-orbitron mb-6">
+            BIZOTTSÁGOK
+            <span className="block h-1.5 w-24 bg-gradient-to-r from-red-600 to-indigo-600 mx-auto mt-4 rounded-full shadow-[0_0_15px_rgba(220,38,38,0.5)]"></span>
           </h1>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
-            Tyukod Nagyközség Önkormányzatának bizottságai
+          <p className="max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-400 font-light leading-relaxed">
+            Tyukod Nagyközség Önkormányzatának szakmai döntés-előkészítő és ellenőrző testületei, melyek segítik a képviselő-testület munkáját.
           </p>
         </div>
 
-        <div className="space-y-16">
+        <div className="space-y-32 max-w-6xl mx-auto">
           {committees.length === 0 ? (
-            <EmptyState
-              title="Nincsenek elérhető bizottságok"
-              description="Jelenleg nincs megjeleníthető bizottsági adat a rendszerben. Kérjük, látogasson vissza később!"
-              icon="bi-people"
-            />
+            <div className="bg-white/40 dark:bg-stone-900/40 backdrop-blur-xl border border-stone-200 dark:border-stone-800 rounded-[3rem] p-16">
+              <EmptyState
+                title="Nincsenek elérhető bizottságok"
+                description="Jelenleg nincs megjeleníthető bizottsági adat a rendszerben. Kérjük, látogasson vissza később!"
+                icon="bi-people"
+              />
+            </div>
           ) : (
             <>
               {committees.map((committee) => (
-                <div key={committee.name}>
-                  <div className="flex items-center mb-6">
-                    <i className={`${committee.icon} ${committee.iconColor} text-3xl mr-4`}></i>
-                    <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
-                      {committee.name}
-                    </h2>
+                <section key={committee.name} className="relative group">
+                  <div className="flex flex-col md:flex-row items-center md:items-end justify-between mb-12 gap-6">
+                    <div className="flex items-center gap-6">
+                      <div className={`flex items-center justify-center w-16 h-16 rounded-2xl bg-white dark:bg-stone-900 shadow-xl border border-stone-100 dark:border-stone-800 transform group-hover:scale-110 transition-transform duration-500`}>
+                        <i className={`${committee.icon} ${committee.iconColor} text-3xl`}></i>
+                      </div>
+                      <div>
+                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white font-orbitron tracking-tight">
+                          {committee.name}
+                        </h2>
+                        <div className="h-1 w-full bg-stone-200 dark:bg-stone-800 mt-2 rounded-full overflow-hidden">
+                          <div className={`h-full w-1/3 ${committee.iconColor.replace('text-', 'bg-')} bg-current opacity-50`}></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="px-4 py-2 rounded-xl bg-stone-100 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700 text-sm font-bold text-stone-500 dark:text-stone-400 font-orbitron uppercase tracking-widest">
+                      {committee.members.length} TAG
+                    </div>
                   </div>
-                  <div className="flex flex-wrap justify-center gap-8">
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                     {committee.members.map((member) => (
                       <div
                         key={member.name + member.role}
-                        className="w-72 bg-white/40 dark:bg-stone-900/40 rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300"
+                        className="group/card relative"
                       >
-                        <div className="p-6 text-center">
-                          <div className="relative w-28 h-28 mx-auto mb-4">
-                            {member.image ? (
-                              <Image
-                                src={member.image}
-                                alt={`Profilkép - ${member.name}`}
-                                layout="fill"
-                                objectFit="cover"
-                                className="rounded-full"
-                              />
-                            ) : (
-                              <div className="w-full h-full rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                                <i className="bi bi-person-fill text-5xl text-gray-400 dark:text-gray-500"></i>
-                              </div>
-                            )}
+                        {/* Shadow/Glow effect on hover */}
+                        <div className={`absolute -inset-0.5 bg-gradient-to-r from-red-600/20 to-indigo-600/20 rounded-3xl blur opacity-0 group-hover/card:opacity-100 transition duration-500`}></div>
+
+                        <div className="relative bg-white/60 dark:bg-stone-900/60 backdrop-blur-xl border border-white/20 dark:border-stone-800 rounded-3xl p-8 h-full flex flex-col items-center text-center hover:border-stone-300 dark:hover:border-stone-700 transition-all duration-300">
+                          <div className="relative p-1 rounded-2xl bg-gradient-to-b from-stone-200 to-stone-100 dark:from-stone-700 dark:to-stone-800 mb-6 shadow-lg group-hover/card:shadow-red-500/10 transition-shadow duration-500">
+                            <div className="relative w-24 h-24 overflow-hidden rounded-xl bg-stone-50 dark:bg-stone-800">
+                              {member.image ? (
+                                <Image
+                                  src={member.image}
+                                  alt={`Profilkép - ${member.name}`}
+                                  fill
+                                  className="object-cover transform group-hover/card:scale-110 transition-transform duration-700"
+                                />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center text-stone-300 dark:text-stone-600">
+                                  <i className="bi bi-person-fill text-5xl"></i>
+                                </div>
+                              )}
+                            </div>
+                            {/* Role indicator dot */}
+                            <div className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-4 border-white dark:border-stone-900 ${member.role.toLowerCase().includes('elnök') ? 'bg-red-500' : 'bg-green-500'
+                              }`}></div>
                           </div>
-                          <h4 className="text-xl font-semibold text-gray-900 dark:text-white">
+
+                          <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2 leading-tight">
                             {member.name}
                           </h4>
-                          <p className="text-gray-600 dark:text-gray-400 capitalize">{member.role}</p>
+
+                          <div className="mt-auto pt-4 flex flex-col items-center">
+                            <span className="px-3 py-1 rounded-lg bg-stone-100 dark:bg-stone-800 group-hover/card:bg-red-500/10 text-stone-500 dark:text-stone-400 group-hover/card:text-red-600 dark:group-hover/card:text-red-400 text-xs font-bold uppercase tracking-widest transition-colors duration-300">
+                              {member.role}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     ))}
                   </div>
-                </div>
+                </section>
               ))}
             </>
           )}
