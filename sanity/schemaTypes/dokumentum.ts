@@ -33,7 +33,9 @@ export const dokumentum = defineType({
                     { title: 'Határozat', value: 'hatarozat' },
                     { title: 'Nyomtatvány', value: 'nyomtatvany' },
                     { title: 'Egyéb', value: 'egyeb' },
+                    { title: 'Mentés a régi oldalról', value: 'mentes-regi' },
                 ],
+
             },
         }),
         defineField({

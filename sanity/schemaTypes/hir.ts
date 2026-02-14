@@ -41,6 +41,7 @@ export const hir = defineType({
                     { title: 'Önkormányzati', value: 'onkormanyzati' },
                     { title: 'Kulturális', value: 'kulturalis' },
                     { title: 'Sport', value: 'sport' },
+                    { title: 'Mentés a régi oldalról', value: 'mentes-regi' },
                     { title: 'Egyéb', value: 'egyeb' },
                 ],
             },
