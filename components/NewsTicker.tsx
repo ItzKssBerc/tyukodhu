@@ -21,7 +21,7 @@ export interface NewsTickerProps {
     mode?: 'default' | 'minimal';
 }
 
-export default function NewsTicker({ news, docs }: NewsTickerProps) {
+export default function NewsTicker({ news, docs, mode = 'default' }: NewsTickerProps) {
     const [activeType, setActiveType] = useState<'news' | 'docs'>('news');
     const [isVisible, setIsVisible] = useState(true);
 
@@ -80,11 +80,11 @@ export default function NewsTicker({ news, docs }: NewsTickerProps) {
                         <Link href={item.url} className="absolute inset-0 z-10" aria-label={item.title}></Link>
                         <div className="flex items-stretch w-full flex-grow bg-transparent overflow-hidden">
                             {/* Left Side: Content */}
-                            <div className="flex-grow flex flex-col justify-between p-4 md:p-6 text-left pointer-events-none">
-                                <span className="text-white group-hover:text-blue-300 transition-colors line-clamp-3 text-sm md:text-xl font-bold leading-tight">
+                            <div className={`flex-grow flex flex-col justify-center text-left pointer-events-none ${mode === 'minimal' ? 'p-3 md:px-5 md:py-3' : 'p-4 md:p-6'}`}>
+                                <span className={`text-white group-hover:text-blue-300 transition-colors font-bold leading-tight ${mode === 'minimal' ? 'line-clamp-1 text-sm md:text-base' : 'line-clamp-3 text-sm md:text-xl'}`}>
                                     {item.title}
                                 </span>
-                                <div className="flex items-center text-[10px] md:text-xs uppercase tracking-widest text-white/60 font-semibold space-x-2 mt-2">
+                                <div className={`flex items-center uppercase tracking-widest text-white/60 font-semibold space-x-2 ${mode === 'minimal' ? 'text-[9px] md:text-[10px] mt-1' : 'text-[10px] md:text-xs mt-2'}`}>
                                     <span>{getCategoryName(item)}</span>
                                     <span>•</span>
                                     <span>{item.date}</span>

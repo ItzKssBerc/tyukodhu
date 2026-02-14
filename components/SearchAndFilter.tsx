@@ -9,7 +9,7 @@ type SearchAndFilterProps = {
     searchPlaceholder?: string;
     selectedCategory?: string;
     onCategoryChange?: (value: string) => void;
-    categories?: { label: string; value: string }[];
+    categories?: readonly { label: string; value: string }[];
     categoryPlaceholder?: string;
     className?: string;
     selectedSort?: string;

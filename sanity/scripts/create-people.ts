@@ -5,7 +5,6 @@ dotenv.config({ path: '.env.local' })
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-02-08'
 const token = process.env.SANITY_WRITE_TOKEN
 
 if (!token) {
@@ -16,7 +15,7 @@ if (!token) {
 const client = createClient({
     projectId,
     dataset,
-    apiVersion,
+    apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-02-08',
     useCdn: false,
     token, // Írási jogosultsághoz szükséges token
 })
@@ -78,7 +77,7 @@ async function migrate() {
             const result = await client.create({
                 _type: 'szemely',
                 ...person,
-            } as any)
+            } as any) // eslint-disable-line @typescript-eslint/no-explicit-any
             console.log(`Létrehozva: ${result.nev} (${result._id})`)
         } catch (error) {
             console.error(`Hiba a létrehozás során (${person.nev}):`, error)

@@ -43,7 +43,7 @@ export const KEP_QUERY = groq`*[_type == "kep"] | order(_createdAt desc) {
 export const DOKUMENTUM_QUERY = groq`*[_type == "dokumentum"] | order(_createdAt desc) {
   _id,
   dokumentumcim,
-  "fajlUrl": fajl.asset->url,
+  "fajlUrl": fajlok[0].asset->url,
   kategoria,
   _createdAt
 }`

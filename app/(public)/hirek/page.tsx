@@ -5,7 +5,7 @@ import NewsClient from "@/components/NewsClient";
 import EmptyState from "@/components/EmptyState";
 
 // Hardcoded category options from keystatic.config.ts for runtime lookup
-const categoryOptions = [
+const categoryOptions: { label: string; value: string }[] = [
   { title: 'Közérdekű', value: 'kozerdeku' },
   { title: 'Önkormányzati', value: 'onkormanyzati' },
   { title: 'Kulturális', value: 'kulturalis' },
@@ -13,21 +13,29 @@ const categoryOptions = [
   { title: 'Egyéb', value: 'egyeb' },
 ].map(opt => ({ label: opt.title, value: opt.value }));
 
+interface SanityPost {
+  _id: string;
+  cim: string;
+  hirkategoria: string;
+  datum: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  hirindexkep: any; // suppression or literal type needed if urlFor still complains
+  slug: { current: string };
+}
+
 export default async function NewsPage() {
   // Fetch news from Sanity
-  const sanityPosts = await client.fetch(HIREK_QUERY);
+  const sanityPosts: SanityPost[] = await client.fetch(HIREK_QUERY);
 
-  // Map Sanity data to the structure expected by NewsClient
   // structure: { slug, entry: { title, category, publishedDate, featuredImage } }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const posts = sanityPosts.map((post: any) => ({
+  const posts = sanityPosts.map((post) => ({
+    id: post._id,
     slug: post.slug.current,
     entry: {
       title: post.cim,
       category: post.hirkategoria,
       publishedDate: post.datum,
       featuredImage: post.hirindexkep ? urlFor(post.hirindexkep).url() : null,
-      // content is not strictly needed for the list view if NewsClient doesn't use it for rendering the card
     }
   }));
 
@@ -46,19 +54,25 @@ export default async function NewsPage() {
       </h1>
 
       {sortedPosts.length > 0 ? (
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        <NewsClient initialPosts={sortedPosts.map((post: any) => {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { content, ...restEntry } = post.entry;
-          return {
-            ...post,
-            entry: {
-              ...restEntry,
-              category: getCategoryLabel(restEntry.category),
-              categorySlug: restEntry.category,
-            }
-          };
-        })} categoryOptions={categoryOptions} />
+        <NewsClient initialPosts={(() => {
+          const seenSlugs = new Set();
+          return sortedPosts
+            .map((post: { id: string; slug: string; entry: { title: string; category: string; publishedDate: string; featuredImage: string | null } }) => ({
+              ...post,
+              entry: {
+                ...post.entry,
+                category: getCategoryLabel(post.entry.category),
+                categorySlug: post.entry.category,
+              }
+            }))
+            .filter((post: { id: string; slug: string; entry: { title: string; category: string; publishedDate: string; featuredImage: string | null } }) => {
+              if (seenSlugs.has(post.slug)) {
+                return false;
+              }
+              seenSlugs.add(post.slug);
+              return true;
+            });
+        })()} categoryOptions={categoryOptions} />
       ) : (
         <EmptyState
           title="Nincsenek friss hírek"

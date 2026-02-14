@@ -2,15 +2,19 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { set, unset } from 'sanity'
-import { Box, Button, Flex, Grid, Stack, Text, TextInput } from '@sanity/ui'
+import { Button, Flex, Grid, Stack, Text, TextInput } from '@sanity/ui'
 // Import CSS but not the code at top-level
 import 'leaflet/dist/leaflet.css'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function LeafletInput(props: any) {
     const { value, onChange } = props
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mapRef = useRef<any>(null)
     const containerRef = useRef<HTMLDivElement>(null)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const markerRef = useRef<any>(null)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const LRef = useRef<any>(null)
 
     const isMounted = useRef(true)
@@ -138,6 +142,7 @@ export default function LeafletInput(props: any) {
                     <Text size={1} weight="semibold">Szélesség (Lat)</Text>
                     <TextInput
                         value={lat}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         onChange={(e: any) => setLat(e.currentTarget.value)}
                         onBlur={handleInputChange}
                         placeholder="pl. 47.8447"
@@ -147,6 +152,7 @@ export default function LeafletInput(props: any) {
                     <Text size={1} weight="semibold">Hosszúság (Lng)</Text>
                     <TextInput
                         value={lng}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         onChange={(e: any) => setLng(e.currentTarget.value)}
                         onBlur={handleInputChange}
                         placeholder="pl. 22.5029"

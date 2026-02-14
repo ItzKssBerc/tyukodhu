@@ -7,17 +7,15 @@ export default async function DocumentsPage() {
   // Fetch documents from Sanity
   const sanityDocs = await client.fetch(DOKUMENTUM_QUERY);
 
-  // Map Sanity data to DocumentsClient structure
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const documents = sanityDocs.map((item: any) => {
+  const documents = sanityDocs.map((item: { _id: string; dokumentumcim: string; kategoria: string; fajlUrl: string | null; _createdAt: string }) => {
     const publishedDateTime = new Date(item._createdAt);
     return {
       slug: item._id,
       entry: {
         title: item.dokumentumcim || '',
         category: item.kategoria || '',
-        description: '', // Desc not in schema yet
-        file: item.fajlUrl || '',
+        description: '',
+        file: item.fajlUrl || null,
         publishedDate: publishedDateTime.toISOString().split('T')[0],
         publishedTime: publishedDateTime.toTimeString().split(' ')[0].substring(0, 5),
       }
