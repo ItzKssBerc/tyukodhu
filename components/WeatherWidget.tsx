@@ -34,19 +34,19 @@ export default function WeatherWidget() {
     const isDark = resolvedTheme === "dark";
 
     return (
-        <div key={resolvedTheme} className="w-full theme-transition overflow-hidden">
-            <div className="-mb-[1px]">
+        <div key={resolvedTheme} className="w-full theme-transition overflow-hidden flex justify-center">
+            <div className="-mb-[1px] w-full">
                 <a
                     className="weatherwidget-io"
                     href="https://forecast7.com/hu/47d8522d56/tyukod/"
-                    data-label_1="TYUKOD"
-                    data-label_2="IDŐJÁRÁS"
+                    data-label_1=""
+                    data-label_2=""
                     data-theme={isDark ? "dark" : "pure"}
                     data-language="HU"
                     data-basecolor={isDark ? "#0c0a09" : "transparent"}
                     data-accent="transparent"
                 >
-                    TYUKOD IDŐJÁRÁS
+                    {/* Internal text removed as requested */}
                 </a>
             </div>
         </div>

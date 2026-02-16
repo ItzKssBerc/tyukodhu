@@ -207,7 +207,7 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
             <details className="group">
               <summary className="flex items-center justify-between px-4 py-4 cursor-pointer list-none">
                 <span className="font-bold text-stone-800 dark:text-stone-200">
-                  Időjárás
+                  Tyukodi Időjárás
                 </span>
                 <i className="bi bi-cloud-sun text-indigo-500"></i>
               </summary>
@@ -356,8 +356,8 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
             </div>
 
             <div className="flex flex-col lg:col-span-4 mt-4 lg:mt-8 border-t border-stone-200 dark:border-stone-800 pt-8">
-              <h4 className="text-lg font-bold mb-4 border-b-2 border-red-600 dark:border-red-500 pb-2 text-stone-900 dark:text-white w-fit">
-                Helyi Időjárás
+              <h4 className="text-lg font-bold mb-4 border-b-2 border-red-600 dark:border-red-500 pb-2 text-stone-900 dark:text-white w-full">
+                Tyukodi Időjárás
               </h4>
               <WeatherWidget />
             </div>
