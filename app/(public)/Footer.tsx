@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import WeatherWidget from "@/components/WeatherWidget";
 
 export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
   const [currentDay, setCurrentDay] = useState<number | null>(null);
@@ -203,6 +204,17 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
                 </ul>
               </div>
             </details>
+            <details className="group">
+              <summary className="flex items-center justify-between px-4 py-4 cursor-pointer list-none">
+                <span className="font-bold text-stone-800 dark:text-stone-200">
+                  Időjárás
+                </span>
+                <i className="bi bi-cloud-sun text-indigo-500"></i>
+              </summary>
+              <div className="px-4 pb-4">
+                <WeatherWidget />
+              </div>
+            </details>
           </div>
         </div>
 
@@ -341,6 +353,13 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
                   </a>
                 </li>
               </ul>
+            </div>
+
+            <div className="flex flex-col">
+              <h4 className="text-lg font-bold mb-4 border-b-2 border-red-600 dark:border-red-500 pb-2 text-stone-900 dark:text-white">
+                Helyi Időjárás
+              </h4>
+              <WeatherWidget />
             </div>
           </div>
         </div>
