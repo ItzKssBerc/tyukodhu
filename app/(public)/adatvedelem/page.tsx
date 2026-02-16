@@ -68,7 +68,14 @@ export default function AdatvedelemPage() {
       title: "7. Kapcsolat",
       icon: "bi-envelope-fill",
       content: (
-        <p>Ha bármilyen kérdése van ezzel az adatvédelmi nyilatkozattal kapcsolatban, kérjük, vegye fel velünk a kapcsolatot a &quot;Kapcsolat&quot; oldalunkon található elérhetőségeinken.</p>
+        <>
+          <p>Ha bármilyen kérdése vagy észrevétele van jelen adatvédelmi nyilatkozattal kapcsolatban, kérjük, forduljon bizalommal az adatkezelőhöz (Tyukod Nagyközség Önkormányzata) az alábbi elérhetőségek egyikén:</p>
+          <ul className="mt-4 space-y-2">
+            <li><strong>E-mail:</strong> <a href="mailto:tyukod@outlook.hu" className="text-indigo-600 dark:text-indigo-400 hover:underline">tyukod@outlook.hu</a></li>
+            <li><strong>Telefon:</strong> <a href="tel:+3644556062" className="text-indigo-600 dark:text-indigo-400 hover:underline">+36 44 556 062</a></li>
+            <li><strong>Cím:</strong> 4762 Tyukod, Árpád u. 33.</li>
+          </ul>
+        </>
       )
     }
   ];

@@ -43,8 +43,8 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
               </div>
             </Link>
             <p className="text-sm text-stone-600 dark:text-stone-400 text-center mt-4">
-              Szabolcs-Szatmár-Bereg megye szívében található településünk
-              gazdag történelmi múlttal és élő hagyományokkal rendelkezik.
+              Közvetlenül az államhatár mentén fekvő nagyközségünk gazdag
+              történelmi örökséggel és büszkén őrzött, élő hagyományokkal büszkélkedhet.
             </p>
           </div>
 
@@ -234,8 +234,8 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
                 </div>
               </Link>
               <p className="text-sm text-stone-600 dark:text-stone-400">
-                Szabolcs-Szatmár-Bereg megye szívében található településünk
-                gazdag történelmi múlttal és élő hagyományokkal rendelkezik.
+                Közvetlenül az államhatár mentén fekvő nagyközségünk gazdag
+                történelmi örökséggel és büszkén őrzött, élő hagyományokkal büszkélkedhet.
               </p>
             </div>
 
