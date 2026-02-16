@@ -355,8 +355,8 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
               </ul>
             </div>
 
-            <div className="flex flex-col">
-              <h4 className="text-lg font-bold mb-4 border-b-2 border-red-600 dark:border-red-500 pb-2 text-stone-900 dark:text-white">
+            <div className="flex flex-col lg:col-span-4 mt-4 lg:mt-8 border-t border-stone-200 dark:border-stone-800 pt-8">
+              <h4 className="text-lg font-bold mb-4 border-b-2 border-red-600 dark:border-red-500 pb-2 text-stone-900 dark:text-white w-fit">
                 Helyi Időjárás
               </h4>
               <WeatherWidget />
