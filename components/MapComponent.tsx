@@ -12,6 +12,7 @@ import * as LucideIcons from 'lucide-react';
 import * as FaIcons from 'react-icons/fa';
 import * as MdIcons from 'react-icons/md';
 import * as IoIcons from 'react-icons/io5';
+import MapPopup from './MapPopup';
 
 export interface MapMarker {
     _id: string;
@@ -92,7 +93,30 @@ const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, re
             maxClusterRadius: 50,
             spiderfyOnMaxZoom: true,
             zoomToBoundsOnClick: true,
+            iconCreateFunction: (cluster: any) => {
+                const count = cluster.getChildCount();
+                return L.divIcon({
+                    html: `<div class="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-600 dark:bg-indigo-500 text-white font-bold shadow-lg border-2 border-white dark:border-stone-800">
+                             ${count}
+                           </div>`,
+                    className: 'custom-cluster-icon',
+                    iconSize: [40, 40]
+                });
+            }
         }).addTo(map);
+
+        // Handle custom close button in popups
+        map.on('popupopen', (e) => {
+            const container = e.popup.getElement();
+            if (container) {
+                const closeTrigger = container.querySelector('.popup-close-trigger');
+                if (closeTrigger) {
+                    closeTrigger.addEventListener('click', () => {
+                        map.closePopup();
+                    });
+                }
+            }
+        });
 
         // Watch for theme changes
         const observer = new MutationObserver((mutations) => {
@@ -105,6 +129,10 @@ const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, re
                     } else {
                         map.removeLayer(darkTiles);
                         lightTiles.addTo(map);
+                    }
+                    // Refresh clusters to update theme-dependent styles if any (like borders)
+                    if (markersLayerRef.current) {
+                        markersLayerRef.current.refreshClusters();
                     }
                 }
             });
@@ -177,29 +205,15 @@ const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, re
                         popupAnchor: [0, -18],
                     });
 
-                    const popupContent = renderToString(
-                        <div className="p-1 min-w-[200px] font-sans">
-                            <h3 className="text-lg font-bold text-stone-900 dark:text-white m-0 mb-2 leading-tight">
-                                {marker.helyszinnev}
-                            </h3>
-                            {marker.leiras && marker.leiras.length > 0 && (
-                                <div className="space-y-2 mt-2">
-                                    {marker.leiras.map((item, idx) => (
-                                        <div key={idx} className="text-sm">
-                                            {item.cim && <span className="font-semibold text-stone-700 dark:text-stone-300 block">{item.cim}</span>}
-                                            {item.tartalom && <span className="text-stone-600 dark:text-stone-400">{item.tartalom}</span>}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    );
+                    const popupContent = renderToString(<MapPopup marker={marker} />);
 
                     const leafletMarker = L.marker([marker.koordinata.lat, marker.koordinata.lng], { icon: customIcon })
                         .addTo(markersLayer)
                         .bindPopup(popupContent, {
                             className: 'custom-popup',
-                            maxWidth: 300,
+                            maxWidth: 350,
+                            minWidth: 280,
+                            autoPanPadding: [50, 50],
                         });
 
                     markersMapRef.current[marker.helyszinnev] = leafletMarker;
@@ -241,7 +255,14 @@ const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, re
                     color: #1c1917;
                     border-radius: 1rem;
                     padding: 0;
-                    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+                    box-shadow: none !important;
+                    border: 1px solid #e7e5e4; /* stone-200 */
+                }
+                .custom-popup {
+                    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.05));
+                }
+                .dark .custom-popup {
+                    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4));
                 }
                 .dark .custom-popup .leaflet-popup-content-wrapper {
                     background: #1c1917;
@@ -250,12 +271,29 @@ const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, re
                 }
                 .custom-popup .leaflet-popup-content {
                     margin: 12px;
+                    width: auto !important;
+                    min-width: 280px !important;
+                    display: block !important;
+                }
+                .custom-popup .leaflet-popup-tip-container {
+                    margin-top: -1.5px; /* Deeper overlap */
+                    z-index: 1;
                 }
                 .custom-popup .leaflet-popup-tip {
                     background: white;
+                    box-shadow: none !important;
+                    border: 1px solid #e7e5e4 !important;
+                    border-top: none !important;
+                    border-left: none !important;
                 }
                 .dark .custom-popup .leaflet-popup-tip {
                     background: #1c1917;
+                    border: 1px solid #292524 !important;
+                    border-top: none !important;
+                    border-left: none !important;
+                }
+                .custom-popup .leaflet-popup-close-button {
+                    display: none !important;
                 }
                 .custom-leaflet-icon {
                     background: transparent;

@@ -91,7 +91,7 @@ export default function MapPage({ locations }: MapPageProps) {
       <div className="flex-1 flex flex-col md:flex-row gap-6 bg-white dark:bg-stone-900 rounded-[2rem] shadow-xl overflow-hidden border border-stone-200 dark:border-stone-800 p-2 md:p-4">
 
         {/* Sidebar / List area */}
-        <div className="w-full md:w-80 flex flex-col h-[500px] md:h-auto border-b md:border-b-0 md:border-r border-stone-100 dark:border-stone-800 pr-0 md:pr-4">
+        <div className="w-full md:w-80 flex flex-col h-[500px] md:h-[600px] border-b md:border-b-0 md:border-r border-stone-100 dark:border-stone-800 pr-0 md:pr-4">
 
           <div className="px-2 pt-2 space-y-4 mb-4">
             {/* Category Filter */}
