@@ -11,15 +11,24 @@ export default function AdatvedelemPage() {
       icon: "bi-info-circle-fill",
       content: (
         <>
-          <p>Nem gyűjtünk személyazonosításra alkalmas információkat Önről, amikor Ön a weboldalunkat látogatja. A weboldalunk látogatása során azonban bizonyos nem személyes adatok automatikusan gyűjtésre kerülhetnek. Ezek közé tartozhatnak:</p>
-          <ul>
-            <li>Az Ön IP-címe.</li>
-            <li>A használt böngésző típusa és verziója.</li>
-            <li>Az Ön által használt operációs rendszer.</li>
-            <li>A látogatás dátuma és ideje.</li>
-            <li>A meglátogatott oldalak.</li>
-            <li>A weboldalunkra való hivatkozás oldala.</li>
-          </ul>
+          <p className="mb-6">Nem gyűjtünk személyazonosításra alkalmas információkat Önről, amikor Ön a weboldalunkat látogatja. A weboldalunk látogatása során azonban bizonyos nem személyes adatok automatikusan gyűjtésre kerülhetnek. Ezek közé tartozhatnak:</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { icon: 'bi-cpu', text: 'Az Ön IP-címe' },
+              { icon: 'bi-browser-chrome', text: 'Böngésző típusa és verziója' },
+              { icon: 'bi-laptop', text: 'Használt operációs rendszer' },
+              { icon: 'bi-calendar-event', text: 'Látogatás dátuma és ideje' },
+              { icon: 'bi-file-earmark-text', text: 'Meglátogatott oldalak' },
+              { icon: 'bi-link-45deg', text: 'Hivatkozó weboldal' }
+            ].map((item, index) => (
+              <div key={index} className="flex items-center p-3 bg-gray-50 dark:bg-gray-700/30 rounded-xl border border-gray-100 dark:border-gray-600/50 group hover:bg-white dark:hover:bg-gray-700 transition-all duration-300">
+                <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 rounded-lg mr-3 group-hover:scale-110 transition-transform">
+                  <i className={`bi ${item.icon}`}></i>
+                </div>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{item.text}</span>
+              </div>
+            ))}
+          </div>
         </>
       )
     },
