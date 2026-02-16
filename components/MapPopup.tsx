@@ -23,22 +23,28 @@ const MapPopup: React.FC<MapPopupProps> = ({ marker }) => {
     let IconComponent: React.ElementType = LucideIcons.MapPin;
     const rawName = marker.helyszinikon?.name || '';
 
+    type IconMap = Record<string, React.ElementType>;
+    const FaIconsMap = FaIcons as unknown as IconMap;
+    const MdIconsMap = MdIcons as unknown as IconMap;
+    const IoIconsMap = IoIcons as unknown as IconMap;
+    const LucideIconsMap = LucideIcons as unknown as IconMap;
+
     if (rawName) {
-        const provider = (marker.helyszinikon as any)?.provider;
-        if (provider === 'fa' && (FaIcons as any)[rawName]) IconComponent = (FaIcons as any)[rawName];
-        else if (provider === 'mdi' && (MdIcons as any)[rawName]) IconComponent = (MdIcons as any)[rawName];
-        else if (provider === 'io' && (IoIcons as any)[rawName]) IconComponent = (IoIcons as any)[rawName];
+        const provider = marker.helyszinikon?.provider;
+        if (provider === 'fa' && FaIconsMap[rawName]) IconComponent = FaIconsMap[rawName];
+        else if (provider === 'mdi' && MdIconsMap[rawName]) IconComponent = MdIconsMap[rawName];
+        else if (provider === 'io' && IoIconsMap[rawName]) IconComponent = IoIconsMap[rawName];
         else {
             let cleanedName = rawName
                 .replace(/^(Fa|Md|Lu|Ri|Bi|Hi|Si|Ti|Go|Vsc|Io|Bs|Im|Gi|Wi|Di|Ai|Fc)/, '')
                 .replace(/-/g, '');
             cleanedName = cleanedName.charAt(0).toUpperCase() + cleanedName.slice(1);
-            IconComponent = (LucideIcons as any)[cleanedName] || (LucideIcons as any)[rawName] || LucideIcons.MapPin;
+            IconComponent = LucideIconsMap[cleanedName] || LucideIconsMap[rawName] || LucideIcons.MapPin;
         }
     }
 
-    const kategoriaValue = (marker as any).kategoria;
-    const kategoriaLabel = CATEGORY_LABELS[kategoriaValue] || kategoriaValue;
+    const kategoriaValue = marker.kategoria;
+    const kategoriaLabel = kategoriaValue ? (CATEGORY_LABELS[kategoriaValue] || kategoriaValue) : '';
 
     return (
         <div

@@ -17,12 +17,16 @@ import MapPopup from './MapPopup';
 export interface MapMarker {
     _id: string;
     helyszinnev: string;
+    kategoria?: string;
     koordinata: {
         lat: number;
         lng: number;
     };
     leiras?: { cim?: string; tartalom?: string }[];
-    helyszinikon?: { name: string };
+    helyszinikon?: {
+        name: string;
+        provider?: string;
+    };
 }
 
 export interface MapRef {
@@ -34,10 +38,18 @@ export interface MapComponentProps {
     markers?: MapMarker[];
 }
 
+interface IMarkerClusterGroup extends L.LayerGroup {
+    refreshClusters: (clusters?: unknown) => void;
+}
+
+interface ICluster {
+    getChildCount: () => number;
+}
+
 const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, ref) => {
     const mapRef = useRef<HTMLDivElement>(null);
     const mapInstanceRef = useRef<L.Map | null>(null);
-    const markersLayerRef = useRef<any>(null);
+    const markersLayerRef = useRef<IMarkerClusterGroup | null>(null);
     const markersMapRef = useRef<{ [key: string]: L.Marker }>({});
 
     useImperativeHandle(ref, () => ({
@@ -88,13 +100,15 @@ const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, re
             lightTiles.addTo(map);
         }
 
-        markersLayerRef.current = (L as any).markerClusterGroup({
+        const LeafletWithClusters = L as unknown as { markerClusterGroup: (options: object) => IMarkerClusterGroup };
+
+        markersLayerRef.current = LeafletWithClusters.markerClusterGroup({
             showCoverageOnHover: false,
             maxClusterRadius: 50,
             spiderfyOnMaxZoom: true,
             zoomToBoundsOnClick: true,
-            iconCreateFunction: (cluster: any) => {
-                const count = cluster.getChildCount();
+            iconCreateFunction: (cluster: unknown) => {
+                const count = (cluster as ICluster).getChildCount();
                 return L.divIcon({
                     html: `<div class="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-600 dark:bg-indigo-500 text-white font-bold shadow-lg border-2 border-white dark:border-stone-800">
                              ${count}
@@ -170,12 +184,18 @@ const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, re
                     let IconComponent: React.ElementType = MapPin;
                     const rawName = marker.helyszinikon?.name || '';
 
+                    type IconMap = Record<string, React.ElementType>;
+                    const FaIconsMap = FaIcons as unknown as IconMap;
+                    const MdIconsMap = MdIcons as unknown as IconMap;
+                    const IoIconsMap = IoIcons as unknown as IconMap;
+                    const LucideIconsMap = LucideIcons as unknown as IconMap;
+
                     if (rawName) {
                         // 1. Try exact match in provider set if available
-                        const provider = (marker.helyszinikon as any)?.provider;
-                        if (provider === 'fa' && (FaIcons as any)[rawName]) IconComponent = (FaIcons as any)[rawName];
-                        else if (provider === 'mdi' && (MdIcons as any)[rawName]) IconComponent = (MdIcons as any)[rawName];
-                        else if (provider === 'io' && (IoIcons as any)[rawName]) IconComponent = (IoIcons as any)[rawName];
+                        const provider = marker.helyszinikon?.provider;
+                        if (provider === 'fa' && FaIconsMap[rawName]) IconComponent = FaIconsMap[rawName];
+                        else if (provider === 'mdi' && MdIconsMap[rawName]) IconComponent = MdIconsMap[rawName];
+                        else if (provider === 'io' && IoIconsMap[rawName]) IconComponent = IoIconsMap[rawName];
 
                         // 2. Fallback to existing Lucide mapping if not found in specific provider
                         if (IconComponent === MapPin) {
@@ -184,7 +204,7 @@ const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, re
                                 .replace(/-/g, '');
                             cleanedName = cleanedName.charAt(0).toUpperCase() + cleanedName.slice(1);
 
-                            const resolvedIcon = (LucideIcons as any)[cleanedName] || (LucideIcons as any)[rawName];
+                            const resolvedIcon = LucideIconsMap[cleanedName] || LucideIconsMap[rawName];
                             if (resolvedIcon) {
                                 IconComponent = resolvedIcon;
                             }
