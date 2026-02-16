@@ -3,9 +3,15 @@
 import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import 'leaflet.markercluster';
 import { renderToString } from 'react-dom/server';
 import { MapPin, Plus, Minus } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
+import * as FaIcons from 'react-icons/fa';
+import * as MdIcons from 'react-icons/md';
+import * as IoIcons from 'react-icons/io5';
 
 export interface MapMarker {
     _id: string;
@@ -30,7 +36,7 @@ export interface MapComponentProps {
 const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, ref) => {
     const mapRef = useRef<HTMLDivElement>(null);
     const mapInstanceRef = useRef<L.Map | null>(null);
-    const markersLayerRef = useRef<L.LayerGroup | null>(null);
+    const markersLayerRef = useRef<any>(null);
     const markersMapRef = useRef<{ [key: string]: L.Marker }>({});
 
     useImperativeHandle(ref, () => ({
@@ -81,7 +87,12 @@ const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, re
             lightTiles.addTo(map);
         }
 
-        markersLayerRef.current = L.layerGroup().addTo(map);
+        markersLayerRef.current = (L as any).markerClusterGroup({
+            showCoverageOnHover: false,
+            maxClusterRadius: 50,
+            spiderfyOnMaxZoom: true,
+            zoomToBoundsOnClick: true,
+        }).addTo(map);
 
         // Watch for theme changes
         const observer = new MutationObserver((mutations) => {
@@ -127,14 +138,34 @@ const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, re
 
             markers.forEach((marker) => {
                 if (marker.koordinata?.lat && marker.koordinata?.lng) {
+                    // Robust icon resolution
+                    let IconComponent: React.ElementType = MapPin;
+                    const rawName = marker.helyszinikon?.name || '';
 
-                    // Simple custom icon using Lucide
-                    const iconName = marker.helyszinikon?.name as keyof typeof LucideIcons;
-                    const IconComponent = (LucideIcons[iconName] as React.ElementType) || MapPin;
+                    if (rawName) {
+                        // 1. Try exact match in provider set if available
+                        const provider = (marker.helyszinikon as any)?.provider;
+                        if (provider === 'fa' && (FaIcons as any)[rawName]) IconComponent = (FaIcons as any)[rawName];
+                        else if (provider === 'mdi' && (MdIcons as any)[rawName]) IconComponent = (MdIcons as any)[rawName];
+                        else if (provider === 'io' && (IoIcons as any)[rawName]) IconComponent = (IoIcons as any)[rawName];
+
+                        // 2. Fallback to existing Lucide mapping if not found in specific provider
+                        if (IconComponent === MapPin) {
+                            let cleanedName = rawName
+                                .replace(/^(Fa|Md|Lu|Ri|Bi|Hi|Si|Ti|Go|Vsc|Io|Bs|Im|Gi|Wi|Di|Ai|Fc)/, '')
+                                .replace(/-/g, '');
+                            cleanedName = cleanedName.charAt(0).toUpperCase() + cleanedName.slice(1);
+
+                            const resolvedIcon = (LucideIcons as any)[cleanedName] || (LucideIcons as any)[rawName];
+                            if (resolvedIcon) {
+                                IconComponent = resolvedIcon;
+                            }
+                        }
+                    }
 
                     const iconHtml = renderToString(
                         <div className="bg-indigo-600 dark:bg-indigo-500 p-2 rounded-full shadow-lg border-2 border-white dark:border-stone-800 text-white flex items-center justify-center">
-                            <IconComponent size={20} />
+                            <IconComponent size={20} strokeWidth={2.5} />
                         </div>
                     );
 

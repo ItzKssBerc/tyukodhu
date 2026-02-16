@@ -195,7 +195,7 @@ export default function MapPage({ locations }: MapPageProps) {
                   <RotateCcw size={24} />
                 </button>
               </div>
-              <DynamicMapComponent ref={mapRef} markers={locations || []} />
+              <DynamicMapComponent ref={mapRef} markers={filteredLocations || []} />
             </>
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
