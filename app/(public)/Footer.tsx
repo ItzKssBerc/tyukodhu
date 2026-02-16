@@ -223,14 +223,15 @@ export default function Footer({ siteEmblem }: { siteEmblem: string | null }) {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-10 text-stone-700 dark:text-stone-300">
             <div className="flex flex-col">
               <Link href="/" className="flex items-center mb-6">
-                <div className="h-16 w-16 bg-white dark:bg-stone-800 p-2 rounded-full shadow-lg flex items-center justify-center border-2 border-stone-300 dark:border-stone-600">
+                <div className="h-16 w-16 bg-white dark:bg-stone-800 p-1 rounded-full shadow-lg flex items-center justify-center border-2 border-stone-300 dark:border-stone-600 overflow-hidden">
                   {siteEmblem ? (
                     <Image
-                      className="max-h-full max-w-full object-contain"
+                      className="w-full h-full object-contain"
                       src={siteEmblem}
                       alt="Tyukod Címere"
                       width={64}
                       height={64}
+                      unoptimized
                     />
                   ) : (
                     <i className="bi bi-shield-fill text-3xl text-stone-400 dark:text-stone-600"></i>

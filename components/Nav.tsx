@@ -84,11 +84,11 @@ export default function Nav({ siteEmblem }: { siteEmblem: string | null }) {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
-              <div className="h-20 w-20 bg-gray-100 dark:bg-gray-800 p-3 rounded-full shadow-lg transform hover:scale-105 transition-transform duration-200 flex items-center justify-center border-2 border-gray-400 dark:border-gray-700">
+              <div className="h-20 w-20 bg-gray-100 dark:bg-gray-800 p-1.5 rounded-full shadow-lg transform hover:scale-105 transition-transform duration-200 flex items-center justify-center border-2 border-gray-400 dark:border-gray-700 overflow-hidden">
                 {siteEmblem ? (
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img
-                    className="max-h-full max-w-full"
+                    className="w-full h-full object-contain"
                     src={siteEmblem}
                     alt="Tyukod Címere"
                   />

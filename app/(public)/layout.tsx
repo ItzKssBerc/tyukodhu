@@ -25,13 +25,21 @@ export default async function PublicLayout({
   children: React.ReactNode;
 }>) {
   const data = await client.fetch(OLDALBEALLITASOK_QUERY);
-  const siteEmblem = data?.oldalemblema ? urlFor(data.oldalemblema).url() : null;
+  const siteEmblem = data?.oldalemblema
+    ? (data.oldalemblema.secure_url || urlFor(data.oldalemblema).url())
+    : null;
 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        {siteEmblem && (
+          <>
+            <link rel="icon" href={siteEmblem} type="image/svg+xml" />
+            <link rel="shortcut icon" href={siteEmblem} type="image/svg+xml" />
+          </>
+        )}
       </head>
       <body className="antialiased theme-transition min-h-screen flex flex-col">
         <div className="fixed inset-0 z-[-1] bg-dot-pattern pointer-events-none" aria-hidden="true"></div>
