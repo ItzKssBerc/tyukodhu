@@ -45,6 +45,7 @@ export default function MapPage({ locations }: MapPageProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'list' | 'map'>('map');
   const mapRef = useRef<MapRef | null>(null);
 
   useEffect(() => {
@@ -64,7 +65,8 @@ export default function MapPage({ locations }: MapPageProps) {
     if (mapRef.current) {
       mapRef.current.focusOnMarker(loc.koordinata.lat, loc.koordinata.lng, loc.helyszinnev);
     }
-    // On mobile, we might want to scroll to map, but let's keep it simple for now
+    // Switch to map view on mobile when a location is selected
+    setActiveTab('map');
   };
 
   const handleReset = () => {
@@ -77,7 +79,7 @@ export default function MapPage({ locations }: MapPageProps) {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6 md:py-10 h-full min-h-[calc(100vh-200px)] flex flex-col">
+    <div className="max-w-7xl mx-auto px-4 py-6 md:py-10 min-h-[calc(100vh-200px)] flex flex-col">
       {/* Header section */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-stone-900 dark:text-white mb-2">
@@ -88,10 +90,39 @@ export default function MapPage({ locations }: MapPageProps) {
         </p>
       </div>
 
-      <div className="flex-1 flex flex-col md:flex-row gap-6 bg-white dark:bg-stone-900 rounded-[2rem] shadow-xl overflow-hidden border border-stone-200 dark:border-stone-800 p-2 md:p-4">
+      {/* Mobile Tab Switcher */}
+      <div className="md:hidden flex p-1 bg-stone-100 dark:bg-stone-800 rounded-xl mb-4">
+        <button
+          onClick={() => setActiveTab('list')}
+          className={cn(
+            "flex-1 py-2 text-sm font-bold rounded-lg transition-all",
+            activeTab === 'list'
+              ? "bg-white dark:bg-stone-700 shadow-sm text-indigo-600 dark:text-indigo-400"
+              : "text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300"
+          )}
+        >
+          Lista
+        </button>
+        <button
+          onClick={() => setActiveTab('map')}
+          className={cn(
+            "flex-1 py-2 text-sm font-bold rounded-lg transition-all",
+            activeTab === 'map'
+              ? "bg-white dark:bg-stone-700 shadow-sm text-indigo-600 dark:text-indigo-400"
+              : "text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300"
+          )}
+        >
+          Térkép
+        </button>
+      </div>
+
+      <div className="flex-1 flex flex-col md:flex-row gap-6 bg-white dark:bg-stone-900 rounded-[2rem] shadow-xl md:overflow-hidden border border-stone-200 dark:border-stone-800 p-2 md:p-4">
 
         {/* Sidebar / List area */}
-        <div className="w-full md:w-80 flex flex-col h-[500px] md:h-[600px] border-b md:border-b-0 md:border-r border-stone-100 dark:border-stone-800 pr-0 md:pr-4">
+        <div className={cn(
+          "w-full md:w-80 flex flex-col h-[500px] md:h-[600px] border-b md:border-b-0 md:border-r border-stone-100 dark:border-stone-800 pr-0 md:pr-4",
+          activeTab === 'list' ? "flex" : "hidden md:flex"
+        )}>
 
           <div className="px-2 pt-2 space-y-4 mb-4">
             {/* Category Filter */}
@@ -183,7 +214,10 @@ export default function MapPage({ locations }: MapPageProps) {
         </div>
 
         {/* Map area */}
-        <div className="flex-1 relative min-h-[400px] md:h-[600px] rounded-[1.5rem] overflow-hidden shadow-inner bg-stone-50 dark:bg-stone-950">
+        <div className={cn(
+          "w-full h-[500px] md:h-[600px] md:flex-1 relative rounded-[1.5rem] overflow-hidden shadow-inner bg-stone-50 dark:bg-stone-950",
+          activeTab === 'map' ? "flex" : "hidden md:flex"
+        )}>
           {mounted ? (
             <>
               <div className="absolute top-6 right-6 z-[1000]">

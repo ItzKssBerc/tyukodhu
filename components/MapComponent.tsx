@@ -231,9 +231,9 @@ const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, re
                         .addTo(markersLayer)
                         .bindPopup(popupContent, {
                             className: 'custom-popup',
-                            maxWidth: 350,
-                            minWidth: 280,
-                            autoPanPadding: [50, 50],
+                            maxWidth: 320,
+                            minWidth: 260,
+                            autoPanPadding: [20, 20],
                         });
 
                     markersMapRef.current[marker.helyszinnev] = leafletMarker;
@@ -292,7 +292,7 @@ const MapComponent = forwardRef<MapRef, MapComponentProps>(({ markers = [] }, re
                 .custom-popup .leaflet-popup-content {
                     margin: 12px;
                     width: auto !important;
-                    min-width: 280px !important;
+                    min-width: 260px !important;
                     display: block !important;
                 }
                 .custom-popup .leaflet-popup-tip-container {

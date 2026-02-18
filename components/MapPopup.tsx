@@ -49,8 +49,8 @@ const MapPopup: React.FC<MapPopupProps> = ({ marker }) => {
     return (
         <div
             style={{
-                minWidth: '280px',
-                maxWidth: '320px',
+                minWidth: '250px',
+                maxWidth: '100%',
                 width: 'auto',
                 display: 'block'
             }}
