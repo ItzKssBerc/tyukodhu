@@ -1,46 +1,64 @@
-# Tyukod Község Hivatalos Weboldala
+# 🏛️ Tyukod Község Hivatalos Weboldala
 
-Ez a repozitórium tartalmazza Tyukod község hivatalos weboldalának forráskódját. Az oldal a [tyukod.hu](https://tyukod.hu) címen érhető el.
+[![Website tyukod.hu](https://img.shields.io/website?url=https%3A%2F%2Ftyukod.hu&up_message=online&up_color=brightgreen&down_message=offline&down_color=red&label=tyukod.hu)](https://tyukod.hu)
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=flat&logo=tailwind-css)
+![Sanity CMS](https://img.shields.io/badge/Sanity-CMS-F03E2F?style=flat&logo=sanity)
+![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?style=flat&logo=vercel)
+![License](https://img.shields.io/badge/License-All_Rights_Reserved-red?style=flat)
 
-## 🚀 Technológiai Háttér
+Tyukod község modern, reszponzív és interaktív hivatalos weboldalának forráskódja. Az alkalmazás a legújabb technológiákat ötvözi a gyorsaság, a skálázhatóság és a könnyű tartalomkezelés érdekében.
 
-A projekt a következő technológiákra épül:
+---
 
-- **Keretrendszer:** [Next.js](https://nextjs.org/)
-- **Programozási nyelv:** [TypeScript](https://www.typescriptlang.org/)
-- **Stílusozás:** [Tailwind CSS](https://tailwindcss.com/)
-- **CMS:** [Keystatic](https://keystatic.dev/)
-- **Deployment:** [Vercel](https://vercel.com/)
+## ✨ Főbb Jellemzők
 
-## 🛠️ Fejlesztői Útmutató
+- 🚀 **Next.js 15 App Router**: Villámgyors betöltés és modern szerveroldali renderelés.
+- 🗺️ **Interaktív Térkép**: Leaflet alapú, klaszterezett helyszínmegjelenítés és szűrés.
+- 📄 **Sanity CMS**: Rugalmas és intuitív headless tartalomkezelő rendszer a szerkesztőknek.
+- 🎨 **Modern Design**: Tailwind CSS alapú, reszponzív felület Radix UI komponensekkel fűszerezve.
+- 📊 **Vercel Analytics & Speed Insights**: Folyamatos teljesítmény-monitoring.
 
-### Előfeltételek
+---
 
-Győződj meg róla, hogy a gépeden telepítve van a [Node.js](https://nodejs.org/) (ajánlott verzió: 18 vagy újabb).
+## 🛠️ Technológiai Stack
 
-### Telepítés és Futtatás
+| Réteg | Technológia |
+| :--- | :--- |
+| **Frontend** | [Next.js 15](https://nextjs.org/), [React 18](https://reactjs.org/) |
+| **Nyelv** | [TypeScript](https://www.typescriptlang.org/) |
+| **Stílus** | [Tailwind CSS 4](https://tailwindcss.com/) |
+| **Tartalomkezelés** | [Sanity.io](https://www.sanity.io/) |
+| **Térkép** | [Leaflet](https://leafletjs.org/), [React Leaflet](https://react-leaflet.js.org/) |
+| **Komponensek** | [Radix UI](https://www.radix-ui.com/), [Lucide React](https://lucide.dev/) |
 
-1.  **Klónozd a repozitóriumot:**
-    ```bash
-    git clone https://github.com/oldalhosting2026/tyukodhu.git
-    cd tyukod.hu
-    ```
+---
 
-2.  **Telepítsd a függőségeket:**
-    ```bash
-    npm install
-    ```
+## ⚠️ Jognyilatkozat (License)
 
-3.  **Környezeti változók beállítása:**
-    Hozd létre a projekt gyökérkönyvtárában a `.env.local` fájlt. Szükség esetén másold le a `.env.example` fájlt (ha létezik), és töltsd ki a megfelelő értékekkel.
+**Ez a szoftver védett tulajdon.**
 
-4.  **Fejlesztői szerver indítása:**
-    ```bash
-    npm run dev
-    ```
+A projekt forráskódja, grafikái és tartalmi elemei szerzői jogi védelem alatt állnak. 
+- **Másolása, felhasználása vagy terjesztése bármilyen más projektben kifejezetten TILOS.**
+- Minden jog fenntartva (All Rights Reserved).
 
-    A projekt elindul a [http://localhost:3000](http://localhost:3000) címen.
+---
 
-## ☁️ Deployment
+## 👨‍💻 Fejlesztés
 
-A projekt automatikusan deploy-olódik a Vercel platformon, amint a `master` (vagy `main`) ágra új módosítások kerülnek.
+A helyi fejlesztői környezet elindítása:
+
+```bash
+# Függőségek telepítése
+npm install
+
+# Fejlesztői szerver indítása
+npm run dev
+```
+
+A projekt a [http://localhost:3000](http://localhost:3000) címen érhető el.
+
+---
+
+Made with ❤️ for **Tyukod**
